@@ -27,7 +27,11 @@ public class CustomerDataLoader {
                         UUID.randomUUID().toString(),
                         faker.name().fullName(),
                         faker.internet().emailAddress(),
-                        faker.phoneNumber().cellPhone()
+                        faker.phoneNumber().cellPhone(),
+                        faker.random().nextInt(18, 130),
+                        faker.random().nextBoolean(),
+                        faker.random().nextBoolean()
+
                 );
                 customerRepository.save(customer);
             }

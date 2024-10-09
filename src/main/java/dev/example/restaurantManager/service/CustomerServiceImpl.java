@@ -6,6 +6,8 @@ import dev.example.restaurantManager.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -20,6 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer createCustomer(Customer customer) {
+        customer.setId(UUID.randomUUID().toString());
         return customerRepository.save(customer);
     }
 
@@ -27,18 +30,6 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer getCustomerById(String id) {
         return customerRepository.findById(id).orElse(null);
     }
-
-//    @Override
-//    public Customer updateCustomer(String id, Customer customerDetails) {
-//        Customer customer = customerRepository.findById(id).orElse(null);
-//        if (customer != null) {
-//            customer.setName(customerDetails.getName());
-//            customer.setEmail(customerDetails.getEmail());
-//            customer.setPhoneNumber(customerDetails.getPhoneNumber());
-//            return customerRepository.save(customer);
-//        }
-//        return null;
-//    }
 
     @Override
     public Customer updateCustomer(String id, Customer customerDetails) {
@@ -59,8 +50,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void deleteCustomer(String id) {
+    public boolean deleteCustomer(String id) {
         customerRepository.deleteById(id);
+        Optional<Customer> customer = customerRepository.findById(id);
+        return customer.isEmpty()
+                ? false : true ;
+    }
+
+    @Override
+    public long countCustomers() {
+        return customerRepository.count();
     }
 
 

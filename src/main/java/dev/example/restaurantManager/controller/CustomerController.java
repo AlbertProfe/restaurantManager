@@ -7,103 +7,87 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("/api/v1/customer")
 @RestController
 public class CustomerController {
 
-
-  @Autowired
+    @Autowired
     private CustomerService customerService;
 
+    // manage request by ResponseEntity with all customers
     @GetMapping("/allCustomers")
-    public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
+    public ResponseEntity<List<Customer>> getAllCustomers( ) {
+        List<Customer> customers = customerService.getAllCustomers();
+        HttpHeaders headers = getCommonHeaders("Get all customers");
+
+        /*if (customers != null && !customers.isEmpty()) {
+            return new ResponseEntity<>(customers, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+        }*/
+
+        // Ternary operator is concise, reduces code clutter, improves readability
+        // and efficiently handles simple conditional returns in a single line.
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator
+        return customers != null && !customers.isEmpty()
+                ? new ResponseEntity<>(customers, headers, HttpStatus.OK)
+                : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.createCustomer(customer);
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+        Customer createdCustomer = customerService.createCustomer(customer);
+        HttpHeaders headers = getCommonHeaders("Create a new customer");
+
+        return createdCustomer != null
+                ? new ResponseEntity<>(createdCustomer, headers, HttpStatus.CREATED)
+                : new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable String id, @RequestBody Customer customerDetails) {
-        return customerService.updateCustomer(id, customerDetails);
+    public ResponseEntity<Customer> updateCustomer(@PathVariable String id, @RequestBody Customer customerDetails) {
+        Customer updatedCustomer = customerService.updateCustomer(id, customerDetails);
+        HttpHeaders headers = getCommonHeaders("Update a customer");
+
+        return updatedCustomer != null
+                ? new ResponseEntity<>(updatedCustomer, headers, HttpStatus.OK)
+                : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable String id) {
-        customerService.deleteCustomer(id);
+    public ResponseEntity<Void> deleteCustomer(@PathVariable String id) {
+        boolean deleted = customerService.deleteCustomer(id);
+        HttpHeaders headers = getCommonHeaders("Delete a customer");
+        headers.add("deleted", String.valueOf(deleted));
+
+
+        return deleted
+                ? new ResponseEntity<>(headers, HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
-    // just a drat of getCustomerById with headers and responseEntity
-    // just the first version
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable String id) {
         Customer customer = customerService.getCustomerById(id);
+        HttpHeaders headers = getCommonHeaders("Get a customer by Id");
 
+        return customer != null
+                ? new ResponseEntity<>(customer, headers, HttpStatus.OK)
+                : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+    }
+
+    private HttpHeaders getCommonHeaders(String description) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("desc", "Get a customer by Id");
+        headers.add("desc", description);
         headers.add("content-type", "application/json");
-        headers.add("date", "10-01-2022");
+        headers.add("date", new Date().toString());
         headers.add("server", "H2 Database");
         headers.add("version", "1.0.0");
-
-        //new ResponseEntity<>(customer, headers, HttpStatus.OK);
-        return customer != null
-                ? ResponseEntity.accepted().headers(headers).body(customer)
-                : ResponseEntity.notFound().headers(headers).build();
+        headers.add("customer-count", String.valueOf(customerService.countCustomers()));
+        headers.add("object", "customers");
+        return headers;
     }
-
-
-//-------------------------------------------------------------------------------
-//--------------------- old controller with customerRepository -------------------------------------------
-//-------------------------------------------------------------------------------
-
-/*
-    @Autowired
-    CustomerRepository customerRepository;
-
-    // CRUD: read for customer
-    @GetMapping("/allCustomers")
-    public List<Customer> getAllCustomers() {
-        //return customerRepository.findAll();
-        List<Customer> customers = customerRepository.findAll();
-        return customers;
-    }
-
-    // CRUD: create for customer
-    @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
-        // Generate a unique ID
-        customer.setId(UUID.randomUUID().toString());
-        return customerRepository.save(customer);
-    }
-
-    @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable String id) {
-        return customerRepository.findById(id).orElse(null);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable String id) {
-        customerRepository.deleteById(id);
-    }
-
-    // Update a customer by ID and return the updated customer
-    @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable String id, @RequestBody Customer customerDetails) {
-        Customer customer = customerRepository.findById(id).orElse(null);
-        if (customer != null) {
-            customer.setName(customerDetails.getName());
-            customer.setEmail(customerDetails.getEmail());
-            return customerRepository.save(customer);
-        }
-        return null;
-    }
-*/
-
-
-
 }

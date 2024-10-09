@@ -16,5 +16,8 @@ public class Customer {
     private String name;
     private String email;
     private String phoneNumber;
+    private int age;
+    private boolean vipCustomer;
+    private boolean deleted;
 
 }

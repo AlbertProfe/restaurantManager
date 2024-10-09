@@ -10,7 +10,7 @@ public interface CustomerService {
     Customer createCustomer(Customer customer);
     Customer getCustomerById(String id);
     Customer updateCustomer(String id, Customer customerDetails);
-    void deleteCustomer(String id);
-
+    boolean deleteCustomer(String id);
+    long countCustomers();
 }
 
