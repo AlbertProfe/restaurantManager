@@ -78,7 +78,6 @@ public class CustomerController {
                 ? new ResponseEntity<>(customer, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
-
     private HttpHeaders getCommonHeaders(String description) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("desc", description);
