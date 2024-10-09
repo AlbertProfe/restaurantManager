@@ -17,10 +17,10 @@ Enhance the existing Restaurant Manager project by implementing JPA repositories
 
 Summary tasks
 
-- [ ] Update Entity Classe
-- [ ] Create Faker Classe
+- [x] Update Entity Classe
+- [x] Create Faker Classe
 - [ ] Develop Service Layer
-- [ ] Implement JPA Repositories
+- [x] Implement JPA Repositories
 - [ ] Design REST Controllers
 - [ ] Test with Swagger API
 
@@ -28,7 +28,7 @@ Summary tasks
 
 1. **Update Entity Classes**
    
-   - Transform the **TABLE** and **MENUS** classes into JPA entities.
+   - Transform the **TABLE** and **MENU** classes into JPA entities.
    - Add appropriate annotations such as `@Entity`, `@Id`, and do not use `@GeneratedValue.`Use @id string <mark>UUID</mark>.
    - ~~Define relationships between entities if necessary.~~
 

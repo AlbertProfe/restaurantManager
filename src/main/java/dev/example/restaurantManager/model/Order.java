@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
-
+    @Id
+    private String id;
     private Date date;
     private String waiter;
     private int peopleQty;
