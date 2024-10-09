@@ -2,6 +2,12 @@ package dev.example.restaurantManager.controller;
 
 import dev.example.restaurantManager.model.Table;
 import dev.example.restaurantManager.service.TableService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -15,7 +21,7 @@ public class TableController {
 
     // manage request by ResponseEntity with all customers
     @GetMapping("/allTables")
-    public ResponseEntity<List<Table>> getAllTables( ) {
+    public ResponseEntity<List<Table>> getAllTables() {
         List<Table> tables = tableService.getAllTables();
         HttpHeaders headers = getCommonHeaders("Get all tables");
         return tables != null && !tables.isEmpty()
@@ -29,13 +35,13 @@ public class TableController {
         HttpHeaders headers = getCommonHeaders("Create a new table");
 
         return createdTable != null
-                ? new ResponseEntity<>(createdtable, headers, HttpStatus.CREATED)
+                ? new ResponseEntity<>(createdTable, headers, HttpStatus.CREATED)
                 : new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Table> updateTable(@PathVariable String id, @RequestBody Table tableDetails) {
-        Customer updatedTable = tableService.updateTable(id, tableDetails);
+        Table updatedTable = tableService.updateTable(id, tableDetails);
         HttpHeaders headers = getCommonHeaders("Update a table");
 
         return updatedTable != null
@@ -56,14 +62,15 @@ public class TableController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable String id) {
-        Customer customer = customerService.getCustomerById(id);
+    public ResponseEntity<Table> getTableById(@PathVariable String id) {
+        Table table = tableService.getTableById(id);
         HttpHeaders headers = getCommonHeaders("Get a customer by Id");
 
-        return customer != null
-                ? new ResponseEntity<>(customer, headers, HttpStatus.OK)
+        return table != null
+                ? new ResponseEntity<>(table, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
+
     private HttpHeaders getCommonHeaders(String description) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("desc", description);
@@ -71,7 +78,8 @@ public class TableController {
         headers.add("date", new Date().toString());
         headers.add("server", "H2 Database");
         headers.add("version", "1.0.0");
-        headers.add("customer-count", String.valueOf(customerService.countCustomers()));
+        headers.add("customer-count", String.valueOf(tableService.countTables()));
         headers.add("object", "customers");
         return headers;
     }
+}
