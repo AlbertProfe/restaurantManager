@@ -13,8 +13,8 @@ public class Table {
     private String id;
     private String name;
     private String description;
-    private int qty;
-    private boolean busy;
+    private Integer qty;
+    private Boolean busy;
 
 
 }
