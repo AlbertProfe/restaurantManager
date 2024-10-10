@@ -1,5 +1,7 @@
 package dev.example.restaurantManager.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.util.ArrayList;
 import java.util.Date;
 import lombok.AllArgsConstructor;

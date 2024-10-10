@@ -5,6 +5,7 @@ import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.model.Menu;
 import dev.example.restaurantManager.model.Table;
 import dev.example.restaurantManager.repository.CustomerRepository;
+import dev.example.restaurantManager.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class TableDataLoader {
     @Autowired
     private TableRepository tableRepository;
 
-    public String createFakeTables() {
+    public void createFakeTables() {
         if (tableRepository.count() == 0) {
             System.out.println("0 records found in the database");
 
@@ -27,7 +28,7 @@ public class TableDataLoader {
             for (int i = 0; i < qty; i++) {
                 Table table = new Table(
                         UUID.randomUUID().toString(),
-                        // add "table-" + faker.number().numberBetween(1, qty),
+                        "table-" + faker.number().numberBetween(1, qty),
                         generateMaterialDescription(faker),
                         faker.number().numberBetween(1, 20),
                         faker.random().nextBoolean()

@@ -19,10 +19,10 @@ Summary tasks
 
 - [x] Update Entity Classe
 - [x] Create Faker Classe
-- [ ] Develop Service Layer
+- [x] Develop Service Layer
 - [x] Implement JPA Repositories
-- [ ] Design REST Controllers
-- [ ] Test with Swagger API
+- [x] Design REST Controllers
+- [x] Test with Swagger API
 
 
 

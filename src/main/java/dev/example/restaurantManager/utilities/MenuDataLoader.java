@@ -2,6 +2,7 @@ package dev.example.restaurantManager.utilities;
 
 import com.github.javafaker.Faker;
 import dev.example.restaurantManager.model.Menu;
+import dev.example.restaurantManager.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,7 @@ public class MenuDataLoader {
     @Autowired
     private MenuRepository menuRepository;
 
-    public String createFakeMenus() {
+    public void createFakeMenus() {
         if (menuRepository.count() == 0) {
             System.out.println("0 records found in the database");
 

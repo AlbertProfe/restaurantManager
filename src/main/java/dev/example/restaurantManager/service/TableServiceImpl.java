@@ -41,10 +41,9 @@ public class TableServiceImpl implements TableService {
             if (tableDetails.getQty() != null) {
                 table.setQty(tableDetails.getQty());
             }
-            if (tableDetails.isBusy() != null) {
-                table.setBusy(tableDetails.isBusy());
+            if (tableDetails.getBusy() != null) {
+                table.setBusy(tableDetails.getBusy());
             }
-            // Update other fields as necessary
             return tableRepository.save(table);
         }
         return null;
