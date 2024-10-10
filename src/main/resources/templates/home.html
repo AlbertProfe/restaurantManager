@@ -16,7 +16,7 @@
         h1, h2 {
             color: #333;
         }
-        table {
+        tableRestaurant {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
@@ -35,7 +35,7 @@
 <body>
 <h1>Welcome</h1>
 <h2>Customers</h2>
-<table>
+<tableRestaurant>
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -48,6 +48,6 @@
         <td th:text="${customer.email}"></td>
         <td th:text="${customer.phoneNumber}"></td>
     </tr>
-</table>
+</tableRestaurant>
 </body>
 </html>

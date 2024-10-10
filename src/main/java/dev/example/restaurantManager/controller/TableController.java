@@ -1,6 +1,6 @@
 package dev.example.restaurantManager.controller;
 
-import dev.example.restaurantManager.model.Table;
+import dev.example.restaurantManager.model.TableRestaurant;
 import dev.example.restaurantManager.service.TableService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,33 +19,32 @@ public class TableController {
     @Autowired
     private TableService tableService;
 
-    // manage request by ResponseEntity with all customers
     @GetMapping("/allTables")
-    public ResponseEntity<List<Table>> getAllTables() {
-        List<Table> tables = tableService.getAllTables();
+    public ResponseEntity<List<TableRestaurant>> getAllTables() {
+        List<TableRestaurant> tableRestaurants = tableService.getAllTables();
         HttpHeaders headers = getCommonHeaders("Get all tables");
-        return tables != null && !tables.isEmpty()
-                ? new ResponseEntity<>(tables, headers, HttpStatus.OK)
+        return tableRestaurants != null && !tableRestaurants.isEmpty()
+                ? new ResponseEntity<>(tableRestaurants, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<Table> createTable(@RequestBody Table table) {
-        Table createdTable = tableService.createTable(table);
+    public ResponseEntity<TableRestaurant> createTable(@RequestBody TableRestaurant tableRestaurant) {
+        TableRestaurant createdTableRestaurant = tableService.createTable(tableRestaurant);
         HttpHeaders headers = getCommonHeaders("Create a new table");
 
-        return createdTable != null
-                ? new ResponseEntity<>(createdTable, headers, HttpStatus.CREATED)
+        return createdTableRestaurant != null
+                ? new ResponseEntity<>(createdTableRestaurant, headers, HttpStatus.CREATED)
                 : new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Table> updateTable(@PathVariable String id, @RequestBody Table tableDetails) {
-        Table updatedTable = tableService.updateTable(id, tableDetails);
+    public ResponseEntity<TableRestaurant> updateTable(@PathVariable String id, @RequestBody TableRestaurant tableRestaurantDetails) {
+        TableRestaurant updatedTableRestaurant = tableService.updateTable(id, tableRestaurantDetails);
         HttpHeaders headers = getCommonHeaders("Update a table");
 
-        return updatedTable != null
-                ? new ResponseEntity<>(updatedTable, headers, HttpStatus.OK)
+        return updatedTableRestaurant != null
+                ? new ResponseEntity<>(updatedTableRestaurant, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
@@ -62,12 +61,12 @@ public class TableController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Table> getTableById(@PathVariable String id) {
-        Table table = tableService.getTableById(id);
+    public ResponseEntity<TableRestaurant> getTableById(@PathVariable String id) {
+        TableRestaurant tableRestaurant = tableService.getTableById(id);
         HttpHeaders headers = getCommonHeaders("Get a customer by Id");
 
-        return table != null
-                ? new ResponseEntity<>(table, headers, HttpStatus.OK)
+        return tableRestaurant != null
+                ? new ResponseEntity<>(tableRestaurant, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 

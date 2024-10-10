@@ -19,7 +19,6 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    // Manage request by ResponseEntity with all menus
     @GetMapping("/allMenus")
     public ResponseEntity<List<Menu>> getAllMenus() {
         List<Menu> menus = menuService.getAllMenus();

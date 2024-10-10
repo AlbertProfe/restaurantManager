@@ -1,6 +1,6 @@
 package dev.example.restaurantManager.service;
 
-import dev.example.restaurantManager.model.Table;
+import dev.example.restaurantManager.model.TableRestaurant;
 import dev.example.restaurantManager.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,35 +16,35 @@ public class TableServiceImpl implements TableService {
     private TableRepository tableRepository;
 
     @Override
-    public List<Table> getAllTables() {
+    public List<TableRestaurant> getAllTables() {
         return tableRepository.findAll();
     }
 
     @Override
-    public Table createTable(Table table) {
-        table.setId(UUID.randomUUID().toString());
-        return tableRepository.save(table);
+    public TableRestaurant createTable(TableRestaurant tableRestaurant) {
+        tableRestaurant.setId(UUID.randomUUID().toString());
+        return tableRepository.save(tableRestaurant);
     }
 
     @Override
-    public Table getTableById(String id) {
+    public TableRestaurant getTableById(String id) {
         return tableRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Table updateTable(String id, Table tableDetails) {
-        Table table = tableRepository.findById(id).orElse(null);
-        if (table != null) {
-            if (tableDetails.getName() != null) {
-                table.setName(tableDetails.getName());
+    public TableRestaurant updateTable(String id, TableRestaurant tableRestaurantDetails) {
+        TableRestaurant tableRestaurant = tableRepository.findById(id).orElse(null);
+        if (tableRestaurant != null) {
+            if (tableRestaurantDetails.getName() != null) {
+                tableRestaurant.setName(tableRestaurantDetails.getName());
             }
-            if (tableDetails.getQty() != null) {
-                table.setQty(tableDetails.getQty());
+            if (tableRestaurantDetails.getQty() != null) {
+                tableRestaurant.setQty(tableRestaurantDetails.getQty());
             }
-            if (tableDetails.getBusy() != null) {
-                table.setBusy(tableDetails.getBusy());
+            if (tableRestaurantDetails.getBusy() != null) {
+                tableRestaurant.setBusy(tableRestaurantDetails.getBusy());
             }
-            return tableRepository.save(table);
+            return tableRepository.save(tableRestaurant);
         }
         return null;
     }
@@ -52,7 +52,7 @@ public class TableServiceImpl implements TableService {
     @Override
     public boolean deleteTable(String id) {
         tableRepository.deleteById(id);
-        Optional<Table> table = tableRepository.findById(id);
+        Optional<TableRestaurant> table = tableRepository.findById(id);
         return table.isEmpty();
     }
 

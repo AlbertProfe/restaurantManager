@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class OrderRestaurant {
     @Id
     private String id;
     private Date date;
@@ -20,7 +20,7 @@ public class Order {
     private int peopleQty;
     private double totalPayment;
     private boolean paid;
-    private ArrayList<Table> tables;
+    private ArrayList<TableRestaurant> tableRestaurants;
     private ArrayList<Menu> menus;
 
     @Override
@@ -31,8 +31,8 @@ public class Order {
                 "peopleQty: " + peopleQty +"\n"  +
                 "totalPayment: " + totalPayment +" euros\n"  +
                 "paid: " + paid +"\n"  +
-                "Tables quantity: " + tables.size() +"\n"  +
-                "table: " + tables +"\n"  +
+                "Tables quantity: " + tableRestaurants.size() +"\n"  +
+                "table: " + tableRestaurants +"\n"  +
                 "Menus quantity: " + menus.size() +"\n"  +
                 "menus: " + menus
                 ;

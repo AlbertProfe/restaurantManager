@@ -17,7 +17,7 @@ public class CustomerDataLoader {
     public void createFakeCustomers() {
         // Check if the database is empty
         if (customerRepository.count() == 0) {
-            System.out.println(" 0 records at the database found");
+            System.out.println("0 customers in the database");
             Faker faker = new Faker(new Locale("en-US"));
 
             int qty = 50;

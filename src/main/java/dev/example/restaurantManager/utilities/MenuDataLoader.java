@@ -17,7 +17,7 @@ public class MenuDataLoader {
 
     public void createFakeMenus() {
         if (menuRepository.count() == 0) {
-            System.out.println("0 records found in the database");
+            System.out.println("0 menus in the database");
 
             Faker faker = new Faker(new Locale("en-US"));
             int qty = 10;

@@ -1,10 +1,7 @@
 package dev.example.restaurantManager.utilities;
 
 import com.github.javafaker.Faker;
-import dev.example.restaurantManager.model.Customer;
-import dev.example.restaurantManager.model.Menu;
-import dev.example.restaurantManager.model.Table;
-import dev.example.restaurantManager.repository.CustomerRepository;
+import dev.example.restaurantManager.model.TableRestaurant;
 import dev.example.restaurantManager.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,21 +17,21 @@ public class TableDataLoader {
 
     public void createFakeTables() {
         if (tableRepository.count() == 0) {
-            System.out.println("0 records found in the database");
+            System.out.println("0 tables found in the database");
 
             Faker faker = new Faker(new Locale("en-US"));
             int qty = 10;
 
-            for (int i = 0; i < qty; i++) {
-                Table table = new Table(
+            for (int i = 1; i <= qty; i++) {
+                TableRestaurant tableRestaurant = new TableRestaurant(
                         UUID.randomUUID().toString(),
-                        "table-" + faker.number().numberBetween(1, qty),
+                        "table-" + i,
                         generateMaterialDescription(faker),
                         faker.number().numberBetween(1, 20),
                         faker.random().nextBoolean()
                 );
 
-                tableRepository.save(table);
+                tableRepository.save(tableRestaurant);
             }
 
             System.out.println(qty + " fake tables have been created and saved to the database.");

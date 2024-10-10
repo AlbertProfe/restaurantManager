@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Table {
+public class TableRestaurant {
     @Id
     private String id;
     private String name;

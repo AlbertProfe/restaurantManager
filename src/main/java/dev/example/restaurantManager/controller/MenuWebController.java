@@ -17,7 +17,6 @@ public class MenuWebController {
     @Autowired
     private MenuRepository menuRepository;
 
-    // CRUD for menu
     @GetMapping("/menu/home")
     public String home(Model model) {
         List<Menu> menus = menuRepository.findAll();

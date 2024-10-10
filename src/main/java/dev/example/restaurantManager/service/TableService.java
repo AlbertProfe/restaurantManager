@@ -1,13 +1,14 @@
 package dev.example.restaurantManager.service;
 
-import dev.example.restaurantManager.model.Table;
+import dev.example.restaurantManager.model.TableRestaurant;
+
 import java.util.List;
 
 public interface TableService {
-    List<Table> getAllTables();
-    Table createTable(Table table);
-    Table getTableById(String id);
-    Table updateTable(String id, Table tableDetails);
+    List<TableRestaurant> getAllTables();
+    TableRestaurant createTable(TableRestaurant tableRestaurant);
+    TableRestaurant getTableById(String id);
+    TableRestaurant updateTable(String id, TableRestaurant tableRestaurantDetails);
     boolean deleteTable(String id);
     long countTables();
 }
