@@ -1,6 +1,6 @@
 package dev.example.restaurantManager.controller;
 
-import dev.example.restaurantManager.model.Table;
+import dev.example.restaurantManager.model.TableRestaurant;
 import dev.example.restaurantManager.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,11 +17,10 @@ public class TableWebController {
     @Autowired
     private TableRepository tableRepository;
 
-    // CRUD for table
     @GetMapping("/table/home")
     public String home(Model model) {
-        List<Table> tables = tableRepository.findAll();
-        model.addAttribute("tablesToView", tables);
+        List<TableRestaurant> tableRestaurants = tableRepository.findAll();
+        model.addAttribute("tablesToView", tableRestaurants);
         return "tableHome";
     }
 }
