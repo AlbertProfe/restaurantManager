@@ -27,22 +27,21 @@ public class MenuDataLoader {
 
         Faker faker = new Faker(new Locale("en-US"));
 
-
-        Random random = new Random();
         int menusQty = 6;
         // Create and save 100 fake customers
         for (int i = 1; i <= menusQty; i++) {
             String menuName = "Menu " + (i < 10 ? "0" : "") + i;
             // random price between 7.95 and 30.00
             double price = faker.number().randomDouble(1, 8, 30)
-                    - faker.random().nextInt(6) < 4 ? 0 :0.05;
+                    - (faker.random().nextInt(6) < 4 ? 0 :0.05);
+            System.out.println("price: " + price);
             Menu menu = new Menu(
                     UUID.randomUUID().toString(),
                     menuName,
                     price,
                     menuName + " content",
-                    random.nextInt(4 ) > 0, // 75% of the menus are active
-                    random.nextInt(4 ) > 0 // 75% of the menus have water included
+                    faker.random().nextInt(4 ) > 0, // 75% of the menus are active
+                    faker.random().nextInt(4 ) > 0 // 75% of the menus have water included
             );
             menuRepository.save(menu);
         }
