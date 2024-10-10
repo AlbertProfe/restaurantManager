@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public interface CustomerRepository extends JpaRepository<Customer, String> {
+public interface ICustomerRepository extends JpaRepository<Customer, String> {
 
     // 0. Count customers by name
     int countByName(String name);

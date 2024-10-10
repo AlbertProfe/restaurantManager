@@ -1,7 +1,7 @@
 package dev.example.restaurantManager.controller;
 
 import dev.example.restaurantManager.model.Customer;
-import dev.example.restaurantManager.repository.CustomerRepository;
+import dev.example.restaurantManager.repository.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +14,7 @@ import java.util.List;
 public class CustomerWebController {
 
     @Autowired
-    CustomerRepository customerRepository;
+    ICustomerRepository customerRepository;
 
     // CRUD for customer
     @GetMapping("/home")

@@ -2,7 +2,7 @@ package dev.example.restaurantManager.utilities;
 
 import com.github.javafaker.Faker;
 import dev.example.restaurantManager.model.Customer;
-import dev.example.restaurantManager.repository.CustomerRepository;
+import dev.example.restaurantManager.repository.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.Locale;
@@ -12,7 +12,7 @@ import java.util.UUID;
 public class CustomerDataLoader {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private ICustomerRepository customerRepository;
 
     public void createFakeCustomers() {
         // Check if the database is empty

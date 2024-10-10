@@ -1,7 +1,8 @@
 package dev.example.restaurantManager.controller;
 
 import dev.example.restaurantManager.model.Customer;
-import dev.example.restaurantManager.service.CustomerService;
+import dev.example.restaurantManager.repository.ICustomerRepository;
+import dev.example.restaurantManager.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,12 +16,14 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    private CustomerService customerService;
+    private IService<Customer> customerService;
+
+    private ICustomerRepository customerRepository;
 
     // manage request by ResponseEntity with all customers
     @GetMapping("/allCustomers")
     public ResponseEntity<List<Customer>> getAllCustomers( ) {
-        List<Customer> customers = customerService.getAllCustomers();
+        List<Customer> customers = customerService.getAllElements();
         HttpHeaders headers = getCommonHeaders("Get all customers");
 
         /*if (customers != null && !customers.isEmpty()) {
@@ -39,7 +42,7 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-        Customer createdCustomer = customerService.createCustomer(customer);
+        Customer createdCustomer = customerService.createElement(customer);
         HttpHeaders headers = getCommonHeaders("Create a new customer");
 
         return createdCustomer != null
@@ -49,7 +52,7 @@ public class CustomerController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable String id, @RequestBody Customer customerDetails) {
-        Customer updatedCustomer = customerService.updateCustomer(id, customerDetails);
+        Customer updatedCustomer = customerService.updateElement(id, customerDetails);
         HttpHeaders headers = getCommonHeaders("Update a customer");
 
         return updatedCustomer != null
@@ -59,7 +62,7 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable String id) {
-        boolean deleted = customerService.deleteCustomer(id);
+        boolean deleted = customerService.deleteElement(id);
         HttpHeaders headers = getCommonHeaders("Delete a customer");
         headers.add("deleted", String.valueOf(deleted));
 
@@ -71,7 +74,7 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable String id) {
-        Customer customer = customerService.getCustomerById(id);
+        Customer customer = customerService.getElementById(id);
         HttpHeaders headers = getCommonHeaders("Get a customer by Id");
 
         return customer != null
@@ -86,8 +89,9 @@ public class CustomerController {
         headers.add("date", new Date().toString());
         headers.add("server", "H2 Database");
         headers.add("version", "1.0.0");
-        headers.add("customer-count", String.valueOf(customerService.countCustomers()));
+        headers.add("customer-count", String.valueOf(customerService.countElements()));
         headers.add("object", "customers");
         return headers;
     }
+
 }
