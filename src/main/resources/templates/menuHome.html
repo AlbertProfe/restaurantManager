@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/stylesMenu.css">
+    <title>Menu Home</title>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Welcome to Our Restaurant</h1>
+        <nav>
+            <ul>
+                <li><a href="/menus/home">Menus</a></li>
+                <li><a href="/orders/home">Orders</a></li>
+                <li><a href="/table/home">Tables</a></li>
+                <li><a href="/menus/about">About Us</a></li>
+                <li><a href="/menus/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Menu List</h2>
+        <div class="menu-list">
+            <th:block th:each="menu : ${customersToView}">
+                <div class="menu-item">
+                    <h3 th:text="${menu.name}">Menu Name</h3>
+                    <p th:text="${menu.content}">Menu Description</p>
+                    <p>Price: <span th:text="${menu.price}">0.00</span> €</p>
+                    <p>Status: <span th:text="${menu.active ? 'Active' : 'Inactive'}">Status</span></p>
+                </div>
+            </th:block>
+        </div>
+
+        <!-- Buttons to navigate to Orders and Tables -->
+        <div class="navigation-buttons">
+            <a href="/orders/home" class="button">View Orders</a>
+            <a href="/table/home" class="button">View Tables</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Our Restaurant. All rights reserved.</p>
+    </footer>
+</div>
+</body>
+</html>

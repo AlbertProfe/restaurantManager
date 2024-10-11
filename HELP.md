@@ -1,6 +1,6 @@
 # Restaurant Manager Application
 
-This Spring Boot application is designed to manage various aspects of a restaurant's operations. It provides functionality for customer management, bookings, menu items, orders, and table management.
+This Spring Boot application is designed to manage various aspects of a restaurant's operations. It provides functionality for customer management, bookings, menu items, orders, and tableRestaurant management.
 
 ## Project Structure
 

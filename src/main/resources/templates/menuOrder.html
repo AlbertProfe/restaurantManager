@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/stylesOrders.css">
+    <title>Order Home</title>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Welcome to Our Restaurant</h1>
+        <nav>
+            <ul>
+                <li><a href="/menus/home">Menus</a></li>
+                <li><a href="/orders/home">Orders</a></li>
+                <li><a href="/table/home">Tables</a></li>
+                <li><a href="/menus/about">About Us</a></li>
+                <li><a href="/menus/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Order List</h2>
+        <div class="order-list">
+            <th:block th:each="order : ${ordersToView}">
+                <div class="order-item">
+                    <h3 th:text="${order.waiter}">Waiter Name</h3>
+                    <p>Order Date: <span th:text="${#dates.format(order.date, 'yyyy-MM-dd HH:mm')}">Date</span></p>
+                    <p>People Quantity: <span th:text="${order.peopleQty}">0</span></p>
+                    <p>Total Payment: <span th:text="${order.totalPayment}">0.00</span> €</p>
+                    <p>Paid: <span th:text="${order.paid ? 'Yes' : 'No'}">Status</span></p>
+                    <p>Tables: <span th:text="${order.tableIds.size()}">0</span></p>
+                    <p th:each="tableId : ${order.tableIds}">Table ID: <span th:text="${tableId}">ID</span></p>
+                    <p>Menus: <span th:text="${order.menuIds.size()}">0</span></p>
+                    <p th:each="menuId : ${order.menuIds}">Menu ID: <span th:text="${menuId}">ID</span></p>
+                </div>
+            </th:block>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Our Restaurant. All rights reserved.</p>
+    </footer>
+</div>
+</body>
+</html>

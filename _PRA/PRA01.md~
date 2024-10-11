@@ -21,8 +21,8 @@ Summary tasks
 - [x] Create Faker Classe
 - [x] Develop Service Layer
 - [x] Implement JPA Repositories
-- [x] Design REST Controllers
-- [x] Test with Swagger API
+- [ ] Design REST Controllers
+- [ ] Test with Swagger API
 
 
 

@@ -37,7 +37,7 @@ public class CustomerController {
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
         Customer createdCustomer = customerService.createCustomer(customer);
         HttpHeaders headers = getCommonHeaders("Create a new customer");
@@ -47,7 +47,7 @@ public class CustomerController {
                 : new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable String id, @RequestBody Customer customerDetails) {
         Customer updatedCustomer = customerService.updateCustomer(id, customerDetails);
         HttpHeaders headers = getCommonHeaders("Update a customer");
@@ -57,7 +57,7 @@ public class CustomerController {
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable String id) {
         boolean deleted = customerService.deleteCustomer(id);
         HttpHeaders headers = getCommonHeaders("Delete a customer");
@@ -69,7 +69,7 @@ public class CustomerController {
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable String id) {
         Customer customer = customerService.getCustomerById(id);
         HttpHeaders headers = getCommonHeaders("Get a customer by Id");

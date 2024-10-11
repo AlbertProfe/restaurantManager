@@ -1,13 +1,17 @@
 package dev.example.restaurantManager.model;
 
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.Table;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Menu {
+@Entity
+@Table(name = "menus")
+public class MenuRestaurant {
 
     private String name;
     private Double price;

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/stylesTables.css">
+    <title>Table Home</title>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Welcome to Our Restaurant</h1>
+        <nav>
+            <ul>
+                <li><a href="/menus/home">Menus</a></li>
+                <li><a href="/orders/home">Orders</a></li>
+                <li><a href="/table/home">Tables</a></li>
+                <li><a href="/menus/about">About Us</a></li>
+                <li><a href="/menus/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Table List</h2>
+        <div class="table-list">
+            <th:block th:each="table : ${tables}">
+                <div class="table-item">
+                    <h3 th:text="${table.name}">Table Name</h3>
+                    <p>Description: <span th:text="${table.description}">Description</span></p>
+                    <p>Quantity: <span th:text="${table.qty}">0</span></p>
+                    <p>Busy: <span th:text="${table.busy ? 'Yes' : 'No'}">Status</span></p>
+                </div>
+            </th:block>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Our Restaurant. All rights reserved.</p>
+    </footer>
+</div>
+</body>
+</html>

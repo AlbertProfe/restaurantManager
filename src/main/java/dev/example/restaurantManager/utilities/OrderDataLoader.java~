@@ -1,0 +1,42 @@
+package dev.example.restaurantManager.utilities;
+
+import com.github.javafaker.Faker;
+import dev.example.restaurantManager.model.OrderRestaurant;
+import dev.example.restaurantManager.repository.OrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
+
+@Component
+public class OrderDataLoader {
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+    public void createFakeOrders() {
+
+        // Check if the database is empty
+        if (orderRepository.count() == 0) {
+            System.out.println(" 0 records at the database found");
+            Faker faker = new Faker(new Locale("en-US"));
+
+            int qty = 100;
+            for(int i = 0; i < qty; i++) {
+                OrderRestaurant orderRestaurant = new OrderRestaurant();
+                orderRestaurant.setId(UUID.randomUUID().toString());
+                orderRestaurant.setDate(faker.date().between(new Date(0), new Date(System.currentTimeMillis())));
+                orderRestaurant.setWaiter(faker.name().fullName());
+                orderRestaurant.setPeopleQty(faker.random().nextInt(1, 10));
+                orderRestaurant.setTotalPayment(faker.random().nextDouble());
+                orderRestaurant.setPaid(faker.random().nextBoolean());
+
+                orderRepository.save(orderRestaurant);
+            }
+
+            System.out.println(" 100 fake orders have been created and saved to the database");
+        }
+    }
+}
