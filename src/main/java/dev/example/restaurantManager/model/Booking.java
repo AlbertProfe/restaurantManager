@@ -14,7 +14,7 @@ public class Booking {
     private String phoneNumber;
     private int peopleQty;
     private LocalDateTime date;
-    private List<Table> tables;
+    private List<RestaurantTable> tables;
     private boolean confirmed;
 
     // Custom toString method (optional, as @Data provides a default toString)

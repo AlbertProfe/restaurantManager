@@ -16,7 +16,7 @@ public class Order {
     private int peopleQty;
     private double totalPayment;
     private boolean paid;
-    private ArrayList<Table> tables;
+    private ArrayList<RestaurantTable> tables;
     private ArrayList<Menu> menus;
 
     @Override
