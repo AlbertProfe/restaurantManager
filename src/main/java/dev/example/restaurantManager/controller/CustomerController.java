@@ -1,5 +1,9 @@
 package dev.example.restaurantManager.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import java.util.List;
 @RestController
 public class CustomerController {
 
+    // inject from application.properties endpoint.url.customers
     @Value("${endpoint.url.customers}")
     private String endpointUrlCustomers;
 

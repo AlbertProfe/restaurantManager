@@ -10,15 +10,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Menu {
+public class TableRest {
 
     @Id
     private String id;
     private String name;
-    private Double price;
-    private String content;
-    private boolean active;
-    private boolean water;
+    private String description;
+    private int qty;
+    private boolean busy;
+
 
 }
-

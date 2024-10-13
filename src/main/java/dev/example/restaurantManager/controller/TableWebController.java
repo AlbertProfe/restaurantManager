@@ -1,0 +1,31 @@
+package dev.example.restaurantManager.controller;
+
+import dev.example.restaurantManager.model.TableRest;
+import dev.example.restaurantManager.repository.TableRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+
+@RequestMapping("/web")
+@Controller
+public class TableWebController {
+
+    @Autowired
+    TableRepository tableRepository;
+
+    // CRUD for table
+    @GetMapping("/home/table")
+    public String home(Model model) {
+
+        List<TableRest> tables = tableRepository.findAll();
+        model.addAttribute("tablesToView", tables);
+
+        return "tables";
+    }
+
+
+}
