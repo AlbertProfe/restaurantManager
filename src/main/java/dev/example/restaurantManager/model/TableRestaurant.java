@@ -20,8 +20,8 @@ public class TableRestaurant {
     private String id;
     private String name;
     private String description;
-    private int qty;
-    private boolean busy;
+    private Integer qty;
+    private Boolean busy;
 
     @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
     private ArrayList<Booking> bookings;
