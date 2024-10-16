@@ -27,7 +27,7 @@ public class TableRestaurant {
     private ArrayList<Booking> bookings;
 
     @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
-    private ArrayList<EatInOrderRestaurant> eatInOrders;
+    private ArrayList<EatInOrder> eatInOrders;
 
 
     // we must create a VERY CONCRETE constructor to RUN the OLD tests
@@ -42,7 +42,7 @@ public class TableRestaurant {
         booking.setTableRestaurantMapped(this);
     }
 
-    public void addEatInOrderRestaurant(EatInOrderRestaurant eatInOrderRestaurant) {
+    public void addEatInOrderRestaurant(EatInOrder eatInOrderRestaurant) {
         this.getEatInOrders().add(eatInOrderRestaurant);
         if (eatInOrderRestaurant.getTableRestaurantMapped() != null) eatInOrderRestaurant.getTableRestaurantMapped().getEatInOrders().remove(eatInOrderRestaurant);
         eatInOrderRestaurant.setTableRestaurantMapped(this);

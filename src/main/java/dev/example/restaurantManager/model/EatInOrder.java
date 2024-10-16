@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Entity
 
-public class EatInOrderRestaurant extends OrderRestaurant {
+public class EatInOrder extends OrderRestaurant {
 
     private ArrayList<TableRestaurant> tableRestaurants = new ArrayList<>();
     //private TableRestaurant orderedTableRestaurant;
@@ -28,9 +28,9 @@ public class EatInOrderRestaurant extends OrderRestaurant {
     @JoinColumn(name = "TABLE_RESTAURANT_FK_ID")
     private TableRestaurant tableRestaurantMapped;
 
-    public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                double totalPayment, boolean paid, ArrayList<Menu> menus,
-                                ArrayList<TableRestaurant> tableRestaurants) {
+    public EatInOrder(String id, Date date, String waiter, int peopleQty,
+                      double totalPayment, boolean paid, ArrayList<Menu> menus,
+                      ArrayList<TableRestaurant> tableRestaurants) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
         this.tableRestaurants = tableRestaurants;
     }
