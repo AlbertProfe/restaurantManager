@@ -6,42 +6,59 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TableServiceImpl implements TableService{
 
 
     @Autowired
-    private TableRepository tablereposotory;
-
+    private TableRepository tableRepository;
 
     @Override
     public List<Table> getAllTables() {
-        return List.of();
+        return tableRepository.findAll();
     }
 
     @Override
     public Table createTable(Table table) {
+        table.setId(UUID.randomUUID().toString());
+        return tableRepository.save(table);
+    }
+
+    @Override
+    public Table getTableById(String id) {
+         return tableRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Table updateStatusTable(String id, boolean busy, Table tableDetails) {
+        Table table = tableRepository.findById(id).orElse(null);
+        if (table != null){
+            if (tableDetails.getName() != null){
+                table.setName(tableDetails.getName());
+            }
+            if (tableDetails.getQty() != 0){
+                table.setQty(tableDetails.getQty());
+            }
+            if (!tableDetails.isBusy()){
+                table.setBusy(tableDetails.isBusy());
+            }
+            return tableRepository.save(table);
+
+        }
         return null;
     }
 
     @Override
-    public Table getTableByName(String name) {
-        return null;
+    public boolean deleteTable(String id) {
+        tableRepository.deleteById(id);
+        Optional<Table> table = tableRepository.findById(id);
+        return table.isPresent();
     }
 
     @Override
-    public Table getTableByQty(int qty) {
-        return null;
-    }
-
-    @Override
-    public Table updateStatusTable(boolean busy) {
-        return null;
-    }
-
-    @Override
-    public boolean deleteTable(String name) {
-        return false;
+    public long countTables() {return tableRepository.count();
     }
 }

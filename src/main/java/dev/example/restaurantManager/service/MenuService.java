@@ -1,12 +1,17 @@
 package dev.example.restaurantManager.service;
+import dev.example.restaurantManager.model.Menu;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
+@Service
 public interface MenuService {
 
-    List<MenuService> getAllMenus();
-    MenuService createMenu();
-    MenuService getMenuByContent();
-    MenuService updateStatusMenu(boolean active);
-    boolean deleteMenu(String name);
+    List<Menu> getAllMenus();
+    Menu createMenu(Menu menu);
+    Menu getMenuById(String id);
+    Menu updateStatusMenu(String id, boolean active, Menu menuDetails);
+    boolean deleteMenu(String id);
+    long countMenus();
 
 
 
