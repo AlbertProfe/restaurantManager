@@ -24,7 +24,10 @@ public class TableRestaurant {
     private boolean busy;
 
     @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
-    private ArrayList<Booking> bookings ;
+    private ArrayList<Booking> bookings;
+
+    @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
+    private ArrayList<EatInOrderRestaurant> eatInOrders;
 
 
     // we must create a VERY CONCRETE constructor to RUN the OLD tests
@@ -37,6 +40,12 @@ public class TableRestaurant {
         this.getBookings().add(booking);
         if (booking.getTableRestaurantMapped() != null) booking.getTableRestaurantMapped().getBookings().remove(booking);
         booking.setTableRestaurantMapped(this);
+    }
+
+    public void addEatInOrderRestaurant(EatInOrderRestaurant eatInOrderRestaurant) {
+        this.getEatInOrders().add(eatInOrderRestaurant);
+        if (eatInOrderRestaurant.getTableRestaurantMapped() != null) eatInOrderRestaurant.getTableRestaurantMapped().getEatInOrders().remove(eatInOrderRestaurant);
+        eatInOrderRestaurant.setTableRestaurantMapped(this);
     }
 
     @Override
