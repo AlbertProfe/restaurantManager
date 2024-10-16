@@ -1,8 +1,7 @@
 package dev.example.restaurantManager.service;
 
-
 import dev.example.restaurantManager.model.Customer;
-import dev.example.restaurantManager.repository.CustomerRepository;
+import dev.example.restaurantManager.repository.RepositoryFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,28 +11,32 @@ import java.util.UUID;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
+    private final RepositoryFacade repositoryFacade;
+
     @Autowired
-    private CustomerRepository customerRepository;
+    public CustomerServiceImpl(RepositoryFacade repositoryFacade) {
+        this.repositoryFacade = repositoryFacade;
+    }
 
     @Override
     public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+        return repositoryFacade.customers().findAll();
     }
 
     @Override
     public Customer createCustomer(Customer customer) {
         customer.setId(UUID.randomUUID().toString());
-        return customerRepository.save(customer);
+        return repositoryFacade.customers().save(customer);
     }
 
     @Override
     public Customer getCustomerById(String id) {
-        return customerRepository.findById(id).orElse(null);
+        return repositoryFacade.customers().findById(id).orElse(null);
     }
 
     @Override
     public Customer updateCustomer(String id, Customer customerDetails) {
-        Customer customer = customerRepository.findById(id).orElse(null);
+        Customer customer = repositoryFacade.customers().findById(id).orElse(null);
         if (customer != null) {
             if (customerDetails.getName() != null) {
                 customer.setName(customerDetails.getName());
@@ -44,23 +47,19 @@ public class CustomerServiceImpl implements CustomerService {
             if (customerDetails.getPhoneNumber() != null) {
                 customer.setPhoneNumber(customerDetails.getPhoneNumber());
             }
-            return customerRepository.save(customer);
+            return repositoryFacade.customers().save(customer);
         }
         return null;
     }
 
     @Override
     public boolean deleteCustomer(String id) {
-        customerRepository.deleteById(id);
-        Optional<Customer> customer = customerRepository.findById(id);
-        return customer.isEmpty()
-                ? false : true ;
+        repositoryFacade.customers().deleteById(id);
+        return repositoryFacade.customers().findById(id).isEmpty();
     }
 
     @Override
     public long countCustomers() {
-        return customerRepository.count();
+        return repositoryFacade.customers().count();
     }
-
-
 }
