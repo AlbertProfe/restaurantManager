@@ -37,7 +37,7 @@ public class BookingTableTest {
 
         // Create tableRestaurant object
         TableRestaurant tableRestaurant1 = new TableRestaurant("TR01", "Table 01",
-                "TABLE 01 for 4 people outdoors",  4, false, new ArrayList<>());
+                "TABLE 01 for 4 people outdoors",  4, false, new ArrayList<>(), new ArrayList<>());
 
         // assign  booking to tableRestaurant
         tableRestaurant1.getBookings().add(booking1);
