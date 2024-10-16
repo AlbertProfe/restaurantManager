@@ -23,7 +23,7 @@ Summary tasks:
 
 - [x] Design Entity Classes
 
-- [ ] Implement JPA Repositories
+- [x] Implement JPA Repositories
 
 - [ ] Create Service Layer
 
@@ -43,7 +43,7 @@ Tasks:
    - Implement a OneToMany relationship from `TableRestaurant` to `EatInOrder`.
    - Implement the corresponding ManyToOne relationship from `EatInOrder` to `TableRestaurant`.
    - Use appropriate JPA annotations such as `@OneToMany`, `@ManyToOne`, and `@JoinColumn`, etc.
-   - Implement both cases: unidirectional/biderctional.
+   - Implement both cases: unidirectional/bidirectional.
 
 2. **Implement JPA Repositories**
    
