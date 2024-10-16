@@ -1,5 +1,6 @@
 package dev.example.restaurantManager.model;
 
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,8 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+
 public class EatInOrderRestaurant extends OrderRestaurant {
 
     private ArrayList<TableRestaurant> tableRestaurants = new ArrayList<>();
