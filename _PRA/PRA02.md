@@ -25,9 +25,9 @@ Summary tasks:
 
 - [x] Implement JPA Repositories
 
-- [ ] Create Service Layer
+- [x] Create Service Layer
 
-- [ ] Develop REST Controllers
+- [x] Develop REST Controllers
 
 - [ ] Configure H2 Database
 

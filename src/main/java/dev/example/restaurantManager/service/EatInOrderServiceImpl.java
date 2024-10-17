@@ -1,7 +1,9 @@
 package dev.example.restaurantManager.service;
 
 import dev.example.restaurantManager.model.EatInOrder;
+import dev.example.restaurantManager.model.TableRestaurant;
 import dev.example.restaurantManager.repository.EatInOrderRepository;
+import dev.example.restaurantManager.repository.TableRestaurantRepository;
 import dev.example.restaurantManager.service.EatInOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,15 +11,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-// could implement a service layer for order and a specific one for eatinorder?
 @Service
 public class EatInOrderServiceImpl implements EatInOrderService {
 
     private final EatInOrderRepository eatInOrderRepository;
+    private final TableRestaurantRepository tableRestaurantRepository;
 
     @Autowired
-    public EatInOrderServiceImpl(EatInOrderRepository eatInOrderRepository) {
+    public EatInOrderServiceImpl(EatInOrderRepository eatInOrderRepository, TableRestaurantRepository tableRestaurantRepository) {
         this.eatInOrderRepository = eatInOrderRepository;
+        this.tableRestaurantRepository = tableRestaurantRepository;
     }
 
     @Override
@@ -68,5 +71,26 @@ public class EatInOrderServiceImpl implements EatInOrderService {
     @Override
     public long countOrders() {
         return eatInOrderRepository.count();
+    }
+
+    @Override
+    public List<EatInOrder> getOrdersByTableId(String tableId) {
+        return eatInOrderRepository.findByTableRestaurantId(tableId);
+    }
+
+    @Override
+    public EatInOrder updateOrderTable(String orderId, String tableId) {
+        Optional<EatInOrder> optionalOrder = eatInOrderRepository.findById(orderId);
+        Optional<TableRestaurant> optionalTable = tableRestaurantRepository.findById(tableId);
+
+        if (optionalOrder.isPresent() && optionalTable.isPresent()) {
+            EatInOrder order = optionalOrder.get();
+            TableRestaurant table = optionalTable.get();
+
+            order.setTableRestaurant(table);
+            return eatInOrderRepository.save(order);
+        }
+
+        return null;
     }
 }

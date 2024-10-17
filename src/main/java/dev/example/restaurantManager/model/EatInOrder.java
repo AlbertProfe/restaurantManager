@@ -35,6 +35,10 @@ public class EatInOrder extends OrderRestaurant {
         this.tableRestaurants = tableRestaurants;
     }
 
+    public void setTableRestaurant(TableRestaurant tableRestaurant) {
+        this.tableRestaurantMapped = tableRestaurant;
+    }
+
     @Override
     public String toString() {
         return super.toString() + "\n" +

@@ -11,4 +11,6 @@ public interface EatInOrderService {
     EatInOrder updateOrder(String id, EatInOrder eatInOrderRestaurantDetails);
     boolean deleteOrder(String id);
     long countOrders();
+    List<EatInOrder> getOrdersByTableId(String tableId);
+    EatInOrder updateOrderTable(String orderId, String tableId);
 }
