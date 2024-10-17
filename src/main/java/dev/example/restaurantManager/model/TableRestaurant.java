@@ -31,7 +31,7 @@ public class TableRestaurant {
 
 
     // we must create a VERY CONCRETE constructor to RUN the OLD tests
-    public TableRestaurant(String name, String description , int qty,  boolean busy) {
+    public TableRestaurant(String id, String name, String description , Integer qty,  Boolean busy) {
     }
 
 
