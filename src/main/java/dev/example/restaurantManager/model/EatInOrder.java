@@ -20,8 +20,9 @@ import java.util.stream.Collectors;
 
 public class EatInOrder extends OrderRestaurant {
 
-    private ArrayList<TableRestaurant> tableRestaurants = new ArrayList<>();
-    //private TableRestaurant orderedTableRestaurant;
+    //all tables
+    //private ArrayList<TableRestaurant> tableRestaurants = new ArrayList<>();
+    private TableRestaurant orderedTableRestaurant;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,9 +31,9 @@ public class EatInOrder extends OrderRestaurant {
 
     public EatInOrder(String id, Date date, String waiter, int peopleQty,
                       double totalPayment, boolean paid, ArrayList<Menu> menus,
-                      ArrayList<TableRestaurant> tableRestaurants) {
+                      TableRestaurant tableRestaurantMapped) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
-        this.tableRestaurants = tableRestaurants;
+        this.tableRestaurantMapped = tableRestaurantMapped;
     }
 
     public void setTableRestaurant(TableRestaurant tableRestaurant) {
@@ -43,6 +44,6 @@ public class EatInOrder extends OrderRestaurant {
     public String toString() {
         return super.toString() + "\n" +
                 "Type: Eat In\n" +
-                "Tables: " + tableRestaurants.stream().map(TableRestaurant::getName).collect(Collectors.joining(", "));
+                "Tables: " + tableRestaurantMapped.getName();
     }
 }
