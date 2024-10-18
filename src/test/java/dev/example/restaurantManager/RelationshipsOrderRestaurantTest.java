@@ -41,8 +41,8 @@ private CustomerRepository customerRepository;
             Customer customer9 = new Customer("C9", "George", "george@email.com", "901-234-5678", 50, false, false);
 
             // Create sample tables
-            TableRestaurant table1 = new TableRestaurant("T1", "Window Table", 4, false);
-            TableRestaurant table2 = new TableRestaurant("T2", "Corner Table", 2, true);
+            TableRestaurant table1 = new TableRestaurant("T1", "Table 1", "Window Table", 4, false);
+            TableRestaurant table2 = new TableRestaurant("T2", "Table 2", "Corner Table", 2, true);
 
             // Create 3 ShippingOrder objects
             OrderRestaurant shippingOrder1 = new ShippingOrderRestaurant("SO1", new Date(), "John", 2, 21.98, false, new ArrayList<>(Arrays.asList(menu1, menu1)), "123 Main St", "New York", "Mike");
@@ -50,9 +50,9 @@ private CustomerRepository customerRepository;
             OrderRestaurant shippingOrder3 = new ShippingOrderRestaurant("SO3", new Date(), "Emily", 3, 32.97, false, new ArrayList<>(Arrays.asList(menu1, menu2, menu3)), "789 Oak St", "Chicago", "Lisa");
 
             // Create 3 EatInOrder objects
-            OrderRestaurant eatInOrder1 = new EatInOrder("EO1", new Date(), "David", 4, 43.96, true, new ArrayList<>(Arrays.asList(menu1, menu1, menu2, menu2)), new ArrayList<>(Arrays.asList(table1)));
-            OrderRestaurant eatInOrder2 = new EatInOrder("EO2", new Date(), "Anna", 2, 21.98, false, new ArrayList<>(Arrays.asList(menu2, menu3)), new ArrayList<>(Arrays.asList(table2)));
-            OrderRestaurant eatInOrder3 = new EatInOrder("EO3", new Date(), "Mark", 6, 65.94, true, new ArrayList<>(Arrays.asList(menu1, menu1, menu2, menu2, menu3, menu3)), new ArrayList<>(Arrays.asList(table1, table2)));
+            OrderRestaurant eatInOrder1 = new EatInOrder("EO1", new Date(), "David", 4, 43.96, true, new ArrayList<>(Arrays.asList(menu1, menu1, menu2, menu2)), table1);
+            OrderRestaurant eatInOrder2 = new EatInOrder("EO2", new Date(), "Anna", 2, 21.98, false, new ArrayList<>(Arrays.asList(menu2, menu3)), table2);
+            OrderRestaurant eatInOrder3 = new EatInOrder("EO3", new Date(), "Mark", 6, 65.94, true, new ArrayList<>(Arrays.asList(menu1, menu1, menu2, menu2, menu3, menu3)), table1);
 
             // Create 3 TakeAwayOrder objects
             OrderRestaurant takeAwayOrder1 = new TakeAwayOrder("TO1", new Date(), "Alice", 1, 10.99, true, new ArrayList<>(Arrays.asList(menu1)), customer1 );

@@ -50,7 +50,7 @@ public class EatInOrderServiceImpl implements EatInOrderService {
             existingOrder.setPeopleQty(eatInOrderRestaurantDetails.getPeopleQty());
             existingOrder.setPaid(eatInOrderRestaurantDetails.isPaid());
             existingOrder.setMenus(eatInOrderRestaurantDetails.getMenus());
-            existingOrder.setTableRestaurants(eatInOrderRestaurantDetails.getTableRestaurants());
+            existingOrder.setTableRestaurantMapped(eatInOrderRestaurantDetails.getTableRestaurantMapped());
 
             return eatInOrderRepository.save(existingOrder);
         } else {
