@@ -9,12 +9,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Booking {
+public class BookingRestaurant {
     private String name;
     private String phoneNumber;
     private int peopleQty;
     private LocalDateTime date;
-    private List<Table> tables;
+    private List<TableRestaurant> tables;
     private boolean confirmed;
 
     // Custom toString method (optional, as @Data provides a default toString)

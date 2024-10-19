@@ -2,6 +2,8 @@ package dev.example.restaurantManager.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,15 +11,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+@Table(name = "orders")
+public class OrderRestaurant {
 
     private Date date;
     private String waiter;
     private int peopleQty;
     private double totalPayment;
     private boolean paid;
-    private ArrayList<Table> tables;
-    private ArrayList<Menu> menus;
+    private ArrayList<TableRestaurant> tables;
+    private ArrayList<MenuRestaurant> menus;
 
     @Override
     public String toString() {

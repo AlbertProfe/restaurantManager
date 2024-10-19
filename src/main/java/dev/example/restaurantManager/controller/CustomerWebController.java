@@ -1,6 +1,6 @@
 package dev.example.restaurantManager.controller;
 
-import dev.example.restaurantManager.model.Customer;
+import dev.example.restaurantManager.model.CustomerRestaurant;
 import dev.example.restaurantManager.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ public class CustomerWebController {
     @GetMapping("/home")
     public String home(Model model) {
 
-        List<Customer> customers = customerRepository.findAll();
+        List<CustomerRestaurant> customers = customerRepository.findAll();
         model.addAttribute("customersToView", customers);
 
         return "home";

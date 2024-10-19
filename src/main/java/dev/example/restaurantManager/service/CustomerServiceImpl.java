@@ -1,7 +1,7 @@
 package dev.example.restaurantManager.service;
 
 
-import dev.example.restaurantManager.model.Customer;
+import dev.example.restaurantManager.model.CustomerRestaurant;
 import dev.example.restaurantManager.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,24 +16,24 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
 
     @Override
-    public List<Customer> getAllCustomers() {
+    public List<CustomerRestaurant> getAllCustomers() {
         return customerRepository.findAll();
     }
 
     @Override
-    public Customer createCustomer(Customer customer) {
+    public CustomerRestaurant createCustomer(CustomerRestaurant customer) {
         customer.setId(UUID.randomUUID().toString());
         return customerRepository.save(customer);
     }
 
     @Override
-    public Customer getCustomerById(String id) {
+    public CustomerRestaurant getCustomerById(String id) {
         return customerRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Customer updateCustomer(String id, Customer customerDetails) {
-        Customer customer = customerRepository.findById(id).orElse(null);
+    public CustomerRestaurant updateCustomer(String id, CustomerRestaurant customerDetails) {
+        CustomerRestaurant customer = customerRepository.findById(id).orElse(null);
         if (customer != null) {
             if (customerDetails.getName() != null) {
                 customer.setName(customerDetails.getName());
@@ -52,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public boolean deleteCustomer(String id) {
         customerRepository.deleteById(id);
-        Optional<Customer> customer = customerRepository.findById(id);
+        Optional<CustomerRestaurant> customer = customerRepository.findById(id);
         return customer.isEmpty()
                 ? false : true ;
     }

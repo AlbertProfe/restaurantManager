@@ -2,6 +2,7 @@ package dev.example.restaurantManager.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Table implements Serializable {
-    @Serial
+@Table(name = "table_restaurant")
+public class TableRestaurant implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     private String Id;

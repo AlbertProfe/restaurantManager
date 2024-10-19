@@ -2,14 +2,14 @@ package dev.example.restaurantManager.service;
 
 
 
-import dev.example.restaurantManager.model.Customer;
+import dev.example.restaurantManager.model.CustomerRestaurant;
 import java.util.List;
 
 public interface CustomerService {
-    List<Customer> getAllCustomers();
-    Customer createCustomer(Customer customer);
-    Customer getCustomerById(String id);
-    Customer updateCustomer(String id, Customer customerDetails);
+    List<CustomerRestaurant> getAllCustomers();
+    CustomerRestaurant createCustomer(CustomerRestaurant customer);
+    CustomerRestaurant getCustomerById(String id);
+    CustomerRestaurant updateCustomer(String id, CustomerRestaurant customerDetails);
     boolean deleteCustomer(String id);
     long countCustomers();
 }

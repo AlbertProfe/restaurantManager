@@ -1,7 +1,7 @@
 package dev.example.restaurantManager.utilities;
 
 import com.github.javafaker.Faker;
-import dev.example.restaurantManager.model.Customer;
+import dev.example.restaurantManager.model.CustomerRestaurant;
 import dev.example.restaurantManager.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ public class CustomerDataLoader {
             //int qty = 50;
             // Create and save 100 fake customers
             for (int i = 0; i < 100; i++) {
-                Customer customer = new Customer(
+                CustomerRestaurant customer = new CustomerRestaurant(
                         UUID.randomUUID().toString(),
                         faker.name().fullName(),
                         faker.internet().emailAddress(),

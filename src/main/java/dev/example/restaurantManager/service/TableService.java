@@ -1,16 +1,16 @@
 package dev.example.restaurantManager.service;
 
-import dev.example.restaurantManager.model.Table;
+import dev.example.restaurantManager.model.TableRestaurant;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public interface TableService {
 
-    List<Table> getAllTables();
-    Table createTable(Table table);
-    Table getTableById(String id);
-    Table updateStatusTable(String id, boolean busy, Table tableDetails);
+    List<TableRestaurant> getAllTables();
+    TableRestaurant createTable(TableRestaurant table);
+    TableRestaurant getTableById(String id);
+    TableRestaurant updateTable(String id, TableRestaurant tableDetails);
     boolean deleteTable(String id);
     long countTables();
 

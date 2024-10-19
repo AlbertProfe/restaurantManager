@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Menu {
+public class MenuRestaurant {
 
     @Id
     private String Id;

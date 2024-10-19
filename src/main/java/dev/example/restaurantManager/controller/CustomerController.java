@@ -1,6 +1,6 @@
 package dev.example.restaurantManager.controller;
 
-import dev.example.restaurantManager.model.Customer;
+import dev.example.restaurantManager.model.CustomerRestaurant;
 import dev.example.restaurantManager.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,8 +19,8 @@ public class CustomerController {
 
     // manage request by ResponseEntity with all customers
     @GetMapping("/allCustomers")
-    public ResponseEntity<List<Customer>> getAllCustomers( ) {
-        List<Customer> customers = customerService.getAllCustomers();
+    public ResponseEntity<List<CustomerRestaurant>> getAllCustomers( ) {
+        List<CustomerRestaurant> customers = customerService.getAllCustomers();
         HttpHeaders headers = getCommonHeaders("Get all customers");
 
         /*if (customers != null && !customers.isEmpty()) {
@@ -38,8 +38,8 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-        Customer createdCustomer = customerService.createCustomer(customer);
+    public ResponseEntity<CustomerRestaurant> createCustomer(@RequestBody CustomerRestaurant customer) {
+        CustomerRestaurant createdCustomer = customerService.createCustomer(customer);
         HttpHeaders headers = getCommonHeaders("Create a new customer");
 
         return createdCustomer != null
@@ -48,8 +48,8 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable String id, @RequestBody Customer customerDetails) {
-        Customer updatedCustomer = customerService.updateCustomer(id, customerDetails);
+    public ResponseEntity<CustomerRestaurant> updateCustomer(@PathVariable String id, @RequestBody CustomerRestaurant customerDetails) {
+        CustomerRestaurant updatedCustomer = customerService.updateCustomer(id, customerDetails);
         HttpHeaders headers = getCommonHeaders("Update a customer");
 
         return updatedCustomer != null
@@ -70,8 +70,8 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable String id) {
-        Customer customer = customerService.getCustomerById(id);
+    public ResponseEntity<CustomerRestaurant> getCustomerById(@PathVariable String id) {
+        CustomerRestaurant customer = customerService.getCustomerById(id);
         HttpHeaders headers = getCommonHeaders("Get a customer by Id");
 
         return customer != null
