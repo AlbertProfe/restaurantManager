@@ -1,6 +1,8 @@
 package dev.example.restaurantManager;
 
 import dev.example.restaurantManager.utilities.CustomerDataLoader;
+import dev.example.restaurantManager.utilities.MenuDataLoader;
+import dev.example.restaurantManager.utilities.TableDataLoader;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,5 +21,14 @@ public class RestaurantManagerApplication {
 		return args -> customerDataLoader.createFakeCustomers();
 	}
 
+	@Bean
+	public ApplicationRunner dataLoader(TableDataLoader tableDataLoader) {
+		return args -> tableDataLoader.createFakeTables();
+	}
+
+	@Bean
+	public ApplicationRunner dataLoader(MenuDataLoader menuDataLoader) {
+		return args -> menuDataLoader.createFakeMenus();
+	}
 
 }
