@@ -21,11 +21,11 @@ Implement and test a <mark>OneToMany/ManyToOne</mark> relationship between `EatI
 
 Summary tasks:
 
-- [ ] Design Entity Classes
+- [X] Design Entity Classes
 
-- [ ] Implement JPA Repositories
+- [X] Implement JPA Repositories
 
-- [ ] Create Service Layer
+- [X] Create Service Layer
 
 - [ ] Develop REST Controllers
 
