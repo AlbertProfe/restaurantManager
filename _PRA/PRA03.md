@@ -20,9 +20,9 @@ Implement and test a `ManyToMany` relationship between `Menu` and `MenuItem` ent
 
 Summary tasks:
 
-- [ ] Design Entity Classes
-- [ ] Implement JPA Repositories
-- [ ] Create Service Layer
+- [X] Design Entity Classes
+- [X] Implement JPA Repositories
+- [X] Create Service Layer
 - [ ] Develop REST Controllers
 - [ ] Configure H2 Database
 - [ ] Write Unit Tests
