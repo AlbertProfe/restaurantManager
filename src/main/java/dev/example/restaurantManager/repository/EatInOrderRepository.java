@@ -1,32 +1,33 @@
 package dev.example.restaurantManager.repository;
 
-import dev.example.restaurantManager.model.TableRestaurant;
+import dev.example.restaurantManager.model.EatInOrderRestaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public interface TableRestaurantRepository extends JpaRepository<TableRestaurant, String> {
+public interface EatInOrderRepository extends JpaRepository<EatInOrderRestaurant, String> {
 
     // 0. Count tables by name
     int countByName(String name);
     // 1. Find tables by name
-    ArrayList<TableRestaurant> findByName(String name);
+    ArrayList<EatInOrderRestaurant> findByName(String name);
     // 3. Find tables by name
     long count();
 
 
-    // 1. Find tables by state
-    //Optional<Customer> findByEmail(String email);
+    // 1. Find tables by id
+    //EatInOrderRestaurant findById(String id);
 
     // 2. Find tables by capacity
     //Table findByPhoneNumber(String phoneNumber);
 
-    // 3. Find tables by name
-    //Customer findByNameAndEmail(String name, String email);
+    // 3. Find orders by waiter
+    EatInOrderRestaurant findByWaiter(String waiter);
 
-    // 4. Find tables by name
-    TableRestaurant findByNameContaining(String letter);
+    // 4. Find Orders by date
+    EatInOrderRestaurant findByDate(Date date);
 
     // 5. Find tables by age greater than a specified value
     //List<Customer> findByAgeGreaterThan(int age);
@@ -35,7 +36,7 @@ public interface TableRestaurantRepository extends JpaRepository<TableRestaurant
     //List<Customer> findByAgeLessThanAndDeletedFalse(int age);
 
     // 7. Find tables by name containing a specific string (case-insensitive)
-    List<TableRestaurant> findByNameContainingIgnoreCase(String namePart);
+    List<EatInOrderRestaurant> findByNameContainingIgnoreCase(String namePart);
 
     // 8. Count tables by age
     //long countByAge(int age);

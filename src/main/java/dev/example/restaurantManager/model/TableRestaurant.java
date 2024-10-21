@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -25,10 +26,27 @@ public class TableRestaurant {
     @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
     private ArrayList<Booking> bookings ;
 
+    @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
+    private ArrayList<Booking> EatInOrders;
 
     // we must create a VERY CONCRETE constructor to RUN the OLD tests
-    public TableRestaurant(String name, String description , int qty,  boolean busy) {
+    /*public TableRestaurant(String name, String description , int qty,  boolean busy) {
+        this.name = name;
+        this.description = description;
+        this.qty = qty;
+        this.busy = busy;
+
+    }*/
+
+    public TableRestaurant(String string, String numerify, String character, Integer integer, Boolean aBoolean) {
+        this.id = UUID.randomUUID().toString();  // Generar un UUID como id
+        this.name = name;
+        this.description = description;
+        this.qty = qty;
+        this.busy = busy;
     }
+
+
 
 
     //method to add
