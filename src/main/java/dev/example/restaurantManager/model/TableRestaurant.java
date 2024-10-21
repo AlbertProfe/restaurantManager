@@ -25,9 +25,15 @@ public class TableRestaurant {
     @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
     private ArrayList<Booking> bookings ;
 
+    @OneToMany(mappedBy  = "tableRestaurantMapped", cascade  = CascadeType.ALL)
+    private ArrayList<EatInOrderRestaurant> eatInOrderRestaurants;
+
 
     // we must create a VERY CONCRETE constructor to RUN the OLD tests
     public TableRestaurant(String name, String description , int qty,  boolean busy) {
+    }
+
+    public <E> TableRestaurant(String tr01, String s, String s1, int i, boolean b, ArrayList<E> es) {
     }
 
 
