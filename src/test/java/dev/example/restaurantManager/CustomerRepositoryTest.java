@@ -27,6 +27,7 @@ public class CustomerRepositoryTest {
         Customer alex = new Customer("1", "Alex", "alex@example.com", "1234567890", 30, false, false);
         entityManager.persist(alex);
         entityManager.flush();
+        //customerRepository.save(alex);
 
         // when
         Optional<Customer> found = customerRepository.findByEmail(alex.getEmail());

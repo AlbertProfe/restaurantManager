@@ -1,6 +1,5 @@
 package dev.example.restaurantManager.service;
 
-
 import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

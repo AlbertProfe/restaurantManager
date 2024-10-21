@@ -1,7 +1,5 @@
 package dev.example.restaurantManager.service;
 
-
-
 import dev.example.restaurantManager.model.Customer;
 import java.util.List;
 
