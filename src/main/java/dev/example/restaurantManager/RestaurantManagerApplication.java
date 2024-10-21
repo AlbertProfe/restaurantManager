@@ -1,12 +1,13 @@
 package dev.example.restaurantManager;
 
+<<<<<<< HEAD
 
 import dev.example.restaurantManager.utilities.DataLoader;
 import org.springframework.boot.ApplicationRunner;
+=======
+>>>>>>> master
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
 
 @SpringBootApplication
 public class RestaurantManagerApplication {
@@ -15,6 +16,7 @@ public class RestaurantManagerApplication {
 		SpringApplication.run(RestaurantManagerApplication.class, args);
 	}
 
+<<<<<<< HEAD
 
 	@Bean
 	public ApplicationRunner customerDataLoader(DataLoader DataLoader) {
@@ -22,4 +24,6 @@ public class RestaurantManagerApplication {
 
 	}
 
+=======
+>>>>>>> master
 }

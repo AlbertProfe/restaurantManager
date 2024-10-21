@@ -3,6 +3,7 @@ package dev.example.restaurantManager.controller;
 import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,18 @@ import java.util.List;
 @RestController
 public class CustomerController {
 
+    // inject  from application.properties endpoint.url.customers
+    @Value("${endpoint.url.customers}")
+    private String endpointUrlCustomers;
+
     @Autowired
     private CustomerService customerService;
+
+    @GetMapping("/show-endpoint")
+    public String showEndpointCustomers() {
+
+        return "The customers endpoint URL is: " + endpointUrlCustomers;
+    }
 
     // manage request by ResponseEntity with all customers
     @GetMapping("/allCustomers")
@@ -23,15 +34,6 @@ public class CustomerController {
         List<Customer> customers = customerService.getAllCustomers();
         HttpHeaders headers = getCommonHeaders("Get all customers");
 
-        /*if (customers != null && !customers.isEmpty()) {
-            return new ResponseEntity<>(customers, headers, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
-        }*/
-
-        // Ternary operator is concise, reduces code clutter, improves readability
-        // and efficiently handles simple conditional returns in a single line.
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator
         return customers != null && !customers.isEmpty()
                 ? new ResponseEntity<>(customers, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
