@@ -27,7 +27,7 @@ Summary tasks:
 
 - [X] Create Service Layer
 
-- [ ] Develop REST Controllers
+- [X] Develop REST Controllers
 
 - [ ] Configure H2 Database
 
