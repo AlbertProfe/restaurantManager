@@ -23,7 +23,7 @@ Summary tasks:
 - [X] Design Entity Classes
 - [X] Implement JPA Repositories
 - [X] Create Service Layer
-- [ ] Develop REST Controllers
+- [X] Develop REST Controllers
 - [ ] Configure H2 Database
 - [ ] Write Unit Tests
 - [ ] Test with Swagger API

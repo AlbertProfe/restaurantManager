@@ -1,21 +1,20 @@
 package dev.example.restaurantManager.service;
 
-import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.model.MenuItem;
 import dev.example.restaurantManager.repository.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
-public class MenuItemImpl implements MenuItemService{
+@Service
+public class MenuItemServiceImpl implements MenuItemService{
 
      @Autowired
     MenuItemRepository menuItemRepository;
 
     @Override
-    public List<MenuItem> getAllMenuItem() {
+    public List<MenuItem> getAllMenuItems() {
         return menuItemRepository.findAll();
     }
 

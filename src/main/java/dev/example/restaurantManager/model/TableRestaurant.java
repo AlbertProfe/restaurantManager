@@ -30,7 +30,6 @@ public class TableRestaurant {
     public TableRestaurant(String name, String description , int qty,  boolean busy) {
     }
 
-
     //method to add
     public void addBooking(Booking booking) {
         this.getBookings().add(booking);

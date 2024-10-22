@@ -26,9 +26,9 @@ public class MenuRestaurant  {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "menu_item",
-            joinColumns = @JoinColumn(name = "MENU-ID"),
-            inverseJoinColumns = @JoinColumn(name = "ITEM-ID")
+            name = "menuItems",
+            joinColumns = @JoinColumn(name = "MENU_FK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ITEM_FK_ID")
     )
     private List<MenuItem> menuItems;
 
