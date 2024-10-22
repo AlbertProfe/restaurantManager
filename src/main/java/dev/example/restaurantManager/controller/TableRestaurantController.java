@@ -1,8 +1,6 @@
 package dev.example.restaurantManager.controller;
 
-import dev.example.restaurantManager.model.Customer;
 import dev.example.restaurantManager.model.TableRestaurant;
-import dev.example.restaurantManager.service.CustomerService;
 import dev.example.restaurantManager.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +15,7 @@ import java.util.List;
 @RestController
 public class TableRestaurantController {
 
-    // inject  from application.properties endpoint.url.tables
+    // inject from application.properties endpoint.url.tables
     @Value("${endpoint.url.tables}")
     private String endpointUrlTables;
 

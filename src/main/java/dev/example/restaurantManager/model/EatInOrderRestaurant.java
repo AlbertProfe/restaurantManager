@@ -1,6 +1,7 @@
 package dev.example.restaurantManager.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.javafaker.DateAndTime;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -30,6 +31,9 @@ public class EatInOrderRestaurant extends OrderRestaurant {
                                 ArrayList<TableRestaurant> tableRestaurants) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
         this.tableRestaurants = tableRestaurants;
+    }
+
+    public EatInOrderRestaurant(String string, DateAndTime date, String character, Integer integer, double v, Boolean aBoolean) {
     }
 
     @Override
