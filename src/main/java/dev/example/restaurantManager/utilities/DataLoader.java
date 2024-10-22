@@ -1,10 +1,7 @@
 package dev.example.restaurantManager.utilities;
 
 import com.github.javafaker.Faker;
-import dev.example.restaurantManager.model.Customer;
-import dev.example.restaurantManager.model.MenuRestaurant;
-import dev.example.restaurantManager.model.OrderRestaurant;
-import dev.example.restaurantManager.model.TableRestaurant;
+import dev.example.restaurantManager.model.*;
 import dev.example.restaurantManager.repository.CustomerRepository;
 import dev.example.restaurantManager.repository.MenuRepository;
 import dev.example.restaurantManager.repository.OrderRepository;
@@ -105,34 +102,34 @@ public class DataLoader {
 
             int qty = 100;
             for (int i = 0; i < qty; i++) {
-                OrderRestaurant orderRestaurant = new OrderRestaurant();
-                orderRestaurant.setId(UUID.randomUUID().toString());
-                orderRestaurant.setDate(faker.date().between(new Date(0), new Date(System.currentTimeMillis())));
-                orderRestaurant.setWaiter(faker.name().fullName());
-                orderRestaurant.setPeopleQty(faker.random().nextInt(1, 10));
-                orderRestaurant.setTotalPayment(faker.random().nextDouble());
-                orderRestaurant.setPaid(faker.random().nextBoolean());
+                // Crear una instancia de EatInOrderRestaurant
+                EatInOrderRestaurant eatInOrderRestaurant = new EatInOrderRestaurant();
+                eatInOrderRestaurant.setId(UUID.randomUUID().toString());
+                eatInOrderRestaurant.setDate(faker.date().between(new Date(0), new Date(System.currentTimeMillis())));
+                eatInOrderRestaurant.setWaiter(faker.name().fullName());
+                eatInOrderRestaurant.setPeopleQty(faker.random().nextInt(1, 10));
+                eatInOrderRestaurant.setTotalPayment(faker.random().nextDouble());
+                eatInOrderRestaurant.setPaid(faker.random().nextBoolean());
 
-                List<String> tableIds = new ArrayList<>();
-                for (int j = 0; j < faker.random().nextInt(1, 10) && j < tables.size(); j++) {
-                    TableRestaurant tableRestaurant = tables.get(j);
-                    tableIds.add(tableRestaurant.getId());
-                }
-                orderRestaurant.setTableIds(tableIds);
+                // Asignar una mesa aleatoria
+                TableRestaurant tableRestaurant = tables.get(faker.random().nextInt(tables.size()));
+                eatInOrderRestaurant.setTableRestaurant(tableRestaurant);  // Aquí se asigna la mesa
 
-                List<String> menuIds = new ArrayList<>();
+                // Añadir menús a la orden
+                List<MenuRestaurant> menuList = new ArrayList<>();
                 for (int j = 0; j < faker.random().nextInt(1, 10) && j < menus.size(); j++) {
-                    MenuRestaurant menuRestaurant = menus.get(j);
-                    menuIds.add(menuRestaurant.getId());
+                    menuList.add(menus.get(j));
                 }
-                orderRestaurant.setMenuIds(menuIds);
+                eatInOrderRestaurant.setMenus(menuList);
 
-                orderRepository.save(orderRestaurant);
+                // Guardar la orden
+                orderRepository.save(eatInOrderRestaurant);
             }
 
-            System.out.println(" 100 fake orders have been created and saved to the database");
+            System.out.println(" 100 fake eat-in orders have been created and saved to the database");
         }
     }
+
     public void createFakeAllData(){
         createFakeCustomers();
         createFakeTables();

@@ -1,13 +1,14 @@
 package dev.example.restaurantManager.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.example.restaurantManager.model.TableRestaurant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +21,10 @@ public class Booking {
     private String name;
     private String phoneNumber;
     private int peopleQty;
+
     private LocalDateTime date;
+    private List<TableRestaurant> tableRestaurants;
+
     private boolean confirmed;
 
     @JsonIgnore
@@ -28,12 +32,16 @@ public class Booking {
     @JoinColumn(name = "TABLE_RESTAURANT_FK_ID")
     private TableRestaurant tableRestaurantMapped;
 
+    // Custom toString method (optional, as @Data provides a default toString)
     @Override
     public String toString() {
-        return "name: " + name + "\n"  +
+        return
+                "name: " + name + "\n"  +
                 "phoneNumber: " + phoneNumber + "\n"  +
-                "peopleQty: " + peopleQty + "\n"  +
-                "date: " + date + "\n"  +
-                "table: " + tableRestaurantMapped;
+                "peopleQty: " + peopleQty +"\n"  +
+                "date: " + date +"\n"  +
+                "tables: " + tableRestaurants +"\n"  +
+                "table: " + tableRestaurantMapped
+                ;
     }
 }

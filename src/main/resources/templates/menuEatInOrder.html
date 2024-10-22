@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/stylesEatInOrder.css">
+    <title>Eat In Orders</title>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Eat In Orders</h1>
+        <nav>
+            <ul>
+                <li><a href="/menus/home">Menus</a></li>
+                <li><a href="/orders/home">Orders</a></li>
+                <li><a href="/table/home">Tables</a></li>
+                <li><a href="/menus/about">About Us</a></li>
+                <li><a href="/menus/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>List of Eat In Orders</h2>
+        <div class="order-list">
+            <th:block th:each="order : ${eatInOrders}">
+                <div class="order-item">
+                    <h3>Order ID: <span th:text="${order.id}">ID</span></h3>
+                    <p>Waiter: <span th:text="${order.waiter}">Waiter Name</span></p>
+                    <p>Date: <span th:text="${#dates.format(order.date, 'yyyy-MM-dd HH:mm')}">Order Date</span></p>
+                    <p>People Quantity: <span th:text="${order.peopleQty}">0</span></p>
+                    <p>Total Payment: <span th:text="${order.totalPayment}">0.00</span> €</p>
+                    <p>Paid: <span th:text="${order.paid ? 'Yes' : 'No'}">Paid Status</span></p>
+                    <!-- Actualización de la referencia a las mesas -->
+                    <p>Table: <span th:text="${order.tableRestaurant.name}">Table Name</span></p>
+                    <p>Menus: <span th:text="${order.menus.size()}">0</span></p>
+                    <p th:each="menu : ${order.menus}">Menu Name: <span th:text="${menu.name}">Menu</span></p>
+                </div>
+            </th:block>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Our Restaurant. All rights reserved.</p>
+    </footer>
+</div>
+</body>
+</html>

@@ -99,13 +99,9 @@ public class DataLoader {
         }
     }
     public void createFakeOrders() {
-
-        // Check if the database is empty
         if (orderRepository.count() == 0) {
             System.out.println(" 0 records at the database found");
             Faker faker = new Faker(new Locale("en-US"));
-            MenuRestaurant menuRestaurant = new MenuRestaurant();
-            TableRestaurant tableRestaurant = new TableRestaurant();
 
             int qty = 100;
             for (int i = 0; i < qty; i++) {
@@ -115,25 +111,21 @@ public class DataLoader {
                 orderRestaurant.setWaiter(faker.name().fullName());
                 orderRestaurant.setPeopleQty(faker.random().nextInt(1, 10));
                 orderRestaurant.setTotalPayment(faker.random().nextDouble());
-                orderRestaurant.setTables(new ArrayList<>());
                 orderRestaurant.setPaid(faker.random().nextBoolean());
 
-                if (orderRestaurant.getMenuRestaurants() == null) {
-                    orderRestaurant.setMenuRestaurants(new ArrayList<>());
+                List<String> tableIds = new ArrayList<>();
+                for (int j = 0; j < faker.random().nextInt(1, 10) && j < tables.size(); j++) {
+                    TableRestaurant tableRestaurant = tables.get(j);
+                    tableIds.add(tableRestaurant.getId());
                 }
-                if (orderRestaurant.getTables() == null) {
-                    orderRestaurant.setTables(new ArrayList<>());
-                }
+                orderRestaurant.setTableIds(tableIds);
 
-                for(int j = faker.random().nextInt(1, 10); j < menus.size(); j++) {
-                    menuRestaurant = menus.get(j);
-                    orderRestaurant.getMenuRestaurants().add(menuRestaurant);
+                List<String> menuIds = new ArrayList<>();
+                for (int j = 0; j < faker.random().nextInt(1, 10) && j < menus.size(); j++) {
+                    MenuRestaurant menuRestaurant = menus.get(j);
+                    menuIds.add(menuRestaurant.getId());
                 }
-
-                for(int j = faker.random().nextInt(1, 10); j < tables.size(); j++) {
-                    tableRestaurant = tables.get(j);
-                    orderRestaurant.getTables().add(tableRestaurant);
-                }
+                orderRestaurant.setMenuIds(menuIds);
 
                 orderRepository.save(orderRestaurant);
             }

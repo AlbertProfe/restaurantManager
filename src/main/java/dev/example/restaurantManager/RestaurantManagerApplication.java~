@@ -17,10 +17,10 @@ public class RestaurantManagerApplication {
 
 
 
-//	@Bean
-//	public ApplicationRunner customerDataLoader(DataLoader DataLoader) {
-//		return args -> DataLoader.createFakeAllData();
-//
-//	}
+	@Bean
+	public ApplicationRunner customerDataLoader(DataLoader DataLoader) {
+		return args -> DataLoader.createFakeAllData();
+
+	}
 
 }

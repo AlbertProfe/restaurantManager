@@ -1,13 +1,13 @@
 package dev.example.restaurantManager.model;
 
 import jakarta.persistence.Entity;
-<<<<<<< HEAD
+
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Table;
-=======
+
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -16,19 +16,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> master
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-<<<<<<< HEAD
+
 @Table(name = "menus")
 public class MenuRestaurant {
-
-=======
-public class MenuRestaurant  {
->>>>>>> master
 
     @Id
     private String id;
@@ -38,8 +34,7 @@ public class MenuRestaurant  {
     private boolean active;
     private boolean water;
 
-<<<<<<< HEAD
-=======
+
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
     private List<OrderRestaurant> orders = new ArrayList<>();
 
@@ -64,7 +59,5 @@ public class MenuRestaurant  {
                 ", water=" + water +
                 '}';
     }
-
->>>>>>> master
 }
 

@@ -4,7 +4,7 @@ import dev.example.restaurantManager.model.TableRestaurant;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-@Service
+
 public interface TableService {
 
     List<TableRestaurant> getAllTables();

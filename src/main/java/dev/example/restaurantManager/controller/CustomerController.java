@@ -16,17 +16,17 @@ import java.util.List;
 public class CustomerController {
 
     // inject  from application.properties endpoint.url.customers
-    @Value("${endpoint.url.customers}")
-    private String endpointUrlCustomers;
+//    @Value("${endpoint.url.customers}")
+//    private String endpointUrlCustomers;
 
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/show-endpoint")
-    public String showEndpointCustomers() {
-
-        return "The customers endpoint URL is: " + endpointUrlCustomers;
-    }
+//    @GetMapping("/show-endpoint")
+//    public String showEndpointCustomers() {
+//
+//        return "The customers endpoint URL is: " + endpointUrlCustomers;
+//    }
 
     // manage request by ResponseEntity with all customers
     @GetMapping("/allCustomers")
