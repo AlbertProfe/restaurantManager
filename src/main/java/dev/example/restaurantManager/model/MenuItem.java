@@ -17,8 +17,6 @@ public class MenuItem {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    // Constructors, getters, and setters
-
     private String name;
     private String description;
     private boolean isSpicy;
@@ -36,8 +34,11 @@ public class MenuItem {
 
     // Default constructor
     public MenuItem() {
-        this.id = UUID.randomUUID().toString();
+       // this.id = UUID.randomUUID().toString();
     }
+// Getters and setters
+
+
 
 }
 
