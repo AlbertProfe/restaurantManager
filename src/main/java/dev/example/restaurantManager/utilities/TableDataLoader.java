@@ -24,14 +24,14 @@ public class TableDataLoader {
             int qty = 10;
             // Create and save 100 fake customers
             for (int i = 0; i < qty; i++) {
-                TableRestaurant table_rest = new TableRestaurant(
-                        UUID.randomUUID().toString(),
-                        faker.numerify("Table"+i),
-                        faker.rickAndMorty().character(),
-                        faker.random().nextInt(1, 10),
-                        faker.random().nextBoolean()
+                TableRestaurant table_rest = new TableRestaurant();
+                        table_rest.setId(UUID.randomUUID().toString());
+                        table_rest.setName("Table " + (i + 1));
+                        table_rest.setDescription(faker.lorem().sentence());
+                        table_rest.setQty(faker.number().numberBetween(1, 10));
+                        table_rest.setBusy(faker.bool().bool());  //
 
-                );
+
                 tableRepository.save(table_rest);
             }
 

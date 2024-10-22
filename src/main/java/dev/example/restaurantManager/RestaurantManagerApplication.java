@@ -2,7 +2,7 @@ package dev.example.restaurantManager;
 
 
 import dev.example.restaurantManager.utilities.CustomerDataLoader;
-import dev.example.restaurantManager.utilities.EatInOrderDataLoader;
+//import dev.example.restaurantManager.utilities.EatInOrderDataLoader;
 import dev.example.restaurantManager.utilities.MenuDataLoader;
 import dev.example.restaurantManager.utilities.TableDataLoader;
 import org.springframework.boot.ApplicationRunner;
@@ -33,8 +33,8 @@ public class RestaurantManagerApplication {
 		return args -> menuDataLoader.createFakeMenus();
 	}
 
-	@Bean
+	/*@Bean
 	public ApplicationRunner EatInOrderDataLoader(EatInOrderDataLoader eatInOrderDataLoader) {
 		return args -> eatInOrderDataLoader.createFakeEatInOrders();
-	}
+	}*/
 }

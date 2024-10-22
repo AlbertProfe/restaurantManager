@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "ORDER_RESTAURANT")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+
 public class OrderRestaurant {
 
     @Id

@@ -10,9 +10,9 @@ import java.util.List;
 public interface EatInOrderRepository extends JpaRepository<EatInOrderRestaurant, String> {
 
     // 0. Count tables by name
-    int countByName(String name);
+    int countByDate(Date date);
     // 1. Find tables by name
-    ArrayList<EatInOrderRestaurant> findByName(String name);
+    ArrayList<EatInOrderRestaurant> findByDate(Date date);
     // 3. Find tables by name
     long count();
 
@@ -27,7 +27,7 @@ public interface EatInOrderRepository extends JpaRepository<EatInOrderRestaurant
     EatInOrderRestaurant findByWaiter(String waiter);
 
     // 4. Find Orders by date
-    EatInOrderRestaurant findByDate(Date date);
+    //EatInOrderRestaurant findByDate(Date date);
 
     // 5. Find tables by age greater than a specified value
     //List<Customer> findByAgeGreaterThan(int age);
@@ -36,7 +36,7 @@ public interface EatInOrderRepository extends JpaRepository<EatInOrderRestaurant
     //List<Customer> findByAgeLessThanAndDeletedFalse(int age);
 
     // 7. Find tables by name containing a specific string (case-insensitive)
-    List<EatInOrderRestaurant> findByNameContainingIgnoreCase(String namePart);
+    //List<EatInOrderRestaurant> findByNameContainingIgnoreCase(String namePart);
 
     // 8. Count tables by age
     //long countByAge(int age);

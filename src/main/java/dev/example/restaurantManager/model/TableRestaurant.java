@@ -26,26 +26,26 @@ public class TableRestaurant {
     @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
     private ArrayList<Booking> bookings ;
 
-    @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
-    private ArrayList<Booking> EatInOrders;
+    @OneToMany(mappedBy = "orderedTableRestaurant", cascade = CascadeType.ALL)
+    private ArrayList<EatInOrderRestaurant> EatInOrders;
 
-    // we must create a VERY CONCRETE constructor to RUN the OLD tests
-    /*public TableRestaurant(String name, String description , int qty,  boolean busy) {
+     //we must create a VERY CONCRETE constructor to RUN the OLD tests
+    public TableRestaurant(String name, String description , int qty,  boolean busy) {
         this.name = name;
         this.description = description;
         this.qty = qty;
         this.busy = busy;
 
-    }*/
-
-    public TableRestaurant(String string, String numerify, String character, Integer integer, Boolean aBoolean) {
-        this.id = UUID.randomUUID().toString();  // Generar un UUID como id
-        this.name = name;
-        this.description = description;
-        this.qty = qty;
-        this.busy = busy;
     }
 
+    public TableRestaurant(String id, String name, String description, Integer qty, Boolean busy, ArrayList<EatInOrderRestaurant> EatInOrders) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.qty = qty;
+        this.busy = busy;
+        this.EatInOrders = EatInOrders;
+    }
 
 
 
