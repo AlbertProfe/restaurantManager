@@ -24,7 +24,8 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade =
+            {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "order_menu",
             joinColumns = @JoinColumn(name = "order_id"),

@@ -29,6 +29,7 @@ public class MenuItem {
 //    @ManyToMany(mappedBy = "menuItems")
 //    private Set<Menu> menus = new HashSet<>();
 
+    // Many to many with
     @ManyToMany(mappedBy = "menuItems", fetch = FetchType.LAZY)
     private List<MenuRestaurant> menuRestaurants = new ArrayList<>();
 
@@ -38,12 +39,19 @@ public class MenuItem {
     }
 // Getters and setters
 
-
+    @Override
+    public String toString() {
+        return "MenuRestaurant{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description=" + description +
+                ", spicy=" + isSpicy + '\'' +
+                ", hasGluten=" + hasGluten +
+                ", available=" + isAvailable +
+                ", courseType=" + courseType +
+                ", menus=" + menuRestaurants +
+                '}';
+    }
 
 }
 
-enum CourseType {
-    STARTER,
-    MAIN,
-    DESSERT
-}

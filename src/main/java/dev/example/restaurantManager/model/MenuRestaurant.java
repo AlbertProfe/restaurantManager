@@ -21,16 +21,32 @@ public class MenuRestaurant  {
     private boolean active;
     private boolean water;
 
+    // Many to Many with Orders
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
     private List<OrderRestaurant> orders = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    // Many to Many with MenuItems
+    @ManyToMany(fetch = FetchType.LAZY, cascade =
+            {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name = "menuItems",
+            name = "menu_items",
             joinColumns = @JoinColumn(name = "MENU_FK_ID"),
             inverseJoinColumns = @JoinColumn(name = "ITEM_FK_ID")
     )
-    private List<MenuItem> menuItems;
+    private List<MenuItem> menuItems = new ArrayList<>();
+
+    // Create add method
+    public List<MenuItem> addItem(MenuItem item){
+        this.menuItems.add(item);
+        item.getMenuRestaurants().add(this);
+        return this.menuItems;
+    }
+    // Create remove method
+    public List<MenuItem> removeItem(MenuItem item) {
+        this.menuItems.remove(item);
+        item.getMenuRestaurants().remove(this);
+        return this.menuItems;
+    }
 
 
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
@@ -54,6 +70,7 @@ public class MenuRestaurant  {
                 ", water=" + water +
                 ", ordersCount=" + (orders != null ? orders.size() : 0) +
                 ", orders=" + orders +
+                ", menuItems=" + menuItems +
                 '}';
     }
 
