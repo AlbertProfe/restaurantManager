@@ -4,14 +4,12 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class TableRestaurant {
@@ -26,9 +24,20 @@ public class TableRestaurant {
     @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
     private ArrayList<Booking> bookings ;
 
+    public TableRestaurant(String id,String name, String description , int qty,  boolean busy, ArrayList<Booking> bookings) {
+        this.id=id;
+        this.name= name;
+        this.description=description;
+        this.qty=qty;
+        this.busy=busy;
+        this.bookings = bookings;
+    }
+
+
 
     // we must create a VERY CONCRETE constructor to RUN the OLD tests
     public TableRestaurant(String name, String description , int qty,  boolean busy) {
+        this(name,name, description , qty, busy,new ArrayList<>());
     }
 
 

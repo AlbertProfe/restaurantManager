@@ -1,6 +1,7 @@
 package dev.example.restaurantManager.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
 public class EatInOrderRestaurant extends OrderRestaurant {
 
     //private ArrayList<TableRestaurant> tableRestaurants = new ArrayList<>();
+
+    @ManyToOne
     private TableRestaurant tableEatInOrder;
 
 
