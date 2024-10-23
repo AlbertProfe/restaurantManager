@@ -124,14 +124,23 @@ public class RelationshipsMenuToMenuItemsTest {
                 System.out.println("--------------------");
                 System.out.println("Menu ID: " + menuFound.get().getId());
 
-                Optional<MenuItem> menuItemFound = menuItemRepository.findById(String.valueOf(item1.getId()));
+                Optional<MenuItem> menuItemOneFound = menuItemRepository.findById(String.valueOf(item1.getId()));
                 System.out.println("--------------------");
-                System.out.println("Menu Item ID: " + menuItemFound.get().getId());
+                System.out.println("Menu Item ID: " + menuItemOneFound.get().getId());
+                System.out.println("Menu Item Name: " + menuItemOneFound.get().getName());
+
+
+                Optional<MenuItem> menuItemTwoFound = menuItemRepository.findById(String.valueOf(item2.getId()));
+                System.out.println("--------------------");
+                System.out.println("Menu Item ID: " + menuItemTwoFound.get().getId());
+                System.out.println("Menu Item Name: " + menuItemTwoFound.get().getName());
+
 
                 // then
                 assertThat(menuFound).isPresent();
-                assertThat(menuFound.get().getMenuItems().get(0).getName().equals(menuRestaurant1.getName()));
-                assertThat(menuFound.get().getMenuItems().get(1).getName().equals(menuRestaurant1.getName()));
+                assertThat(menuFound.get().getMenuItems().size()).isEqualTo(2);
+                assertThat(menuFound.get().getMenuItems().get(0).getName()).isEqualTo(item1.getName());
+                assertThat(menuFound.get().getMenuItems().get(1).getName()).isEqualTo(item2.getName());
 
         }
 
