@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -72,6 +73,25 @@ public class MenuRestaurant  {
                 ", orders=" + orders +
                 ", menuItems=" + menuItems +
                 '}';
+    }
+
+    // Updated equals() method to compare all fields except 'order'
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof MenuRestaurant)) return false;
+        MenuRestaurant that = (MenuRestaurant) object;
+        return active == that.active &&
+                water == that.water &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(content, that.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, content, active, water);
     }
 
 }

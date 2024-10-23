@@ -52,6 +52,26 @@ public class MenuItem {
                 ", menus=" + menuRestaurants +
                 '}';
     }
+    // Updated equals() method to compare all fields except 'menuRestaurants'
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof MenuItem)) return false;
+        MenuItem that = (MenuItem) object;
+        return isAvailable == that.isAvailable &&
+                hasGluten == that.hasGluten &&
+                isSpicy == that.isSpicy &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(courseType, that.courseType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, isSpicy, hasGluten,isAvailable, courseType);
+    }
+
 
 }
 

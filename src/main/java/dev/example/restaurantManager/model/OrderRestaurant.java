@@ -42,7 +42,7 @@ public class OrderRestaurant {
         this.menus.remove(menu);
         menu.getOrders().remove(this);
     }
-
+/*
     public List<MenuRestaurant> getMenus() {
         return menus;
     }
@@ -50,7 +50,7 @@ public class OrderRestaurant {
     public void setMenus(List<MenuRestaurant> menus) {
         this.menus = menus;
     }
-
+*/
     @Override
     public String toString() {
         return "OrderRestaurant{" +
@@ -64,5 +64,7 @@ public class OrderRestaurant {
                 ", menus=" + menus +
                 '}';
     }
+
+
 
 }

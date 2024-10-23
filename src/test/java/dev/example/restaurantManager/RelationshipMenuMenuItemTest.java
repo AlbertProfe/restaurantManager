@@ -98,6 +98,11 @@ public class RelationshipMenuMenuItemTest {
         menu3.getMenuItems().add(item5);
         menuRestaurantRepository.save(menu3);
 
+        // Print all the content from menuRestaurantRepository
+        System.out.println("--------------------");
+        System.out.println(menuRestaurantRepository.findAll());
+        System.out.println("--------------------");
+
         // Create a list of all menu
         ArrayList<MenuRestaurant> menus = new ArrayList<>();
         menus.addAll(Arrays.asList(menu1, menu2, menu3));

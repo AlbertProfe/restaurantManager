@@ -167,8 +167,8 @@ private OrderRestaurantRepository orderRestaurantRepository;
 
                 // Save sample orders
                 orderRestaurantRepository.save(orderRestaurant1);
-                //orderRestaurantRepository.save(orderRestaurant2);
-                //orderRestaurantRepository.save(orderRestaurant3);
+                orderRestaurantRepository.save(orderRestaurant2);
+                orderRestaurantRepository.save(orderRestaurant3);
 
                 // set menus to orders and save
                 menuRestaurant1.getOrders().add(orderRestaurant1);
