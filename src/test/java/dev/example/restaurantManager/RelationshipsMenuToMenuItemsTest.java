@@ -144,8 +144,5 @@ public class RelationshipsMenuToMenuItemsTest {
 
         }
 
-        // Create and save menu items to menu
 
-
-        //check if the item is in the menu
 }
