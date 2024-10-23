@@ -53,7 +53,7 @@ public class MenuItem {
                 ", hasGluten=" + hasGluten +
                 ", isAvailable=" + isAvailable +
                 ", courseType=" + courseType +
-                ", menus=" + menus +
+            //    ", menus=" + menus +
                 '}';
     }
 }

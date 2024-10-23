@@ -63,8 +63,8 @@ public class MenuRestaurant {
                 ", water=" + water +
                 ", ordersCount=" + (orders != null ? orders.size() : 0) +
                 ", orders=" + orders + '\'' +
-                ", menuItemsCount=" + menuItems.size() +
-                ", menuItems=" + menuItems +
+                ", menuItemsCount=" + + (menuItems != null ? menuItems.size() : 0) +
+              //  ", menuItems=" + menuItems +
                 '}';
     }
 }

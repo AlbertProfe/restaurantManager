@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -98,8 +99,8 @@ public class RelationshipsMenuToMenuItemsTest {
                 //Add items
                 menuRestaurant1.addMenuItem(item1);
                 menuRestaurant1.addMenuItem(item2);
-                menuRestaurant1.addMenuItem(item3);
-                menuRestaurant1.addMenuItem(item4);
+                menuRestaurant2.addMenuItem(item3);
+                menuRestaurant3.addMenuItem(item4);
 
                 menuRestaurantRepository.saveAll(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3));
 
@@ -117,6 +118,21 @@ public class RelationshipsMenuToMenuItemsTest {
                         System.out.println(menu);
                         System.out.println("--------------------");
                 }
+
+                //when
+                Optional<MenuRestaurant> menuFound = menuRestaurantRepository.findById("M01");
+                System.out.println("--------------------");
+                System.out.println("Menu ID: " + menuFound.get().getId());
+
+                Optional<MenuItem> menuItemFound = menuItemRepository.findById(String.valueOf(item1.getId()));
+                System.out.println("--------------------");
+                System.out.println("Menu Item ID: " + menuItemFound.get().getId());
+
+                // then
+                assertThat(menuFound).isPresent();
+                assertThat(menuFound.get().getMenuItems().get(0).getName().equals(menuRestaurant1.getName()));
+                assertThat(menuFound.get().getMenuItems().get(1).getName().equals(menuRestaurant1.getName()));
+
         }
 
         // Create and save menu items to menu
