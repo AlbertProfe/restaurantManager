@@ -1,13 +1,11 @@
 package dev.example.restaurantManager.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -27,6 +25,45 @@ public class MenuRestaurant  {
     @JsonIgnore
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
     private List<OrderRestaurant> orders = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER
+            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "menu_item",
+            joinColumns = @JoinColumn(name = "menu_id"),
+            inverseJoinColumns = @JoinColumn(name = "menu_item_id"))
+    private List<MenuItemRestaurant> menuItems = new ArrayList<>();
+
+    public void addMenuItem(MenuItemRestaurant menuItemRestaurant) {
+        this.menuItems.add(menuItemRestaurant);
+        if (menuItemRestaurant.getMenus() == null) {
+            menuItemRestaurant.setMenus(new ArrayList<>());
+        }
+        if (!menuItemRestaurant.getMenus().contains(this)) {
+            menuItemRestaurant.getMenus().add(this);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MenuRestaurant that = (MenuRestaurant) o;
+        return active == that.active &&
+                water == that.water &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(content, that.content) &&
+                Objects.equals(menuItems, that.menuItems);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, content, active, water, menuItems);
+    }
+
 
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
         this.id = id;
