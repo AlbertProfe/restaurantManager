@@ -1,6 +1,8 @@
 package dev.example.restaurantManager.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.awt.*;
@@ -11,6 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Data
 public class MenuItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +56,5 @@ public class MenuItem {
                 ", menus=" + menus +
                 '}';
     }
-
 }
 

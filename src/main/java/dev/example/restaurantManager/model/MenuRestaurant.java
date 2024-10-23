@@ -3,15 +3,17 @@ package dev.example.restaurantManager.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class MenuRestaurant  {
+public class MenuRestaurant {
 
     @Id
     private String id;
@@ -24,6 +26,7 @@ public class MenuRestaurant  {
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
     private List<OrderRestaurant> orders = new ArrayList<>();
 
+    @Getter
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "menu_restaurant_menu_item",
@@ -39,9 +42,16 @@ public class MenuRestaurant  {
         this.content = content;
         this.active = active;
         this.water = water;
+        this.orders = new ArrayList<>();
+        this.menuItems = new ArrayList<>();
     }
 
-    //We  might want to exclude 'orders' from toString() to avoid circular references
+    public void addMenuItem(MenuItem menuItem) {
+        this.menuItems.add(menuItem);
+        menuItem.getMenus().add(this);
+    }
+
+    // We might want to exclude 'orders' from toString() to avoid circular references
     @Override
     public String toString() {
         return "MenuRestaurant{" +
@@ -52,10 +62,9 @@ public class MenuRestaurant  {
                 ", active=" + active +
                 ", water=" + water +
                 ", ordersCount=" + (orders != null ? orders.size() : 0) +
-                ", orders=" + orders +
-                ", menu items=" + menuItems +
+                ", orders=" + orders + '\'' +
+                ", menuItemsCount=" + menuItems.size() +
+                ", menuItems=" + menuItems +
                 '}';
     }
-
 }
-
