@@ -19,7 +19,7 @@ public class TableController {
     @Autowired
     private TableService tableService;
 
-    @RequestMapping("/allOrders")
+    @RequestMapping("/allTables")
     public ResponseEntity<List<TableRestaurant>> getAllTables() {
         List<TableRestaurant> tables = tableService.getAllTables();
         HttpHeaders headers = getCommonHeaders("Get all tables");
@@ -76,7 +76,7 @@ public class TableController {
         headers.add("server", "H2 Database");
         headers.add("version", "1.0.0");
         headers.add("menu-count", String.valueOf(tableService.countTables()));
-        headers.add("object", "customers");
+        headers.add("object", "tables");
         return headers;
     }
 }
