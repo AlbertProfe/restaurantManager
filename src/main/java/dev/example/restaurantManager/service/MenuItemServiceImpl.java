@@ -1,10 +1,13 @@
 package dev.example.restaurantManager.service;
 
 import dev.example.restaurantManager.model.MenuItem;
+import dev.example.restaurantManager.model.MenuRestaurant;
 import dev.example.restaurantManager.repository.MenuItemRepository;
+import dev.example.restaurantManager.repository.MenuRestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -12,6 +15,9 @@ public class MenuItemServiceImpl implements MenuItemService{
 
      @Autowired
     MenuItemRepository menuItemRepository;
+
+    @Autowired
+    MenuRestaurantRepository menuRepository;
 
     @Override
     public List<MenuItem> getAllMenuItems() {
@@ -65,5 +71,12 @@ public class MenuItemServiceImpl implements MenuItemService{
     @Override
     public long countMenuItems() {
         return menuItemRepository.count();
+    }
+
+    @Override
+    public List<MenuItem> getMenuItemsByMenuId(String menuId) {
+
+        MenuRestaurant menu = menuRepository.findById(menuId).orElse(null);
+        return menu != null ? menu.getMenuItems() : new ArrayList<>();
     }
 }
