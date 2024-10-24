@@ -22,8 +22,8 @@ public class MenuItem {
     @Enumerated(EnumType.STRING)
     private CourseType courseType;
 
-//    @ManyToMany(mappedBy = "menuItems")
-//    private ArrayList<MenuRestaurant> menus;
+    @ManyToMany(mappedBy = "items")
+    private ArrayList<MenuRestaurant> menus;
 
     // Default constructor
     public MenuItem() {

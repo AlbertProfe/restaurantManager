@@ -26,9 +26,8 @@ public class MenuItemTest {
     @Autowired
     private MenuRestaurantRepository menuRepository;
 
-    @Test
-    public void createMenuItemsInDBTest() {
 
+    private List<MenuItem> createFakeMenuItems(){
         MenuItem i1 = new MenuItem();
         i1.setName("Macarrones carbonara");
         i1.setDescription("Macarrones carbonara desc.");
@@ -36,8 +35,6 @@ public class MenuItemTest {
         i1.setSpicy(false);
         i1.setHasGluten(true);
         i1.setAvailable(true);
-
-        menuItemRepository.save(i1);
 
         MenuItem i2 = new MenuItem();
         i2.setName("Ensalada de burrata");
@@ -47,9 +44,6 @@ public class MenuItemTest {
         i2.setHasGluten(true);
         i2.setAvailable(true);
 
-        menuItemRepository.save(i2);
-
-
         MenuItem i3 = new MenuItem();
         i3.setName("Tiramisú");
         i3.setDescription("Tiramisú desc.");
@@ -58,14 +52,25 @@ public class MenuItemTest {
         i3.setHasGluten(true);
         i3.setAvailable(true);
 
-        menuItemRepository.save(i3);
+        return Arrays.asList(i1,i2,i3);
+    }
+
+
+    @Test
+    public void createMenuItemsInDBTest() {
+
+        List<MenuItem> menuItems = createFakeMenuItems();
+
+        for(MenuItem mi:menuItems){
+            menuItemRepository.save(mi);
+        }
 
 
         // check if saved
         List<MenuItem> items = menuItemRepository.findAll();
-        assert(items.contains(i1));
-        assert(items.contains(i2));
-        assert(items.contains(i3));
+        for(MenuItem mi:menuItems){
+            assert(items.contains(mi));
+        }
 
         MenuItem i4 = new MenuItem();
         i4.setName("Panceta");
@@ -81,37 +86,15 @@ public class MenuItemTest {
 
 
     @Test
-    public void relateMenuItemsToMenuTest() {
+    public void relatedMenuItemsToMenuUnidirectionalTest() {
 
-        MenuItem i1 = new MenuItem();
-        i1.setName("Macarrones carbonara");
-        i1.setDescription("Macarrones carbonara desc.");
-        i1.setCourseType(CourseType.MAIN);
-        i1.setSpicy(false);
-        i1.setHasGluten(true);
-        i1.setAvailable(true);
+        List<MenuItem> menuItems = createFakeMenuItems();
 
-        MenuItem i2 = new MenuItem();
-        i2.setName("Ensalada de burrata");
-        i2.setDescription("Ensalada de burrata desc.");
-        i2.setCourseType(CourseType.STARTER);
-        i2.setSpicy(false);
-        i2.setHasGluten(true);
-        i2.setAvailable(true);
+        for(MenuItem mi:menuItems){
+            menuItemRepository.save(mi);
+        }
 
-        MenuItem i3 = new MenuItem();
-        i3.setName("Tiramisú");
-        i3.setDescription("Tiramisú desc.");
-        i3.setCourseType(CourseType.DESSERT);
-        i3.setSpicy(false);
-        i3.setHasGluten(true);
-        i3.setAvailable(true);
 
-        menuItemRepository.save(i1);
-        menuItemRepository.save(i2);
-        menuItemRepository.save(i3);
-
-        List<MenuItem> items = Arrays.asList(i1,i2,i3);
 
         MenuRestaurant m1 = new MenuRestaurant();
         m1.setId("M1");
@@ -120,7 +103,7 @@ public class MenuItemTest {
         m1.setPrice(25.50);
         m1.setActive(true);
         m1.setWater(true);
-        m1.setItems(items);
+        m1.setItems(menuItems);
 
         menuRepository.save(m1);
 
@@ -129,11 +112,45 @@ public class MenuItemTest {
         assertThat(m1Found).isPresent();
         MenuRestaurant m1DB = m1Found.get();
         assertThat(m1DB.getId().equals(m1.getId())).isEqualTo(true);
+        assertThat(m1DB.getItems().size() == menuItems.size()).isEqualTo(true);
+        assertThat(m1DB.getItems().get(0).equals(menuItems.get(0))).isEqualTo(true);
+    }
+
+    @Test
+    public void relatedMenuItemsToMenuBidirectionalTest() {
+
+        List<MenuItem> menuItems = createFakeMenuItems();
+
+        for(MenuItem mi:menuItems){
+            menuItemRepository.save(mi);
+        }
+
+
+        MenuRestaurant m1 = new MenuRestaurant();
+        m1.setId("M1");
+        m1.setName("Italliano");
+        m1.setContent("Menú completo: ensalada, macarrones y tiramisú");
+        m1.setPrice(25.50);
+        m1.setActive(true);
+        m1.setWater(true);
+        m1.setItems(menuItems);
+
+        menuRepository.save(m1);
+
+        Optional<MenuItem> mi1Found =  menuItemRepository.findById(menuItems.get(0).getId());
+
+        assertThat(mi1Found).isPresent();
+        MenuItem mi1DB = mi1Found.get();
+        MenuItem mi1Memory = menuItems.get(0);
+        assertThat(mi1DB.getId().equals(mi1Memory.getId())).isEqualTo(true);
+
+        List<MenuRestaurant> menus =mi1DB.getMenus();
+        MenuRestaurant m1DB = menus == null ? null: menus.getFirst();
+
         assertThat(m1DB.getItems().size() == m1.getItems().size()).isEqualTo(true);
         assertThat(m1DB.getItems().get(0).equals(m1.getItems().get(0))).isEqualTo(true);
 
 
     }
-
 
 }
