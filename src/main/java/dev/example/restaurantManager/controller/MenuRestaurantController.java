@@ -3,7 +3,6 @@ package dev.example.restaurantManager.controller;
 import dev.example.restaurantManager.model.MenuRestaurant;
 import dev.example.restaurantManager.service.MenuRestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +15,9 @@ import java.util.List;
 @RestController
 public class MenuRestaurantController {
 
-    // inject  from application.properties endpoint.url.customers
-    @Value("${endpoint.url.menuRestaurant}")
-    private String endpointUrlMenuRestaurant;
-
     @Autowired
     private MenuRestaurantService menuRestaurantService;
+
 
     @GetMapping("/allMenus")
     public ResponseEntity<List<MenuRestaurant>> getAllMenus( ) {

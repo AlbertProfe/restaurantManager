@@ -1,11 +1,9 @@
 package dev.example.restaurantManager.controller;
 
 
-
 import dev.example.restaurantManager.model.MenuItem;
 import dev.example.restaurantManager.service.MenuItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,67 +16,51 @@ import java.util.List;
 @RestController
 public class MenuItemController {
 
-
     @Autowired
     private MenuItemService menuItemService;
 
-    // inject  from application.properties endpoint.url.menuItems
-    @Value("${endpoint.url.menuItems}")
-    private String endpointUrlMenuItems;
-
-    @GetMapping("/show-endpoint")
-    public String showEndpointMenuItems() {
-
-        return "The menuItems endpoint URL is: " + endpointUrlMenuItems;
-    }
-
-    // manage request by ResponseEntity with all customers
-    @GetMapping("/allCustomers")
-    public ResponseEntity<List<MenuItem>> getAllMenuItems( ) {
+    @GetMapping("/allMenuItems")
+    public ResponseEntity<List<MenuItem>> getAllMenuItems() {
         List<MenuItem> menuItems = menuItemService.getAllMenuItems();
-        HttpHeaders headers = getCommonHeaders("Get all customers");
-
+        HttpHeaders headers = getCommonHeaders("Get all menu items");
         return menuItems != null && !menuItems.isEmpty()
                 ? new ResponseEntity<>(menuItems, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+
     }
 
-    @PostMapping
+    @PostMapping("/addMenuItem")
     public ResponseEntity<MenuItem> createMenuItem(@RequestBody MenuItem menuItem) {
         MenuItem createdMenuItem = menuItemService.createMenuItem(menuItem);
-        HttpHeaders headers = getCommonHeaders("Create a new customer");
-
+        HttpHeaders headers = getCommonHeaders("Create a new menu item");
         return createdMenuItem != null
                 ? new ResponseEntity<>(createdMenuItem, headers, HttpStatus.CREATED)
                 : new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
     }
-    @PutMapping("/{id}")
+
+    @PutMapping("/updateMenuItem/{id}")
     public ResponseEntity<MenuItem> updateMenuItem(@PathVariable String id, @RequestBody MenuItem menuItemDetails) {
         MenuItem updatedMenuItem = menuItemService.updateMenuItem(id, menuItemDetails);
-        HttpHeaders headers = getCommonHeaders("Update a menuItem");
-
+        HttpHeaders headers = getCommonHeaders("Update a menu item");
         return updatedMenuItem != null
                 ? new ResponseEntity<>(updatedMenuItem, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteMenuItem/{id}")
     public ResponseEntity<Void> deleteMenuItem(@PathVariable String id) {
         boolean deleted = menuItemService.deleteMenuItem(id);
-        HttpHeaders headers = getCommonHeaders("Delete a menuItem");
+        HttpHeaders headers = getCommonHeaders("Delete a menu item");
         headers.add("deleted", String.valueOf(deleted));
-
-
         return deleted
                 ? new ResponseEntity<>(headers, HttpStatus.NO_CONTENT)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getMenuItem/{id}")
     public ResponseEntity<MenuItem> getMenuItemById(@PathVariable String id) {
         MenuItem menuItem = menuItemService.getMenuItemById(id);
-        HttpHeaders headers = getCommonHeaders("Get a menuItem by Id");
-
+        HttpHeaders headers = getCommonHeaders("Get a menu item by Id");
         return menuItem != null
                 ? new ResponseEntity<>(menuItem, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
@@ -92,8 +74,8 @@ public class MenuItemController {
         headers.add("date", new Date().toString());
         headers.add("server", "H2 Database");
         headers.add("version", "1.0.0");
-        headers.add("menuItem-count", String.valueOf(menuItemService.countMenuItems()));
-        headers.add("object", "menuItems");
+        headers.add("customer-count", String.valueOf(menuItemService.countMenuItems()));
+        headers.add("object", "customers");
         return headers;
     }
 }

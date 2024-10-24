@@ -24,8 +24,8 @@ Summary tasks:
 - [X] Implement JPA Repositories
 - [X] Create Service Layer
 - [X] Develop REST Controllers
-- [ ] Configure H2 Database
-- [ ] Write Unit Tests
+- [X] Configure H2 Database
+- [X] Write Unit Tests
 - [ ] Test with Swagger API
 
 Tasks:
