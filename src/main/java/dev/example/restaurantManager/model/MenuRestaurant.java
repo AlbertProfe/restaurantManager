@@ -1,9 +1,6 @@
 package dev.example.restaurantManager.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,13 +24,18 @@ public class MenuRestaurant  {
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
     private List<OrderRestaurant> orders = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(name = "ITEMS_ON_MENUS",
+            joinColumns = @JoinColumn(name = "MENU_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ITEM_ID"))
+    private List<MenuItem> items;
+
+
+    public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water,List<OrderRestaurant> orders) {
+        this(id,name,price,content,active,water,orders,null);
+    }
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.content = content;
-        this.active = active;
-        this.water = water;
+        this(id,name,price,content,active,water,null,null);
     }
 
     //We  might want to exclude 'orders' from toString() to avoid circular references

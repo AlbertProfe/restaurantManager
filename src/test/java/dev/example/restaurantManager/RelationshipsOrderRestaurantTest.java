@@ -8,10 +8,9 @@ import dev.example.restaurantManager.repository.TakeAwayOrderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Optional;
+
+import java.util.*;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -171,6 +170,10 @@ private OrderRestaurantRepository orderRestaurantRepository;
                 //orderRestaurantRepository.save(orderRestaurant3);
 
                 // set menus to orders and save
+                List<OrderRestaurant> orders = menuRestaurant1.getOrders();
+                if( orders == null){
+                        menuRestaurant1.setOrders(new ArrayList<>());
+                }
                 menuRestaurant1.getOrders().add(orderRestaurant1);
                 menuRestaurantRepository.save(menuRestaurant1);
 
