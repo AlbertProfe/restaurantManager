@@ -31,7 +31,19 @@ public class MenuItem {
 
     // Many to many with
     @ManyToMany(mappedBy = "menuItems", fetch = FetchType.LAZY)
-    private List<MenuRestaurant> menuRestaurants = new ArrayList<>();
+    private List<MenuRestaurant> menuRestaurants;
+
+    // Create add method
+    public void addItem(MenuRestaurant menu){
+        this.menuRestaurants.add(menu);
+        menu.getMenuItems().add(this);
+
+    }
+    // Create remove method
+    public void removeItem(MenuRestaurant menu) {
+        this.menuRestaurants.remove(menu);
+        menu.getMenuItems().remove(this);
+    }
 
     // Default constructor
     public MenuItem() {
@@ -49,7 +61,7 @@ public class MenuItem {
                 ", hasGluten=" + hasGluten +
                 ", available=" + isAvailable +
                 ", courseType=" + courseType +
-                ", menus=" + menuRestaurants +
+                //", menus=" + menuRestaurants +
                 '}';
     }
     // Updated equals() method to compare all fields except 'menuRestaurants'

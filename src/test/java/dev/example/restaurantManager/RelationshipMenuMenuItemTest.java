@@ -25,106 +25,46 @@ public class RelationshipMenuMenuItemTest {
 
     @Test
     public void TestRelationshipMenuMenuItem() {
+        // Create MenuItems
+        MenuItem item1 = new MenuItem("I01", "Tacos", "Fresh",true, false, true, CourseType.MAIN, new ArrayList<>());
+        MenuItem item2 = new MenuItem("I02", "Brownie","Rich and fudgy brownie without gluten.", false, false, true, CourseType.DESSERT, new ArrayList<>() );
+        MenuItem item3 = new MenuItem("I03", "Salad", "Classic Caesar salad with a creamy dressing.", false, true, false, CourseType.STARTER, new ArrayList<>());
+        menuItemRepository.save(item1);
+        menuItemRepository.save(item2);
+        menuItemRepository.save(item3);
 
         // Create menus
         MenuRestaurant menu1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true);
         MenuRestaurant menu2 = new MenuRestaurant("M02", "Pizza Menu", 12.99, "Pizza and salad", true, false);
         MenuRestaurant menu3 = new MenuRestaurant("M03", "Salad Menu", 8.99, "Mixed salad and dressing", true, true);
-        // Save menus
-        menuRestaurantRepository.save(menu1);
-        menuRestaurantRepository.save(menu2);
-        menuRestaurantRepository.save(menu3);
-
-        // Create MenuItems
-
-        MenuItem item1 = new MenuItem();
-        item1.setId("I01");
-        item1.setName("Tacos");
-        item1.setSpicy(true);
-        item1.setHasGluten(false);
-        item1.setAvailable(true);
-        item1.setCourseType(CourseType.MAIN);
-        menuItemRepository.save(item1);
-
-        MenuItem item2 = new MenuItem();
-        item2.setId("I02");
-        item2.setName("Brownie");
-        item2.setDescription("Rich and fudgy brownie without gluten.");
-        item2.setSpicy(false);
-        item2.setHasGluten(false);
-        item2.setAvailable(true);
-        item2.setCourseType(CourseType.DESSERT);
-        menuItemRepository.save(item2);
-
-        MenuItem item3 = new MenuItem();
-        item3.setId("I03");
-        item3.setName("Salad");
-        item3.setDescription("Classic Caesar salad with a creamy dressing.");
-        item3.setSpicy(false);
-        item3.setHasGluten(true);
-        item3.setAvailable(false);
-        item3.setCourseType(CourseType.STARTER);
-        menuItemRepository.save(item3);
-
-        MenuItem item4 = new MenuItem();
-        item4.setId("I04");
-        item4.setName("Hotpot");
-        item4.setDescription("Spicy Sichuan hotpot with a variety of vegetables.");
-        item4.setSpicy(true);
-        item4.setHasGluten(false);
-        item4.setAvailable(true);
-        item4.setCourseType(CourseType.MAIN);
-        menuItemRepository.save(item4);
-
-        MenuItem item5 = new MenuItem();
-        item5.setId("I05");
-        item5.setName("Garlic Bread");
-        item5.setDescription("Freshly baked bread with garlic and herbs.");
-        item5.setSpicy(false);
-        item5.setHasGluten(true);
-        item5.setAvailable(false);
-        item5.setCourseType(CourseType.STARTER);
-        menuItemRepository.save(item5);
 
         // Adding items to menus
-        menu1.getMenuItems().add(item1);
-        menu1.getMenuItems().add(item2);
+        menu1.addItem(menuItemRepository.findByName("Tacos"));
+        menu1.addItem(menuItemRepository.findByName("Brownie"));
         menuRestaurantRepository.save(menu1);
-        menu2.getMenuItems().add(item2);
-        menu2.getMenuItems().add(item5);
+        menu2.addItem(menuItemRepository.findByName("Brownie"));
         menuRestaurantRepository.save(menu2);
-        menu3.getMenuItems().add(item3);
-        menu3.getMenuItems().add(item4);
-        menu3.getMenuItems().add(item5);
+        menu3.addItem(menuItemRepository.findByName("Salad"));
         menuRestaurantRepository.save(menu3);
 
-        // Print all the content from menuRestaurantRepository
-        System.out.println("--------------------");
-        System.out.println(menuRestaurantRepository.findAll());
-        System.out.println("--------------------");
+//        // Create a list of all menu
+//        ArrayList<MenuRestaurant> menus = new ArrayList<>();
+//        menus.addAll(Arrays.asList(menu1, menu2, menu3));
+//        // Print the number of orders
+//        System.out.println("Menus");
+//        System.out.println("Total number of orders: " + menus.size() + " menus.");
+//        System.out.println("--------------------");
+//
+//        // Create a list of all menuItems
+//        ArrayList<MenuItem> menuItems = new ArrayList<>();
+//        menuItems.addAll(Arrays.asList(item1, item2, item3));
+//        // Print the number of items
+//        System.out.println("Menu Items");
+//        System.out.println("Total number of items: " + menuItems.size() + " items.");
+//        System.out.println("--------------------");
+//
 
-        // Create a list of all menu
-        ArrayList<MenuRestaurant> menus = new ArrayList<>();
-        menus.addAll(Arrays.asList(menu1, menu2, menu3));
-        // Print the number of orders
-        System.out.println("Menus");
-        System.out.println("Total number of orders: " + menus.size() + " menus.");
-        System.out.println("--------------------");
 
-        // Create a list of all menuItems
-        ArrayList<MenuItem> menuItems = new ArrayList<>();
-        menuItems.addAll(Arrays.asList(item1, item2, item3, item4, item5));
-        // Print the number of items
-        System.out.println("Menu Items");
-        System.out.println("Total number of items: " + menuItems.size() + " items.");
-        System.out.println("--------------------");
-
-        // Print
-        /*
-        System.out.println(menus);
-        System.out.println("--------------------");
-        System.out.println(menuItems);
-        */
         // MenuRestaurant
         // When
         Optional<MenuRestaurant> foundMenu = menuRestaurantRepository.findById("M01");
@@ -137,9 +77,14 @@ public class RelationshipMenuMenuItemTest {
 
         // MenuItem
         // When
-        Optional<MenuItem> foundItem = menuItemRepository.findById("I01");
+
+        Optional<MenuItem> foundItem = Optional.ofNullable(menuItemRepository.findByName("Tacos"));
         System.out.println("--------------------");
-        System.out.println("Item ID: " + foundItem.get().getId());
+        System.out.println(menuItemRepository.count());
+        //menuItemRepository.findAll().forEach(System.out::println);
+        System.out.println(foundItem.isPresent());
+        System.out.println("Item name: " + foundItem.get().getName());
+
         System.out.println(foundItem.get());
         // Then
         assertThat(foundItem).isPresent();

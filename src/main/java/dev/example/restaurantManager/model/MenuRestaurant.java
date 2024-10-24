@@ -24,7 +24,7 @@ public class MenuRestaurant  {
 
     // Many to Many with Orders
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
-    private List<OrderRestaurant> orders = new ArrayList<>();
+    private List<OrderRestaurant> orders;
 
     // Many to Many with MenuItems
     @ManyToMany(fetch = FetchType.LAZY, cascade =
@@ -37,18 +37,17 @@ public class MenuRestaurant  {
     private List<MenuItem> menuItems = new ArrayList<>();
 
     // Create add method
-    public List<MenuItem> addItem(MenuItem item){
+    public void addItem(MenuItem item){
         this.menuItems.add(item);
         item.getMenuRestaurants().add(this);
-        return this.menuItems;
+
     }
     // Create remove method
-    public List<MenuItem> removeItem(MenuItem item) {
+    public void removeItem(MenuItem item) {
         this.menuItems.remove(item);
         item.getMenuRestaurants().remove(this);
-        return this.menuItems;
-    }
 
+    }
 
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
         this.id = id;
@@ -70,7 +69,7 @@ public class MenuRestaurant  {
                 ", active=" + active +
                 ", water=" + water +
                 ", ordersCount=" + (orders != null ? orders.size() : 0) +
-                ", orders=" + orders +
+                //", orders=" + orders +
                 ", menuItems=" + menuItems +
                 '}';
     }
