@@ -65,7 +65,6 @@ public class MenuItemTest {
             menuItemRepository.save(mi);
         }
 
-
         // check if saved
         List<MenuItem> items = menuItemRepository.findAll();
         for(MenuItem mi:menuItems){
@@ -86,15 +85,13 @@ public class MenuItemTest {
 
 
     @Test
-    public void relatedMenuItemsToMenuUnidirectionalTest() {
+    public void relationshipMenuItemsToMenuUnidirectionalTest() {
 
         List<MenuItem> menuItems = createFakeMenuItems();
 
         for(MenuItem mi:menuItems){
             menuItemRepository.save(mi);
         }
-
-
 
         MenuRestaurant m1 = new MenuRestaurant();
         m1.setId("M1");
@@ -117,14 +114,13 @@ public class MenuItemTest {
     }
 
     @Test
-    public void relatedMenuItemsToMenuBidirectionalTest() {
+    public void relationshipMenuItemsToMenuBidirectionalTest() {
 
         List<MenuItem> menuItems = createFakeMenuItems();
 
         for(MenuItem mi:menuItems){
             menuItemRepository.save(mi);
         }
-
 
         MenuRestaurant m1 = new MenuRestaurant();
         m1.setId("M1");
@@ -133,9 +129,17 @@ public class MenuItemTest {
         m1.setPrice(25.50);
         m1.setActive(true);
         m1.setWater(true);
-        m1.setItems(menuItems);
+        // setting relationship in MenuItems
+        m1.addMenuItems(menuItems);
 
         menuRepository.save(m1);
+
+        // save relationship
+        for(MenuItem mi:menuItems){
+            mi.addMenus(Arrays.asList(m1));
+            menuItemRepository.save(mi);
+        }
+
 
         Optional<MenuItem> mi1Found =  menuItemRepository.findById(menuItems.get(0).getId());
 
@@ -144,7 +148,7 @@ public class MenuItemTest {
         MenuItem mi1Memory = menuItems.get(0);
         assertThat(mi1DB.getId().equals(mi1Memory.getId())).isEqualTo(true);
 
-        List<MenuRestaurant> menus =mi1DB.getMenus();
+        List<MenuRestaurant> menus = mi1DB.getMenus();
         MenuRestaurant m1DB = menus == null ? null: menus.getFirst();
 
         assertThat(m1DB.getItems().size() == m1.getItems().size()).isEqualTo(true);
@@ -153,4 +157,42 @@ public class MenuItemTest {
 
     }
 
+    @Test
+    public void removeRelationshipMenuItemsToMenuTest() {
+
+        List<MenuItem> menuItems = createFakeMenuItems();
+
+        for(MenuItem mi:menuItems){
+            menuItemRepository.save(mi);
+        }
+
+        MenuRestaurant m1 = new MenuRestaurant();
+        m1.setId("M1");
+        m1.setName("Italliano");
+        m1.setContent("Menú completo: ensalada, macarrones y tiramisú");
+        m1.setPrice(25.50);
+        m1.setActive(true);
+        m1.setWater(true);
+        // setting relationship in MenuItems
+        m1.addMenuItems(menuItems);
+
+        menuRepository.save(m1);
+
+        Optional<MenuRestaurant> menuFound = menuRepository.findById("M1");
+        assertThat(menuFound).isPresent();
+        MenuRestaurant m1DB = menuFound.get();
+        // check that all menuItems are in DB
+        assertThat(m1DB.getItems().size()==menuItems.size()).isEqualTo(true);
+
+        // now we delete menuItems
+        m1DB.removeMenuItems(menuItems);
+        menuRepository.save(m1DB);
+
+        Optional<MenuRestaurant> menuFound2 = menuRepository.findById("M1");
+        assertThat(menuFound2).isPresent();
+        MenuRestaurant m2DB = menuFound2.get();
+        // check that no menuItem is in DB
+        assertThat(m1DB.getItems().size()==0).isEqualTo(true);
+
+    }
 }
