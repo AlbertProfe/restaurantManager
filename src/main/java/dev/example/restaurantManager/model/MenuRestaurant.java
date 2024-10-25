@@ -1,5 +1,6 @@
 package dev.example.restaurantManager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,10 +24,12 @@ public class MenuRestaurant  {
     private boolean water;
 
     // Many to Many with Orders
+    @JsonIgnore
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
     private List<OrderRestaurant> orders;
 
     // Many to Many with MenuItems
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade =
             {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(

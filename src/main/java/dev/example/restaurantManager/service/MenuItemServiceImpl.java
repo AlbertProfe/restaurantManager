@@ -28,8 +28,14 @@ public class MenuItemServiceImpl implements MenuItemService{
     public MenuItem createMenuItem(MenuItem menuItem) {
         // not needed because it's already generated in the own entity
         //menuItem.setId(UUID.randomUUID().toString());
-        return menuItemRepository.save(menuItem);
+        Optional<MenuItem> menuItemCreated = menuItemRepository.findById(menuItem.getId());
+        if(menuItemCreated.isPresent()){
+            return null;
+        }
+        menuItemRepository.save(menuItem);
+        return menuItem;
     }
+
 
     @Override
     public MenuItem getMenuItemById(String id) {

@@ -1,5 +1,6 @@
 package dev.example.restaurantManager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -30,6 +31,7 @@ public class MenuItem {
 //    private Set<Menu> menus = new HashSet<>();
 
     // Many to many with
+    @JsonIgnore
     @ManyToMany(mappedBy = "menuItems", fetch = FetchType.LAZY)
     private List<MenuRestaurant> menuRestaurants;
 

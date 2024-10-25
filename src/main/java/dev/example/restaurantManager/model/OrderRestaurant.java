@@ -3,6 +3,8 @@ package dev.example.restaurantManager.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +26,7 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade =
             {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(

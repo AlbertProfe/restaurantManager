@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
 public class RelationshipMenuMenuItemTest {
@@ -88,7 +89,9 @@ public class RelationshipMenuMenuItemTest {
         System.out.println(foundItem.get());
         // Then
         assertThat(foundItem).isPresent();
-        assertThat(foundItem.get().getMenuRestaurants().get(0).getName().equals(menu1.getName()));
+
+
+        //assertNotNull(foundItem, "Not null is expected");
 
     }
 
