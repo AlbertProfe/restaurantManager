@@ -17,7 +17,7 @@ public interface TableRepository extends JpaRepository <TableRestaurant, String>
 //    ArrayList<TableRestaurant> FindByQty(int qty);
 //    // 3. Find tables by busy or not
 //    List<TableRestaurant> findByBusy(boolean busy);
-//
-//
+
+
 
 }

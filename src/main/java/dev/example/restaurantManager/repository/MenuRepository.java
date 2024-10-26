@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface MenuRepository extends JpaRepository <MenuRestaurant, String> {
-//
-//
+
+
 //    // 0. Count menus by name
 //    int countByName(String name);
 //    // 1. Find menus by name

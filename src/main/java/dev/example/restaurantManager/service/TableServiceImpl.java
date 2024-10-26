@@ -1,5 +1,6 @@
 package dev.example.restaurantManager.service;
 
+import dev.example.restaurantManager.model.MenuRestaurant;
 import dev.example.restaurantManager.model.TableRestaurant;
 import dev.example.restaurantManager.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,13 @@ public class TableServiceImpl implements TableService{
 
     @Override
     public TableRestaurant createTable(TableRestaurant table) {
-        table.setId(UUID.randomUUID().toString());
-        return tableRepository.save(table);
+        Optional<TableRestaurant> tableOptional = tableRepository.findById(table.getId());
+        if (tableOptional.isPresent()) {
+            return null;
+        } else {
+            tableRepository.save(table);
+            return table;
+        }
     }
 
     @Override
