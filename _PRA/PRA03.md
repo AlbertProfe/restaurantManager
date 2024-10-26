@@ -26,7 +26,7 @@ Summary tasks:
 - [X] Develop REST Controllers
 - [X] Configure H2 Database
 - [X] Write Unit Tests
-- [ ] Test with Swagger API
+- [X] Test with Swagger API
 
 Tasks:
 
