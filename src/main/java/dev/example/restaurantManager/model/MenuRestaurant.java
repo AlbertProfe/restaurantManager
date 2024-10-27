@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -27,7 +28,7 @@ public class MenuRestaurant {
     private List<OrderRestaurant> orders = new ArrayList<>();
 
     @Getter
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "menu_restaurant_menu_item",
             joinColumns = @JoinColumn(name = "menu_restaurant_id"),
@@ -51,6 +52,21 @@ public class MenuRestaurant {
         menuItem.getMenus().add(this);
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MenuRestaurant that = (MenuRestaurant) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
     // We might want to exclude 'orders' from toString() to avoid circular references
     @Override
     public String toString() {
@@ -67,4 +83,5 @@ public class MenuRestaurant {
               //  ", menuItems=" + menuItems +
                 '}';
     }
+
 }
