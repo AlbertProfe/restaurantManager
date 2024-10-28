@@ -1,9 +1,6 @@
 package dev.example.restaurantManager.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,19 +19,32 @@ public class TableRestaurant {
     private int qty;
     private boolean busy;
 
-    @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL,
+       fetch = FetchType.EAGER)
     private ArrayList<Booking> bookings ;
 
-
     // we must create a VERY CONCRETE constructor to RUN the OLD tests
-    public TableRestaurant(String name, String description , int qty,  boolean busy) {
+    public TableRestaurant(String name, String description, int qty, boolean busy) {
+        this.name = name;
+        this.description = description;
+        this.qty = qty;
+        this.busy = busy;
     }
-
 
     //method to add
     public void addBooking(Booking booking) {
-        this.getBookings().add(booking);
-        if (booking.getTableRestaurantMapped() != null) booking.getTableRestaurantMapped().getBookings().remove(booking);
+        if (bookings == null) {
+            bookings = new ArrayList<>();
+        }
+        // Check if the booking is not already in this table's bookings
+        if (!bookings.contains(booking)) {
+            this.getBookings().add(booking);
+        }
+
+        /*
+        if (booking.getTableRestaurantMapped() != null)
+            booking.getTableRestaurantMapped().getBookings().remove(booking);
+        */
         booking.setTableRestaurantMapped(this);
     }
 

@@ -3,8 +3,6 @@ package dev.example.restaurantManager.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,36 +25,26 @@ public class OrderRestaurant {
     private boolean paid;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER
+    @ManyToMany(fetch = FetchType.LAZY
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name = "order_menu",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "menu_id")
+            name = "ORDER_RESTAURANT_MENU",
+            joinColumns = @JoinColumn(name = "ORDER_RESTAURANT_FK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "MENU_RESTAURANT_FK_ID")
     )
     private List<MenuRestaurant> menus = new ArrayList<>();
 
     public List<MenuRestaurant> addMenu(MenuRestaurant menu) {
-        this.menus.add(menu);
-        menu.getOrders().add(this);
-
+            this.menus.add(menu);
+            menu.getOrders().add(this);
         return this.menus;
     }
 
     public List<MenuRestaurant> removeMenu(MenuRestaurant menu) {
-        this.menus.remove(menu);
-        menu.getOrders().remove(this);
-
+            this.menus.remove(menu);
+            menu.getOrders().remove(this);
         return this.menus;
     }
-
-/*    public List<MenuRestaurant> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<MenuRestaurant> menus) {
-        this.menus = menus;
-    }*/
 
     @Override
     public String toString() {
@@ -71,7 +59,5 @@ public class OrderRestaurant {
                 ", menus=" + menus +
                 '}';
     }
-
-
 
 }
