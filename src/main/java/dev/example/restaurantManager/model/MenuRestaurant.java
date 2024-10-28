@@ -66,7 +66,7 @@ public class MenuRestaurant {
 
     public void addOrderMenuQty(OrderMenuQty orderMenuQty) {
         this.orderMenuQty.add(orderMenuQty);
-        orderMenuQty.setMenuRestaurantMapped(this); // implement method setMenu()
+        orderMenuQty.setMenuRestaurantMapped(this);
     }
 
     @Override

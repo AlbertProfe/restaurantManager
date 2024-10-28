@@ -1,6 +1,7 @@
 package dev.example.restaurantManager.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -62,4 +63,7 @@ public class OrderRestaurant {
                 '}';
     }
 
+    public Collection<Object> getOrderMenuQtyList() {
+        return null;
+    }
 }
