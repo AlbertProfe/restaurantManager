@@ -24,7 +24,7 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
-    @JsonIgnore
+    /*@JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -32,18 +32,20 @@ public class OrderRestaurant {
             joinColumns = @JoinColumn(name = "ORDER_RESTAURANT_FK_ID"),
             inverseJoinColumns = @JoinColumn(name = "MENU_RESTAURANT_FK_ID")
     )
-    private List<MenuRestaurant> menus = new ArrayList<>();
+    private List<MenuRestaurant> menus = new ArrayList<>();*/
 
-    public List<MenuRestaurant> addMenu(MenuRestaurant menu) {
-            this.menus.add(menu);
-            menu.getOrders().add(this);
-        return this.menus;
+    @OneToMany(mappedBy = "orderRestaurantMapped", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private ArrayList<OrderMenuQty> orderMenuQty;
+
+    public void addOrderMenuQty(OrderMenuQty orderMenuQty) {
+        this.orderMenuQty.add(orderMenuQty);
+        orderMenuQty.setOrderRestaurantMapped(this); // Set the back reference
     }
 
-    public List<MenuRestaurant> removeMenu(MenuRestaurant menu) {
-            this.menus.remove(menu);
-            menu.getOrders().remove(this);
-        return this.menus;
+    public void removeOrderMenuQty(OrderMenuQty orderMenuQty) {
+        this.orderMenuQty.remove(orderMenuQty);
+        orderMenuQty.setOrderRestaurantMapped(null); // Clear the back reference
     }
 
     @Override
@@ -55,8 +57,8 @@ public class OrderRestaurant {
                 ", peopleQty=" + peopleQty +
                 ", totalPayment=" + totalPayment +
                 ", paid=" + paid +
-                ", menusCount=" + (menus != null ? menus.size() : 0) +
-                ", menus=" + menus +
+                ", orderMenuQtyCount=" + (orderMenuQty != null ? orderMenuQty.size() : 0) +
+                ", orderMenuQty=" + orderMenuQty +
                 '}';
     }
 

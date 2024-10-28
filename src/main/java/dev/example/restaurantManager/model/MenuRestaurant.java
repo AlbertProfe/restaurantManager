@@ -30,9 +30,9 @@ public class MenuRestaurant {
     private boolean active;
     private boolean water;
 
-    @JsonIgnore
+    /*@JsonIgnore
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
-    private List<OrderRestaurant> orders = new ArrayList<>();
+    private List<OrderRestaurant> orders = new ArrayList<>();*/
 
     @Getter
     @ManyToMany(fetch = FetchType.LAZY)
@@ -41,7 +41,12 @@ public class MenuRestaurant {
             joinColumns = @JoinColumn(name = "menu_restaurant_id"),
             inverseJoinColumns = @JoinColumn(name = "menu_item_id")
     )
-    private List<MenuItem> menuItems = new ArrayList<>();
+    private List<MenuItem> menuItems;
+
+    //PRA04 relationship
+    @OneToMany(mappedBy = "menuRestaurantMapped", cascade = CascadeType.ALL,
+    fetch = FetchType.LAZY)
+    private ArrayList<OrderMenuQty> orderMenuQty;
 
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
         this.id = id;
@@ -50,7 +55,7 @@ public class MenuRestaurant {
         this.content = content;
         this.active = active;
         this.water = water;
-        this.orders = new ArrayList<>();
+        this.orderMenuQty = new ArrayList<>();
         this.menuItems = new ArrayList<>();
     }
 
@@ -59,8 +64,11 @@ public class MenuRestaurant {
         menuItem.getMenus().add(this);
     }
 
-    //We  might want to exclude 'orders' from toString()
-    // to avoid circular references
+    public void addOrderMenuQty(OrderMenuQty orderMenuQty) {
+        this.orderMenuQty.add(orderMenuQty);
+        orderMenuQty.setMenuRestaurantMapped(this); // implement method setMenu()
+    }
+
     @Override
     public String toString() {
         return "MenuRestaurant{" +
@@ -70,8 +78,7 @@ public class MenuRestaurant {
                 ", content='" + content + '\'' +
                 ", active=" + active +
                 ", water=" + water +
-                ", ordersCount=" + (orders != null ? orders.size() : 0) +
-                ", orders=" + orders + '\'' +
+                ", orderMenuQtyCount=" + (orderMenuQty != null ? orderMenuQty.size() : 0) +
                 ", menuItemsCount=" + + (menuItems != null ? menuItems.size() : 0) +
               //  ", menuItems=" + menuItems +
                 '}';
