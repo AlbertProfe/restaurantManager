@@ -6,15 +6,21 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import lombok.*;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class MenuRestaurant  {
+public class MenuRestaurant {
 
     @Id
     private String id;
@@ -28,6 +34,15 @@ public class MenuRestaurant  {
     @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
     private List<OrderRestaurant> orders = new ArrayList<>();
 
+    @Getter
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "menu_restaurant_menu_item",
+            joinColumns = @JoinColumn(name = "menu_restaurant_id"),
+            inverseJoinColumns = @JoinColumn(name = "menu_item_id")
+    )
+    private List<MenuItem> menuItems = new ArrayList<>();
+
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
         this.id = id;
         this.name = name;
@@ -35,6 +50,13 @@ public class MenuRestaurant  {
         this.content = content;
         this.active = active;
         this.water = water;
+        this.orders = new ArrayList<>();
+        this.menuItems = new ArrayList<>();
+    }
+
+    public void addMenuItem(MenuItem menuItem) {
+        this.menuItems.add(menuItem);
+        menuItem.getMenus().add(this);
     }
 
     //We  might want to exclude 'orders' from toString()
@@ -48,6 +70,10 @@ public class MenuRestaurant  {
                 ", content='" + content + '\'' +
                 ", active=" + active +
                 ", water=" + water +
+                ", ordersCount=" + (orders != null ? orders.size() : 0) +
+                ", orders=" + orders + '\'' +
+                ", menuItemsCount=" + + (menuItems != null ? menuItems.size() : 0) +
+              //  ", menuItems=" + menuItems +
                 '}';
     }
 
@@ -73,4 +99,3 @@ public class MenuRestaurant  {
     }
 
 }
-

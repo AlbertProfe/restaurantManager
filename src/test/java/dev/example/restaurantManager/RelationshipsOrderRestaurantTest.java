@@ -27,9 +27,9 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
         @Test
         public void TestCreateOrder() {
                 // Create sample menus
-                MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true, null);
-                MenuRestaurant menuRestaurant2 = new MenuRestaurant("M02","Pizza Menu", 12.99, "Pizza and salad", true, false, null);
-                MenuRestaurant menuRestaurant3 = new MenuRestaurant("M03","Salad Menu", 8.99, "Mixed salad and dressing", true, true, null);
+                MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true);
+                MenuRestaurant menuRestaurant2 = new MenuRestaurant("M02","Pizza Menu", 12.99, "Pizza and salad", true, false);
+                MenuRestaurant menuRestaurant3 = new MenuRestaurant("M03","Salad Menu", 8.99, "Mixed salad and dressing", true, true);
                 // Save sample menus
                 menuRestaurantRepository.save(menuRestaurant1);
                 menuRestaurantRepository.save(menuRestaurant2);
@@ -113,9 +113,9 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
 
         @Test
         public void TestCreateOrderMenu () {
-                MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true, null);
-                MenuRestaurant menuRestaurant2 = new MenuRestaurant("M02","Pizza Menu", 12.99, "Pizza and salad", true, false, null);
-                MenuRestaurant menuRestaurant3 = new MenuRestaurant("M03","Salad Menu", 8.99, "Mixed salad and dressing", true, true, null);
+                MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true);
+                MenuRestaurant menuRestaurant2 = new MenuRestaurant("M02","Pizza Menu", 12.99, "Pizza and salad", true, false);
+                MenuRestaurant menuRestaurant3 = new MenuRestaurant("M03","Salad Menu", 8.99, "Mixed salad and dressing", true, true);
                 // Save sample menus
                 menuRestaurantRepository.save(menuRestaurant1);
                 menuRestaurantRepository.save(menuRestaurant2);
