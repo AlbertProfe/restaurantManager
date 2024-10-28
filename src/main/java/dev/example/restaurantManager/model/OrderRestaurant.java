@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Getter
 @Setter
@@ -17,6 +18,8 @@ import lombok.*;
 public class OrderRestaurant {
 
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private Date date;
     private String waiter;
@@ -24,27 +27,9 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY
-            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "ORDER_RESTAURANT_MENU",
-            joinColumns = @JoinColumn(name = "ORDER_RESTAURANT_FK_ID"),
-            inverseJoinColumns = @JoinColumn(name = "MENU_RESTAURANT_FK_ID")
-    )
-    private List<MenuRestaurant> menus = new ArrayList<>();
-
-    public List<MenuRestaurant> addMenu(MenuRestaurant menu) {
-            this.menus.add(menu);
-            menu.getOrders().add(this);
-        return this.menus;
-    }
-
-    public List<MenuRestaurant> removeMenu(MenuRestaurant menu) {
-            this.menus.remove(menu);
-            menu.getOrders().remove(this);
-        return this.menus;
-    }
+   @OneToMany(mappedBy = "orderRestaurantMapped", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @JsonIgnore
+   private List<OrderMenuQty> ordersQty= new ArrayList<>();
 
     @Override
     public String toString() {
@@ -55,8 +40,6 @@ public class OrderRestaurant {
                 ", peopleQty=" + peopleQty +
                 ", totalPayment=" + totalPayment +
                 ", paid=" + paid +
-                ", menusCount=" + (menus != null ? menus.size() : 0) +
-                ", menus=" + menus +
                 '}';
     }
 

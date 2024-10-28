@@ -1,11 +1,10 @@
 package dev.example.restaurantManager.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,6 +16,8 @@ import java.util.Objects;
 public class MenuRestaurant  {
 
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String name;
     private Double price;
@@ -24,9 +25,10 @@ public class MenuRestaurant  {
     private boolean active;
     private boolean water;
 
+    @OneToMany(mappedBy = "menuRestaurantMapped", cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     @JsonIgnore
-    @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
-    private List<OrderRestaurant> orders = new ArrayList<>();
+    private List<OrderMenuQty> ordersQty = new ArrayList<>();
 
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
         this.id = id;
