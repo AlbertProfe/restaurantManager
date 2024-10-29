@@ -7,11 +7,13 @@ import dev.example.restaurantManager.repository.MenuRestaurantRepository;
 import dev.example.restaurantManager.repository.ShippingOrderRepository;
 import dev.example.restaurantManager.repository.TableRestaurantRepository;
 import dev.example.restaurantManager.service.CustomerService;
+import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Propagation;
 
 import java.util.*;
 
@@ -94,6 +96,7 @@ public class OrderMenuQtyTest {
 
 
     @Test
+    @Transactional // (propagation= Propagation.REQUIRED)
     public void createOrderMenuQtyDB() {
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant)orders.get(0);
         List<OrderMenuQty> menusQty = new ArrayList<>();
