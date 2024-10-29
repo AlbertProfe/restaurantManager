@@ -24,27 +24,30 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY
-            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "ORDER_RESTAURANT_MENU",
-            joinColumns = @JoinColumn(name = "ORDER_RESTAURANT_FK_ID"),
-            inverseJoinColumns = @JoinColumn(name = "MENU_RESTAURANT_FK_ID")
-    )
-    private List<MenuRestaurant> menus = new ArrayList<>();
+//    @JsonIgnore
+//    @ManyToMany(fetch = FetchType.LAZY
+//            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(
+//            name = "ORDER_RESTAURANT_MENU",
+//            joinColumns = @JoinColumn(name = "ORDER_RESTAURANT_FK_ID"),
+//            inverseJoinColumns = @JoinColumn(name = "MENU_RESTAURANT_FK_ID")
+//    )
 
-    public List<MenuRestaurant> addMenu(MenuRestaurant menu) {
-            this.menus.add(menu);
-            menu.getOrders().add(this);
-        return this.menus;
-    }
+    @OneToMany(mappedBy = "orderRestaurantMapped", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private ArrayList<OrderMenuQty> orderMenuQts;
+    //private List<MenuRestaurant> menus = new ArrayList<>();
 
-    public List<MenuRestaurant> removeMenu(MenuRestaurant menu) {
-            this.menus.remove(menu);
-            menu.getOrders().remove(this);
-        return this.menus;
-    }
+//    public List<MenuRestaurant> addMenuQty(OrderMenuQty menuQty) {
+//            this.orderMenuQts.add(menuQty);
+//        menuQty.getQty().add(this);
+//        return this.orderMenuQts;
+//    }
+//
+//    public List<OrderMenuQty> removeMenuQty(OrderMenuQty menuQty) {
+//            this.orderMenuQts.remove(menuQty);
+//        menuQty.getOrders().remove(this);
+//        return this.orderMenuQts;
+//    }
 
     @Override
     public String toString() {
@@ -55,8 +58,8 @@ public class OrderRestaurant {
                 ", peopleQty=" + peopleQty +
                 ", totalPayment=" + totalPayment +
                 ", paid=" + paid +
-                ", menusCount=" + (menus != null ? menus.size() : 0) +
-                ", menus=" + menus +
+                //", menusCount=" + (menus != null ? menus.size() : 0) +
+                //", menus=" + menus +
                 '}';
     }
 
