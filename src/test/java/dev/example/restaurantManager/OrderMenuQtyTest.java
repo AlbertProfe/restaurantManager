@@ -7,9 +7,11 @@ import dev.example.restaurantManager.model.OrderMenuQty;
 import dev.example.restaurantManager.model.OrderRestaurant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Date;
 
+@DataJpaTest
 public class OrderMenuQtyTest {
 
     private OrderMenuQty orderMenuQty;
@@ -90,7 +92,7 @@ public class OrderMenuQtyTest {
         assertNotEquals(orderMenuQty, anotherOrderMenuQty);
     }
 
-/* FAILING
+
     @Test
     public void testAddOrderMenuQty() {
         // Add OrderMenuQty to MenuRestaurant
@@ -102,5 +104,5 @@ public class OrderMenuQtyTest {
 
         // Assert that the menuRestaurantMapped property is set correctly in OrderMenuQty
         assertEquals(menuRestaurant, orderMenuQty.getMenuRestaurantMapped());
-    }*/
+    }
 }

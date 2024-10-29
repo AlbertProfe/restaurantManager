@@ -1,4 +1,4 @@
-package dev.example.restaurantManager.service.impl;
+package dev.example.restaurantManager.service;
 
 import dev.example.restaurantManager.model.MenuItem;
 import dev.example.restaurantManager.repository.MenuItemRepository;

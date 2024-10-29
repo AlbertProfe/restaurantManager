@@ -46,7 +46,7 @@ public class MenuRestaurant {
     //PRA04 relationship
     @OneToMany(mappedBy = "menuRestaurantMapped", cascade = CascadeType.ALL,
     fetch = FetchType.LAZY)
-    private ArrayList<OrderMenuQty> orderMenuQty;
+    private List<OrderMenuQty> orderMenuQty = new ArrayList<>();
 
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
         this.id = id;
