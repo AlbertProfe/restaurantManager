@@ -7,6 +7,7 @@ import dev.example.restaurantManager.repository.MenuRestaurantRepository;
 import dev.example.restaurantManager.repository.ShippingOrderRepository;
 import dev.example.restaurantManager.repository.TableRestaurantRepository;
 import dev.example.restaurantManager.service.CustomerService;
+import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,6 +113,9 @@ public class OrderMenuQtyTest {
         Optional<ShippingOrderRestaurant> found =  shippingOrderRepository.findById(so1.getId());
         assertThat(found).isPresent();
         ShippingOrderRestaurant so1DB = found.get();
+
+        // https://stackoverflow.com/questions/11746499/how-to-solve-the-failed-to-lazily-initialize-a-collection-of-role-hibernate-ex
+        Hibernate.initialize(so1DB.getMenus());
         int nMenus = so1DB.getMenus().size();
         for(int i=0;i<nMenus;i++){
             System.out.println(so1DB.getMenus().get(i));
