@@ -1,11 +1,14 @@
 package dev.example.restaurantManager.model;
 
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +19,7 @@ public class ShippingOrderRestaurant extends OrderRestaurant {
     private String riderName;
 
     public ShippingOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                   double totalPayment, boolean paid, ArrayList<MenuRestaurant> menus,
+                                   double totalPayment, boolean paid, List<OrderMenuQty> menus,
                                    String address, String city, String riderName) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
         this.address = address;

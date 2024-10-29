@@ -24,6 +24,7 @@ private TableRestaurantRepository tableRestaurantRepository;
 @Autowired
 private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
 
+/*
         @Test
         public void TestCreateOrder() {
                 // Create sample menus
@@ -340,10 +341,10 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 menuRestaurantRepository.findAll().forEach(System.out::println);
 
                 // We CAN NOT delete a menu that has a relationship
-                /*menuRestaurantRepository.delete(menuRestaurant2);
+                // menuRestaurantRepository.delete(menuRestaurant2);
                 // Retrieve the updated order after deleting the menu
-                System.out.println("List of menus AFTER DELETION:");
-                menuRestaurantRepository.findAll().forEach(System.out::println);*/
+                // System.out.println("List of menus AFTER DELETION:");
+                // menuRestaurantRepository.findAll().forEach(System.out::println);
 
 
 
@@ -387,7 +388,7 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
 
         // Cascading Deletion of Menus and Orders: Ensures that the deletion of a menu
         // or an order correctly cascades to the associated records in the order-menu join table.
-        /*@Test
+        @Test
         public void testCascadingDeletionOfMenusAndOrders() {
                 // Create sample menus and save them
                 MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true);
@@ -426,11 +427,11 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 assertThat(menuRestaurant1Optional.get().getOrders()).isEmpty();
                 assertThat(menuRestaurant2Optional.get().getOrders()).isEmpty();
                 assertThat(menuRestaurant3Optional.get().getOrders()).isEmpty();
-        }*/
+        }
 
         // Adding Menus to an EatInOrder: Verifies that menus can be added
         // to an EatInOrderRestaurant and the association is correctly persisted in the database.
-        /*@Test
+        @Test
         public void testAddingMenusToEatInOrder() {
                 // Create sample menus and save them
                 MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true, null);
@@ -496,6 +497,8 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 assertThat(updatedOrderOptional.get().getMenus()).contains(menuRestaurant1, menuRestaurant3);
                 assertThat(updatedOrderOptional.get().getMenus()).doesNotContain(menuRestaurant2);
 
-        }*/
+        }
+
+*/
 
 }

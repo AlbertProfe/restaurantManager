@@ -28,23 +28,23 @@ public class OrderRestaurant {
     @ManyToMany(fetch = FetchType.LAZY
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name = "ORDER_RESTAURANT_MENU",
-            joinColumns = @JoinColumn(name = "ORDER_RESTAURANT_FK_ID"),
-            inverseJoinColumns = @JoinColumn(name = "MENU_RESTAURANT_FK_ID")
+            name = "ORDER_MENU_QUANTITY",
+            joinColumns = @JoinColumn(name = "ORDER_ID_FK"),
+            inverseJoinColumns = @JoinColumn(name = "MENU_ID_FK")
     )
-    private List<MenuRestaurant> menus = new ArrayList<>();
+    private List<OrderMenuQty> menus;
 
-    public List<MenuRestaurant> addMenu(MenuRestaurant menu) {
-            this.menus.add(menu);
-            menu.getOrders().add(this);
-        return this.menus;
-    }
-
-    public List<MenuRestaurant> removeMenu(MenuRestaurant menu) {
-            this.menus.remove(menu);
-            menu.getOrders().remove(this);
-        return this.menus;
-    }
+//    public List<MenuRestaurant> addMenu(MenuRestaurant menu) {
+//            this.menus.add(menu);
+//            menu.getOrders().add(this);
+//        return this.menus;
+//    }
+//
+//    public List<MenuRestaurant> removeMenu(MenuRestaurant menu) {
+//            this.menus.remove(menu);
+//            menu.getOrders().remove(this);
+//        return this.menus;
+//    }
 
     @Override
     public String toString() {

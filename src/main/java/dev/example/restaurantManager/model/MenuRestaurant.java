@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
-@AllArgsConstructor
+// @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class MenuRestaurant  {
@@ -24,9 +24,16 @@ public class MenuRestaurant  {
     private boolean active;
     private boolean water;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
-    private List<OrderRestaurant> orders = new ArrayList<>();
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
+//    private List<OrderRestaurant> orders = new ArrayList<>();
+
+
+    // to execute old tests
+    public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water,ArrayList<MenuRestaurant> orders){
+        this(id, name, price, content, active, water);
+    }
+
 
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
         this.id = id;
