@@ -26,7 +26,7 @@ public class OrderRestaurant {
     private boolean paid;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY
+    @ManyToMany(fetch = FetchType.EAGER
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "ORDER_MENU_QUANTITY",

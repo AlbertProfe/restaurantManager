@@ -228,7 +228,7 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
 
 
                 // Retrieve the menus and assert the order
-                assertThat(foundOrder.get().getMenus())
+                assertThat(Converter.convertQtyMenus2Menus(foundOrder.get().getMenus()))
                         .extracting("id")
                         .containsExactlyInAnyOrder("M01", "M02", "M03");
                 assertThat(Converter.convertQtyMenus2Menus(foundOrder.get().getMenus()))
@@ -262,16 +262,16 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 // Retrieve the order and assert the menus
                 Optional<OrderRestaurant> foundOrder = orderRestaurantRepository.findById("O01");
                 assertThat(foundOrder).isPresent();
-                assertThat(foundOrder.get().getMenus()).hasSize(6);
+                assertThat(foundOrder.get().getMenus()).hasSize(3);
                 // Since we've implemented equals() and hashCode() methods based on
                 // the compilation of all fields except for orders.
                 // This avoids potential circular reference issues while still providing a comprehensive comparison of the menu items.
                 // we can now use contains() to check if the retrieved menus match the original ones
                 assertThat(Converter.convertQtyMenus2Menus(foundOrder.get().getMenus())).contains(menuRestaurant1, menuRestaurant2, menuRestaurant2, menuRestaurant3, menuRestaurant3, menuRestaurant3);
                 // Retrieve the menus and assert the order
-                assertThat(foundOrder.get().getMenus())
+                assertThat(Converter.convertQtyMenus2Menus(foundOrder.get().getMenus()))
                         .extracting("id")
-                        .containsExactlyInAnyOrder("M01", "M02", "M02","M03, M03, M03");
+                        .containsExactlyInAnyOrder("M01", "M02", "M02","M03", "M03", "M03");
                 assertThat(Converter.convertQtyMenus2Menus(foundOrder.get().getMenus()))
                         .usingElementComparator(Comparator.comparing(MenuRestaurant::getId))
                         .containsExactlyInAnyOrder(menuRestaurant1, menuRestaurant2, menuRestaurant2, menuRestaurant3, menuRestaurant3, menuRestaurant3 );
@@ -304,7 +304,8 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 OrderRestaurant updatedOrder = foundOrder.get();
                 // Let's remove the second menu
                 //updatedOrder.removeMenu(menuRestaurant2);
-                updatedOrder.removeMenu(Converter.convertQtyMenus2Menus(updatedOrder.getMenus()).get(1));
+//                updatedOrder.removeMenu(Converter.convertQtyMenus2Menus(updatedOrder.getMenus()).get(1));
+                updatedOrder.removeMenu(menuRestaurant2);
                 orderRestaurantRepository.save(updatedOrder);
 
                 // Retrieve the updated order and assert the menus

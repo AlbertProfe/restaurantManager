@@ -25,6 +25,7 @@ public class TableRestaurant {
 
     // we must create a VERY CONCRETE constructor to RUN the OLD tests
     public TableRestaurant(String name, String description, int qty, boolean busy) {
+        this.id = name;
         this.name = name;
         this.description = description;
         this.qty = qty;

@@ -21,6 +21,7 @@ public class Converter {
             omq.setMenu(m.getKey());
             omq.setQuantity(m.getValue());
             omq.setOrder(order);
+            menusNew.add(omq);
         }
         return menusNew;
     }
