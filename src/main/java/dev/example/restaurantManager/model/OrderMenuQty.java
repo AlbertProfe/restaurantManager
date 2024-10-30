@@ -30,6 +30,13 @@ public class OrderMenuQty {
     @JoinColumn(name = "ORDER_FK_ID")
     private OrderRestaurant orderRestaurantMapped;
 
+    public OrderMenuQty (int qty, MenuRestaurant menuRestaurant, OrderRestaurant orderRestaurant){
+        this.qty = qty;
+        this.menuRestaurantMapped = menuRestaurant;
+        this.orderRestaurantMapped = orderRestaurant;
+    }
+
+
 
 
 

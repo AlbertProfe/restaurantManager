@@ -59,7 +59,7 @@ public class OrderRestaurant {
                 ", totalPayment=" + totalPayment +
                 ", paid=" + paid +
                 //", menusCount=" + (menus != null ? menus.size() : 0) +
-                //", menus=" + menus +
+                ", orderMenuQts=" + orderMenuQts +
                 '}';
     }
 

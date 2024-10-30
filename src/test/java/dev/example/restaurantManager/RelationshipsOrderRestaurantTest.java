@@ -23,6 +23,8 @@ private OrderRestaurantRepository orderRestaurantRepository;
 private TableRestaurantRepository tableRestaurantRepository;
 @Autowired
 private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
+@Autowired
+private OrderMenuQtyRepository orderMenuQtyRepository;
 
         @Test
         public void TestCreateOrder() {
@@ -120,6 +122,7 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
                 menuRestaurantRepository.save(menuRestaurant1);
                 menuRestaurantRepository.save(menuRestaurant2);
                 menuRestaurantRepository.save(menuRestaurant3);
+
                 // Create 3 Order objects and assign menus
                 OrderRestaurant orderRestaurant1 = new OrderRestaurant("O01", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)));
                 OrderRestaurant orderRestaurant2 = new OrderRestaurant("O02", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant3)));
@@ -127,9 +130,16 @@ private EatInOrderRestaurantRepository eatInOrderRestaurantRepository;
 
                 // Save sample orders
                 orderRestaurantRepository.save(orderRestaurant1);
-                //orderRestaurantRepository.save(orderRestaurant2);
+                orderRestaurantRepository.save(orderRestaurant2);
                 //orderRestaurantRepository.save(orderRestaurant3);
 
+                // Create MenuQts
+                OrderMenuQty orderMenuQty1 = new OrderMenuQty(4, menuRestaurant1, orderRestaurant1);
+                OrderMenuQty orderMenuQty2 = new OrderMenuQty(2, menuRestaurant2, orderRestaurant2);
+
+                // Save sample OrderMenuQty
+                orderMenuQtyRepository.save(orderMenuQty1);
+                orderMenuQtyRepository.save(orderMenuQty2);
 
                 // when
                 Optional<OrderRestaurant> found = orderRestaurantRepository.findById("O01");
