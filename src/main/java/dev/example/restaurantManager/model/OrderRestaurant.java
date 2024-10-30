@@ -47,6 +47,28 @@ public class OrderRestaurant {
     }
 
 
+    public List<OrderMenuQty> addMenuQty(MenuRestaurant menu, int qty) {
+        if(this.getMenus()==null){
+            this.setMenus(new ArrayList<OrderMenuQty>());
+        }
+        boolean found = false;
+        for(OrderMenuQty omq: this.getMenus()){
+            if(omq.getMenu().equals(menu)){
+                omq.setQuantity(omq.getQuantity()+qty);
+                found = true;
+                break;
+            }
+        }
+        if(!found){
+            OrderMenuQty omq = new OrderMenuQty();
+            omq.setMenu(menu);
+            omq.setQuantity(qty);
+            omq.setOrder(this);
+            this.getMenus().add(omq);
+        }
+        return this.getMenus();
+    }
+
     public List<OrderMenuQty> addMenu(MenuRestaurant menu) {
         if(this.getMenus()==null){
             this.setMenus(new ArrayList<OrderMenuQty>());
@@ -65,6 +87,24 @@ public class OrderRestaurant {
             omq.setQuantity(1);
             omq.setOrder(this);
             this.getMenus().add(omq);
+        }
+        return this.getMenus();
+    }
+
+    public List<OrderMenuQty> removeMenuQty(MenuRestaurant menu, int qty) {
+        if(this.getMenus()==null){
+            return null;
+        }
+        for(OrderMenuQty omq: this.getMenus()){
+            if(omq.getMenu().equals(menu)){
+                int oldQty = omq.getQuantity();
+                if (oldQty > qty) {
+                    omq.setQuantity(omq.getQuantity() - qty);
+                } else{
+                    this.getMenus().remove(omq);
+                }
+                break;
+            }
         }
         return this.getMenus();
     }

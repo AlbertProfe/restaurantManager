@@ -2,10 +2,7 @@ package dev.example.restaurantManager;
 
 import com.github.javafaker.Faker;
 import dev.example.restaurantManager.model.*;
-import dev.example.restaurantManager.repository.CustomerRepository;
-import dev.example.restaurantManager.repository.MenuRestaurantRepository;
-import dev.example.restaurantManager.repository.ShippingOrderRepository;
-import dev.example.restaurantManager.repository.TableRestaurantRepository;
+import dev.example.restaurantManager.repository.*;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +25,8 @@ public class OrderMenuQtyTest {
     CustomerRepository customerRepository;
     @Autowired
     TableRestaurantRepository tableRepository;
+    @Autowired
+    OrderMenuQtyRepository orderMenuQtyRepository;
 
 
     List<MenuRestaurant> menus;
@@ -128,6 +127,52 @@ public class OrderMenuQtyTest {
 
     }
 
+
+    @Test
+    public void createOrderManyMenus() {
+        ShippingOrderRestaurant so1 = (ShippingOrderRestaurant)orders.get(1);
+        List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
+        int nMenus = 0;
+        int totalQtyMenus = 0;
+        // for every menu qty will be greater than 1
+        for(OrderMenuQty q:menusQty){
+            if(q.getQuantity()<2){
+                q.setQuantity(faker.random().nextInt(2,8));
+            }
+            totalQtyMenus += q.getQuantity();
+            nMenus += 1;
+        }
+        so1.setMenus(menusQty);
+        System.out.println("total menus: " + nMenus);
+        System.out.println("total qty menus: " + totalQtyMenus);
+        shippingOrderRepository.save(so1);
+
+        Optional<ShippingOrderRestaurant> found = shippingOrderRepository.findById(so1.getId());
+        assertThat(found).isPresent();
+        assertThat(found.get().getId()).isEqualTo(so1.getId());
+        assertThat(found.get().getMenus().stream()
+                .count()
+        ).isEqualTo(nMenus);
+        assertThat(found.get().getMenus().stream()
+                .mapToInt(omq -> omq.getQuantity())
+                .sum()
+        ).isEqualTo(totalQtyMenus);
+
+
+    }
+
+    @Test
+    public void checkOrderMenuQtyRepository() {
+        ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(2);
+        List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
+        so1.setMenus(menusQty);
+        shippingOrderRepository.save(so1);
+
+        List<OrderMenuQty> menusQtyDB = orderMenuQtyRepository.findAll();
+
+        assertThat(menusQtyDB).containsAll(menusQty);
+
+    }
 
 
 
