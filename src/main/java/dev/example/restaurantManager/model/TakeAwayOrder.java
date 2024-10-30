@@ -29,6 +29,16 @@ public class TakeAwayOrder extends OrderRestaurant {
         this.customerTakeAway = customerTakeAway;
     }
 
+    public TakeAwayOrder(String id, Date date, String waiter, int peopleQty,
+                         double totalPayment, boolean paid, ArrayList<MenuRestaurant> menus,
+                         Customer customerTakeAway) {
+
+        // THIS PART is SUPERCLASS
+        super(id, date, waiter, peopleQty, totalPayment, paid, menus);
+        // THIS PART is SUBCLASS
+        this.customerTakeAway = customerTakeAway;
+    }
+
     @Override
     public String toString() {
         return super.toString() + "\n" +

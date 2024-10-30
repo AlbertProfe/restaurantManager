@@ -1,11 +1,12 @@
 package dev.example.restaurantManager.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import dev.example.restaurantManager.utilities.Converter;
 
 @Getter
 @Setter
@@ -33,6 +34,60 @@ public class OrderRestaurant {
             inverseJoinColumns = @JoinColumn(name = "MENU_ID_FK")
     )
     private List<OrderMenuQty> menus;
+
+    public OrderRestaurant(String id, Date date, String waiter, int peopleQty,
+                                   double totalPayment, boolean paid, ArrayList<MenuRestaurant> menus){
+        this.id=id;
+        this.date=date;
+        this.waiter=waiter;
+        this.peopleQty=peopleQty;
+        this.totalPayment=totalPayment;
+        this.paid=paid;
+        this.menus = Converter.convertMenus2QtyMenus(this,menus);
+    }
+
+
+    public List<OrderMenuQty> addMenu(MenuRestaurant menu) {
+        if(this.getMenus()==null){
+            this.setMenus(new ArrayList<OrderMenuQty>());
+        }
+        boolean found = false;
+        for(OrderMenuQty omq: this.getMenus()){
+            if(omq.getMenu().equals(menu)){
+                omq.setQuantity(omq.getQuantity()+1);
+                found = true;
+                break;
+            }
+        }
+        if(!found){
+            OrderMenuQty omq = new OrderMenuQty();
+            omq.setMenu(menu);
+            omq.setQuantity(1);
+            omq.setOrder(this);
+            this.getMenus().add(omq);
+        }
+        return this.getMenus();
+    }
+
+    public List<OrderMenuQty> removeMenu(MenuRestaurant menu) {
+        if(this.getMenus()==null){
+            return null;
+        }
+        for(OrderMenuQty omq: this.getMenus()){
+            if(omq.getMenu().equals(menu)){
+                int qty = omq.getQuantity();
+                if (qty > 1) {
+                    omq.setQuantity(omq.getQuantity() - 1);
+                } else{
+                    this.getMenus().remove(omq);
+                }
+                break;
+            }
+        }
+        return this.getMenus();
+    }
+
+
 
 //    public List<MenuRestaurant> addMenu(MenuRestaurant menu) {
 //            this.menus.add(menu);

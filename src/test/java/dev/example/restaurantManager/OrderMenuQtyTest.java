@@ -66,9 +66,9 @@ public class OrderMenuQtyTest {
         menuRepository.save(menu3);
 
         // Create 3 ShippingOrder objects
-        ShippingOrderRestaurant so1 = new ShippingOrderRestaurant("SO1", new Date(), "John", 2, 0.0, false, null, "123 Main St", "New York", "Mike");
-        ShippingOrderRestaurant so2 = new ShippingOrderRestaurant("SO2", new Date(), "Sarah", 1, 0.0, true, null, "456 Elm St", "Los Angeles", "Tom");
-        ShippingOrderRestaurant so3 = new ShippingOrderRestaurant("SO3", new Date(), "Emily", 3, 0.0, false, null, "789 Oak St", "Chicago", "Lisa");
+        ShippingOrderRestaurant so1 = new ShippingOrderRestaurant("SO1", new Date(), "John", 2, 0.0, false, (List)null, "123 Main St", "New York", "Mike");
+        ShippingOrderRestaurant so2 = new ShippingOrderRestaurant("SO2", new Date(), "Sarah", 1, 0.0, true, (List)null, "456 Elm St", "Los Angeles", "Tom");
+        ShippingOrderRestaurant so3 = new ShippingOrderRestaurant("SO3", new Date(), "Emily", 3, 0.0, false, (List)null, "789 Oak St", "Chicago", "Lisa");
         orders = new ArrayList<>(Arrays.asList(so1,so2,so3));
         shippingOrderRepository.save(so1);
         shippingOrderRepository.save(so2);
