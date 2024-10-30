@@ -33,7 +33,9 @@ public class OrderMenuQty {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof OrderMenuQty that)) return false;
-        return quantity == that.quantity && Objects.equals(id, that.id) && Objects.equals(order, that.order) && Objects.equals(menu, that.menu);
+        // don't check because id it's set in db
+        // Objects.equals(id, that.id)
+        return quantity == that.quantity && Objects.equals(order, that.order) && Objects.equals(menu, that.menu);
     }
 
 
