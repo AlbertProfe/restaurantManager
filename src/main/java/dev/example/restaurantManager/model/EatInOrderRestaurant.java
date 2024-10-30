@@ -1,6 +1,7 @@
 package dev.example.restaurantManager.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @Entity
 public class EatInOrderRestaurant extends OrderRestaurant {
 
+    @Transient
     private ArrayList<TableRestaurant> tableRestaurants = new ArrayList<>();
     //private TableRestaurant orderedTableRestaurant;
 
