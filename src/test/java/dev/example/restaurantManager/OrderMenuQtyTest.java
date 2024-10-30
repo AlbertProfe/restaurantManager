@@ -6,14 +6,11 @@ import dev.example.restaurantManager.repository.CustomerRepository;
 import dev.example.restaurantManager.repository.MenuRestaurantRepository;
 import dev.example.restaurantManager.repository.ShippingOrderRepository;
 import dev.example.restaurantManager.repository.TableRestaurantRepository;
-import dev.example.restaurantManager.service.CustomerService;
 import jakarta.transaction.Transactional;
-import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Propagation;
 
 import java.util.*;
 
@@ -40,7 +37,7 @@ public class OrderMenuQtyTest {
 
     @BeforeEach
     public void createDataAndSave2DB() {
-        faker = new Faker();
+        faker = new Faker(new Random(42));
 
         // Create sample customers
         Customer customer1 = new Customer("C1", "John", "john@email.com", "123-456-7890", 30, false, false);
@@ -91,25 +88,29 @@ public class OrderMenuQtyTest {
     }
 
 
-
-
-
-
-    @Test
-    @Transactional // (propagation= Propagation.REQUIRED)
-    public void createOrderMenuQtyDB() {
-        ShippingOrderRestaurant so1 = (ShippingOrderRestaurant)orders.get(0);
+    private List<OrderMenuQty> getRandomMenuQty(OrderRestaurant orderRestaurant){
         List<OrderMenuQty> menusQty = new ArrayList<>();
         for(MenuRestaurant m:menus){
             if (faker.random().nextInt(0,3) == 0){
                 continue;
             }
             OrderMenuQty omq = new OrderMenuQty();
-            omq.setOrder(so1);
+            omq.setOrder(orderRestaurant);
             omq.setMenu(m);
             omq.setQuantity(faker.random().nextInt(1,5));
             menusQty.add(omq);
         }
+        return menusQty;
+    }
+
+
+
+    @Test
+    // https://stackoverflow.com/questions/11746499/how-to-solve-the-failed-to-lazily-initialize-a-collection-of-role-hibernate-ex
+    @Transactional // (propagation= Propagation.REQUIRED)
+    public void createOrderMenuQtyDB() {
+        ShippingOrderRestaurant so1 = (ShippingOrderRestaurant)orders.get(0);
+        List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
         so1.setMenus(menusQty);
         shippingOrderRepository.save(so1);
 
@@ -117,8 +118,6 @@ public class OrderMenuQtyTest {
         assertThat(found).isPresent();
         ShippingOrderRestaurant so1DB = found.get();
 
-        // https://stackoverflow.com/questions/11746499/how-to-solve-the-failed-to-lazily-initialize-a-collection-of-role-hibernate-ex
-        Hibernate.initialize(so1DB.getMenus());
         int nMenus = so1DB.getMenus().size();
         for(int i=0;i<nMenus;i++){
             System.out.println(so1DB.getMenus().get(i));
