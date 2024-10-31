@@ -26,7 +26,7 @@ public class OrderMenuQty {
 
     @Override
     public String toString(){
-        return menu.getId() + " qty:  " + this.quantity;
+        return "id=" + id + ", menú: " + menu.getId() + ", qty:  " + this.quantity;
     }
 
     @Override

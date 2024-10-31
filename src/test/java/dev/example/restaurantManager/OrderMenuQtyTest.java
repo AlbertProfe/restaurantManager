@@ -174,6 +174,49 @@ public class OrderMenuQtyTest {
 
     }
 
+    @Test
+    public void createOrderAndDeleteSomeMenus() {
+        ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(0);
+        List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
+        so1.setMenus(menusQty);
+        shippingOrderRepository.save(so1);
+
+
+
+        Optional<ShippingOrderRestaurant> found = shippingOrderRepository.findById(so1.getId());
+        assertThat(found).isPresent();
+        assertThat(found.get().getId()).isEqualTo(so1.getId());
+        ShippingOrderRestaurant soDB = found.get();
+        List<OrderMenuQty> menus =soDB.getMenus();
+        System.out.println(menus);
+
+        String id = menus.get(0).getId();
+        OrderMenuQty omq =menus.get(0);
+        so1.removeMenuQty(omq.getMenu(),omq.getQuantity());
+        shippingOrderRepository.save(so1);
+
+
+        // https://stackoverflow.com/questions/22688402/delete-not-working-with-jparepository
+        // orderMenuQtyRepository.deleteById(id);
+        // orderMenuQtyRepository.flush();
+        found = shippingOrderRepository.findById(so1.getId());
+        ShippingOrderRestaurant soDB2 = found.get();
+        List<OrderMenuQty> menus2 =soDB2.getMenus();
+        System.out.println(menus2);
+        List<OrderMenuQty> menus3 = orderMenuQtyRepository.findAll();
+
+
+
+//        assertThat(found.get().getMenus().stream()
+//                .count()
+//        ).isEqualTo(nMenus);
+//
+//
+//        List<OrderMenuQty> menusQtyDB = orderMenuQtyRepository.findAll();
+//
+//        assertThat(menusQtyDB).containsAll(menusQty);
+
+    }
 
 
 }
