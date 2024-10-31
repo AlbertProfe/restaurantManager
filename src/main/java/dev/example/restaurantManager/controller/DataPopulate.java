@@ -1,3 +1,4 @@
+/*
 package dev.example.restaurantManager.controller;
 
 import dev.example.restaurantManager.utilities.DataLoader;
@@ -19,4 +20,4 @@ public class DataPopulate {
         dataLoader.loadAllData();
         return ResponseEntity.ok("All data populated successfully");
     }
-}
+}*/

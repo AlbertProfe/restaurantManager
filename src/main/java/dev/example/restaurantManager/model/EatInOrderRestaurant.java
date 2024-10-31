@@ -27,6 +27,11 @@ public class EatInOrderRestaurant extends OrderRestaurant {
     }
 
     @Override
+    public double calculateTotalPayment() {
+        return 0;
+    }
+
+    @Override
     public String toString() {
         return super.toString() + "\n" +
                 "Type: Eat In\n" +

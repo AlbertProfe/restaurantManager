@@ -14,7 +14,7 @@ import lombok.*;
 @Entity
 @Table(name = "ORDER_RESTAURANT")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class OrderRestaurant {
+public abstract class OrderRestaurant {
 
     @Id
     private String id;
@@ -24,7 +24,8 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<OrderMenuQty> orderMenuQties;
 
 
@@ -37,6 +38,8 @@ public class OrderRestaurant {
         this.totalPayment = totalPayment;
         this.paid = paid;
     }
+
+    public abstract double calculateTotalPayment();
 
     // Method to add a menu to the order
     public void addMenu(MenuRestaurant menu, int quantity) {
@@ -62,7 +65,7 @@ public class OrderRestaurant {
                 ", peopleQty=" + peopleQty +
                 ", totalPayment=" + totalPayment +
                 ", paid=" + paid +
-                ", orderMenuQties=" + orderMenuQties +
+
                 '}';
     }
 

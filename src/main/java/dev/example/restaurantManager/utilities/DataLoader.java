@@ -1,3 +1,4 @@
+/*
 package dev.example.restaurantManager.utilities;
 
 import com.github.javafaker.Faker;
@@ -293,4 +294,4 @@ public class DataLoader {
             orderMenuQtyRepository.saveAll(orderMenuQties);
         }
     }
-}
+}*/

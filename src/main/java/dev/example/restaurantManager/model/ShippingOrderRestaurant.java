@@ -16,7 +16,7 @@ public class ShippingOrderRestaurant extends OrderRestaurant {
     private String address;
     private String phoneNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CUSTOMER_SHIPPING_FK_ID")
     private Customer customerShipping;
 
@@ -29,6 +29,11 @@ public class ShippingOrderRestaurant extends OrderRestaurant {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.customerShipping = customerShipping;
+    }
+
+    @Override
+    public double calculateTotalPayment() {
+        return 0;
     }
 
     @Override

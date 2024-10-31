@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class TakeAwayOrder extends OrderRestaurant {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CUSTOMER_TA_FK_ID")
     private Customer customerTakeAway;
 
@@ -24,6 +24,12 @@ public class TakeAwayOrder extends OrderRestaurant {
         super(id, date, waiter, peopleQty, totalPayment, paid);
         this.setOrderMenuQties(orderMenuQties);
         this.customerTakeAway = customerTakeAway;
+    }
+
+
+    @Override
+    public double calculateTotalPayment() {
+        return 0;
     }
 
     @Override
