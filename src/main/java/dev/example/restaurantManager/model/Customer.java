@@ -24,7 +24,7 @@ public class Customer {
     private boolean deleted;
     
     @OneToMany(mappedBy = "customerMapped", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     private List<Booking> bookings;
 
     public Customer(String id, String name, String email, String phoneNumber,

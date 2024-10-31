@@ -34,16 +34,8 @@ public class OrderMenuQtyTest {
 
     Faker faker;
 
-
     @BeforeEach
     public void createDataAndSave2DB() {
-        shippingOrderRepository.deleteAll();
-        customerRepository.deleteAll();
-        orderMenuQtyRepository.deleteAll();
-        menuRepository.deleteAll();
-        tableRepository.deleteAll();
-
-
         faker = new Faker(new Random(42));
 
         // Create sample customers

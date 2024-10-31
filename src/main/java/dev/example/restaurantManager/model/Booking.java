@@ -22,11 +22,11 @@ public class Booking {
     //private boolean confirmed;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TABLE_RESTAURANT_FK_ID")
     private TableRestaurant tableRestaurantMapped;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CUSTOMER_FK_ID")
     private Customer customerMapped;
 

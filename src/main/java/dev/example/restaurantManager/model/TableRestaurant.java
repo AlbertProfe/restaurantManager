@@ -21,7 +21,7 @@ public class TableRestaurant {
     private boolean busy;
 
     @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL,
-       fetch = FetchType.LAZY)
+       fetch = FetchType.EAGER)
     private List<Booking> bookings ;
 
     // we must create a VERY CONCRETE constructor to RUN the OLD tests
