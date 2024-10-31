@@ -25,8 +25,7 @@ public class MenuRestaurant  {
     private boolean active;
     private boolean water;
 
-    @OneToMany(mappedBy = "menuRestaurantMapped", cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "menuRestaurant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<OrderMenuQty> ordersQty = new ArrayList<>();
 

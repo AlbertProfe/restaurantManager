@@ -3,6 +3,8 @@ package dev.example.restaurantManager.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,9 +29,30 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
-   @OneToMany(mappedBy = "orderRestaurantMapped", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-   @JsonIgnore
-   private List<OrderMenuQty> ordersQty= new ArrayList<>();
+    @OneToMany(mappedBy = "orderRestaurant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<OrderMenuQty> ordersQty = new ArrayList<>();
+
+    public List<OrderMenuQty> addOrderMenuQty(OrderMenuQty orderMenuQty) {
+        if(ordersQty == null) {
+            ordersQty = new ArrayList<>();
+            ordersQty.add(orderMenuQty);
+            return ordersQty;
+        }else {
+            ordersQty.add(orderMenuQty);
+            return ordersQty;
+        }
+    }
+    public List<String> getOrderMenuQtyIds() {
+        return ordersQty.stream()
+                .map(OrderMenuQty::getId)
+                .collect(Collectors.toList());
+    }
+
+    public void removeOrderMenuQty(OrderMenuQty orderMenuQty) {
+        ordersQty.remove(orderMenuQty);
+    }
+
 
     @Override
     public String toString() {
@@ -40,6 +63,10 @@ public class OrderRestaurant {
                 ", peopleQty=" + peopleQty +
                 ", totalPayment=" + totalPayment +
                 ", paid=" + paid +
+                ", se han creado: " + (ordersQty == null ? 0 : ordersQty.size()) + " ordenes" +
+                ", las ids son: " + getOrderMenuQtyIds() +
+                ", la cantidad de cada menu es:" + ordersQty.stream().collect(Collectors.groupingBy(OrderMenuQty::getMenuName, Collectors.counting())) +
+                ", los menus son:" + ordersQty.stream().map(OrderMenuQty::getMenuName).collect(Collectors.toList()) +
                 '}';
     }
 

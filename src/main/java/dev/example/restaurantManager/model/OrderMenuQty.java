@@ -1,6 +1,7 @@
 package dev.example.restaurantManager.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.Order;
 import lombok.AllArgsConstructor;
@@ -23,8 +24,31 @@ public class OrderMenuQty {
     private long qty;
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    @JsonIgnore
+    private OrderRestaurant orderRestaurant;
+
     @ManyToOne
     @JoinColumn(name = "menu_id")
-    private Menu menu;
+    @JsonIgnore
+    private MenuRestaurant menuRestaurant;
+
+    public OrderMenuQty(long qty, OrderRestaurant orderRestaurant, MenuRestaurant menuRestaurant) {
+        this.qty = qty;
+        this.orderRestaurant = orderRestaurant;
+        this.menuRestaurant = menuRestaurant;
+    }
+
+    public String getMenuName() {
+        return menuRestaurant.getName();
+    }
+
+    @Override
+    public String toString() {
+        return "OrderMenuQty{" +
+                "id='" + id + '\'' +
+                ", qty=" + qty +
+                ", order=" + orderRestaurant.getId() +
+                ", menu=" + menuRestaurant.getName() +
+                '}';
+    }
 }
