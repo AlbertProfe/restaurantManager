@@ -21,12 +21,12 @@ public class OrderMenuQty {
     private int qty;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "MENU_FK_ID")
     private MenuRestaurant menuRestaurantMapped;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ORDER_FK_ID")
     private OrderRestaurant orderRestaurantMapped;
 
@@ -34,6 +34,15 @@ public class OrderMenuQty {
         this.qty = qty;
         this.menuRestaurantMapped = menuRestaurant;
         this.orderRestaurantMapped = orderRestaurant;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderMenuQty{" +
+                "id='" + id + '\'' +
+                "menuRestaurant" + menuRestaurantMapped +
+                "orderRestaurant" + orderRestaurantMapped +
+                '}';
     }
 
 

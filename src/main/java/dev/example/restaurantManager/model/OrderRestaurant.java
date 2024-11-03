@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Getter
 @Setter
@@ -17,12 +18,23 @@ import lombok.*;
 public class OrderRestaurant {
 
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private Date date;
     private String waiter;
     private int peopleQty;
     private double totalPayment;
     private boolean paid;
+
+    public OrderRestaurant( Date date, String waiter, int peopleQty, double totalPayment, boolean paid){
+        //this.id = id;
+        this.date = date;
+        this.waiter = waiter;
+        this.peopleQty = peopleQty;
+        this.totalPayment = totalPayment;
+        this.paid = paid;
+    }
 
 //    @JsonIgnore
 //    @ManyToMany(fetch = FetchType.LAZY
@@ -59,7 +71,7 @@ public class OrderRestaurant {
                 ", totalPayment=" + totalPayment +
                 ", paid=" + paid +
                 //", menusCount=" + (menus != null ? menus.size() : 0) +
-                ", orderMenuQts=" + orderMenuQts +
+                //", orderMenuQts=" + orderMenuQts +
                 '}';
     }
 

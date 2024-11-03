@@ -3,6 +3,8 @@ package dev.example.restaurantManager.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +16,8 @@ import java.util.Objects;
 public class MenuRestaurant  {
 
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String name;
     private Double price;
@@ -28,8 +32,8 @@ public class MenuRestaurant  {
     private ArrayList<OrderMenuQty> orderMenuQts;
 
 
-    public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water) {
-        this.id = id;
+    public MenuRestaurant(String name, Double price, String content, boolean active, boolean water) {
+        //this.id = id;
         this.name = name;
         this.price = price;
         this.content = content;
@@ -48,7 +52,7 @@ public class MenuRestaurant  {
                 ", content='" + content + '\'' +
                 ", active=" + active +
                 ", water=" + water +
-                ", OrderMenuQts=" + orderMenuQts +
+                //", OrderMenuQts=" + orderMenuQts +
                 '}';
     }
 

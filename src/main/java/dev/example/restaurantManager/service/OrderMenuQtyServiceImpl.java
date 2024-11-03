@@ -20,7 +20,7 @@ public class OrderMenuQtyServiceImpl implements OrderMenuQtyService {
         return orderMenuQtyRepository.findAll();
     }
     public List<OrderMenuQty> getAllByOrderId(String orderId) {
-        return orderMenuQtyRepository.findAllByOrderId(orderId);
+        return orderMenuQtyRepository.findAllByOrderRestaurantMapped_Id(orderId);
     }
 
     @Override

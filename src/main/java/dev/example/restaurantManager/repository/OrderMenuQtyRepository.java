@@ -8,7 +8,7 @@ import java.util.List;
 public interface OrderMenuQtyRepository extends JpaRepository <OrderMenuQty, String> {
 
 
-    List<OrderMenuQty> findAllByOrderId(String orderId);
-
+   //List<OrderMenuQty> findAllByOrderId(String orderId);
+    List<OrderMenuQty> findAllByOrderRestaurantMapped_Id(String orderId);
 
 }

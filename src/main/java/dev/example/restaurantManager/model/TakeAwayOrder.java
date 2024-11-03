@@ -19,11 +19,11 @@ public class TakeAwayOrder extends OrderRestaurant {
 
     // Constructor for TakeAwayOrder with the WHOLE DATA fields
     public TakeAwayOrder(String id, Date date, String waiter, int peopleQty,
-                         double totalPayment, boolean paid, ArrayList<MenuRestaurant> menus,
+                         double totalPayment, boolean paid, ArrayList<OrderMenuQty> orderMenuQty,
                          Customer customerTakeAway) {
 
         // THIS PART is SUPERCLASS
-        super(id, date, waiter, peopleQty, totalPayment, paid, menus);
+        super(id, date, waiter, peopleQty, totalPayment, paid, orderMenuQty);
         // THIS PART is SUBCLASS
         this.customerTakeAway = customerTakeAway;
     }
