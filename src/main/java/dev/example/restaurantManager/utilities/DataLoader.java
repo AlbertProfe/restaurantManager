@@ -1,4 +1,4 @@
-/*
+
 package dev.example.restaurantManager.utilities;
 
 import com.github.javafaker.Faker;
@@ -52,7 +52,7 @@ public class DataLoader {
         // create bookings and assign customers and tables
         createBookingsAndAssignTablesAndCustomers();
         // create orders and assign menus and customers
-        createOrdersAndAssignMenus();
+        //createOrdersAndAssignMenus();
 
         // create eat-in orders, shipping orders and take away orders
         createEatInOrders();
@@ -155,7 +155,7 @@ public class DataLoader {
     // we are going to create 45 orders and then
     // create order menu quantities for each order
     // to create a many-to-many relationship
-    private void createOrdersAndAssignMenus() {
+    /*private void createOrdersAndAssignMenus() {
         List<MenuRestaurant> menus = menuRepository.findAll();
         for (int i = 0; i < 45; i++) {
             OrderRestaurant order = new OrderRestaurant(
@@ -187,7 +187,7 @@ public class DataLoader {
             order.setOrderMenuQties(orderMenuQties);
             orderRepository.save(order);
         }
-    }
+    }*/
 
     // we are going to create 25 eat-in orders
     // and save them in the H2 local database
@@ -294,4 +294,4 @@ public class DataLoader {
             orderMenuQtyRepository.saveAll(orderMenuQties);
         }
     }
-}*/
+}
