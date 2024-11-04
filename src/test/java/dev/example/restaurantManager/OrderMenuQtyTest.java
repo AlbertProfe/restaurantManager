@@ -35,7 +35,15 @@ public class OrderMenuQtyTest {
     Faker faker;
 
     @BeforeEach
-    public void createDataAndSave2DB() {
+    public void createDataAndSave2DBWithoutRelationship() {
+        // delete all data
+        customerRepository.deleteAll();
+        tableRepository.deleteAll();
+        orderMenuQtyRepository.deleteAll();
+        menuRepository.deleteAll();
+        shippingOrderRepository.deleteAll();
+
+        // create always same data
         faker = new Faker(new Random(42));
 
         // Create sample customers
@@ -111,12 +119,17 @@ public class OrderMenuQtyTest {
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant)orders.get(0);
         List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
         so1.setMenus(menusQty);
+        // save relationship to DB
         shippingOrderRepository.save(so1);
 
+        // check if shipping order is in DB
         Optional<ShippingOrderRestaurant> found =  shippingOrderRepository.findById(so1.getId());
         assertThat(found).isPresent();
         ShippingOrderRestaurant so1DB = found.get();
 
+        // check if shipping order has all his menus saved to DB
+        // this method must be @Transactional because
+        // menus in order are fetch.LAZY
         int nMenus = so1DB.getMenus().size();
         for(int i=0;i<nMenus;i++){
             System.out.println(so1DB.getMenus().get(i));
@@ -134,7 +147,7 @@ public class OrderMenuQtyTest {
         List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
         int nMenus = 0;
         int totalQtyMenus = 0;
-        // for every menu qty will be greater than 1
+        // every menu qty will be greater than 1
         for(OrderMenuQty q:menusQty){
             if(q.getQuantity()<2){
                 q.setQuantity(faker.random().nextInt(2,8));
@@ -163,48 +176,75 @@ public class OrderMenuQtyTest {
 
     @Test
     public void checkOrderMenuQtyRepository() {
+        List<OrderMenuQty> menusQtyDB = orderMenuQtyRepository.findAll();
+        // no relationship is on DB
+        assertThat(menusQtyDB.size()).isEqualTo(0);
+
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(2);
         List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
         so1.setMenus(menusQty);
+        // save some relationships
         shippingOrderRepository.save(so1);
 
-        List<OrderMenuQty> menusQtyDB = orderMenuQtyRepository.findAll();
+        menusQtyDB = orderMenuQtyRepository.findAll();
 
+        // check relationships are the same that we assign
         assertThat(menusQtyDB).containsAll(menusQty);
 
     }
 
     @Test
-    public void createOrderAndDeleteSomeMenus() {
+    public void createOrderAndDeleteSomeQtyMenus() {
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(0);
         List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
         so1.setMenus(menusQty);
+        int nMenusOriginal = menusQty.size();
+        // save some order with some menus
         shippingOrderRepository.save(so1);
 
 
-
+        // get order from DB
         Optional<ShippingOrderRestaurant> found = shippingOrderRepository.findById(so1.getId());
         assertThat(found).isPresent();
+        // check order from DB is the same as in memory
         assertThat(found.get().getId()).isEqualTo(so1.getId());
         ShippingOrderRestaurant soDB = found.get();
-        List<OrderMenuQty> menus =soDB.getMenus();
+        // print menu qty from order
+        List<OrderMenuQty> menus = soDB.getMenus();
+        int nMenus1 = menus.size();
         System.out.println(menus);
 
+        // delete first menu qty from order and save to DB using
+        // method removeMenuQty from OrderRestaurant
+        // and save to DB
         String id = menus.get(0).getId();
-        OrderMenuQty omq =menus.get(0);
+        OrderMenuQty omq = menus.get(0);
         so1.removeMenuQty(omq.getMenu(),omq.getQuantity());
         shippingOrderRepository.save(so1);
 
-        // https://stackoverflow.com/questions/22688402/delete-not-working-with-jparepository
-        System.out.println("before deleteById");
-        orderMenuQtyRepository.deleteById(id);
-        System.out.println("after deleteById");
-        // orderMenuQtyRepository.flush();
+        // load the order from DB
+        // now should have 1 menu qty less
         found = shippingOrderRepository.findById(so1.getId());
         ShippingOrderRestaurant soDB2 = found.get();
-        List<OrderMenuQty> menus2 =soDB2.getMenus();
+        List<OrderMenuQty> menus2 = soDB2.getMenus();
+        int nMenus2 = menus2.size();
         System.out.println(menus2);
         List<OrderMenuQty> menus3 = orderMenuQtyRepository.findAll();
+        assertThat(nMenusOriginal).isEqualTo(nMenus1);
+        assertThat(nMenusOriginal-1).isEqualTo(nMenus2);
+
+
+
+        // https://stackoverflow.com/questions/22688402/delete-not-working-with-jparepository
+        // System.out.println("before deleteById");
+        // orderMenuQtyRepository.deleteById(id);
+        // System.out.println("after deleteById");
+        // orderMenuQtyRepository.flush();
+//        found = shippingOrderRepository.findById(so1.getId());
+//        ShippingOrderRestaurant soDB2 = found.get();
+//        List<OrderMenuQty> menus2 =soDB2.getMenus();
+//        System.out.println(menus2);
+//        List<OrderMenuQty> menus3 = orderMenuQtyRepository.findAll();
 
 
 
@@ -216,6 +256,28 @@ public class OrderMenuQtyTest {
 //        List<OrderMenuQty> menusQtyDB = orderMenuQtyRepository.findAll();
 //
 //        assertThat(menusQtyDB).containsAll(menusQty);
+
+    }
+
+
+    @Test
+    public void createOrderAndDeleteSomeQtyMenusWithMenuQtyRepository() {
+        ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(0);
+        List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
+        so1.setMenus(menusQty);
+        int nMenusOriginal = menusQty.size();
+        // save some order with some menus
+        shippingOrderRepository.save(so1);
+
+        List<OrderMenuQty> menusQtyDB = orderMenuQtyRepository.findAll();
+        String id = menusQtyDB.get(0).getId();
+        orderMenuQtyRepository.deleteById(id);
+        List<OrderMenuQty> menusQtyDB2 = orderMenuQtyRepository.findAll();
+        Optional<ShippingOrderRestaurant> found = shippingOrderRepository.findById(so1.getId());
+        ShippingOrderRestaurant soDB2 = found.get();
+        int nMenusAfterDelete = soDB2.getMenus().size();
+
+        assertThat(nMenusOriginal-1).isEqualTo(nMenusAfterDelete);
 
     }
 
