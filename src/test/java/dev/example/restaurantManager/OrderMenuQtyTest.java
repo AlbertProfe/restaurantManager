@@ -195,9 +195,10 @@ public class OrderMenuQtyTest {
         so1.removeMenuQty(omq.getMenu(),omq.getQuantity());
         shippingOrderRepository.save(so1);
 
-
         // https://stackoverflow.com/questions/22688402/delete-not-working-with-jparepository
-        // orderMenuQtyRepository.deleteById(id);
+        System.out.println("before deleteById");
+        orderMenuQtyRepository.deleteById(id);
+        System.out.println("after deleteById");
         // orderMenuQtyRepository.flush();
         found = shippingOrderRepository.findById(so1.getId());
         ShippingOrderRestaurant soDB2 = found.get();
