@@ -19,57 +19,48 @@ public class OrderMenuQtyController {
     @Autowired
     private OrderMenuQtyService orderMenuQtyService;
 
-    @GetMapping("allOrderMenuQty")
-    public ResponseEntity<List<OrderMenuQty>> getAllOrderMenuQty(){
-        List<OrderMenuQty> orderMenuQtyList = orderMenuQtyService.getAllOrderMenuQts();
-        HttpHeaders headers = getCommonHeaders("Get all OrderMenuQty entries");
-        return orderMenuQtyList !=null && !orderMenuQtyList.isEmpty()
-                ?new ResponseEntity<>(orderMenuQtyList,headers, HttpStatus.OK)
-                :new ResponseEntity<>(headers,HttpStatus.NOT_FOUND);
-    }
-
     @PostMapping
-    public ResponseEntity<OrderMenuQty> createOrderMenuQty(@RequestBody OrderMenuQty orderMenuQty){
+    public ResponseEntity<OrderMenuQty> createOrderMenuQty(@RequestBody OrderMenuQty orderMenuQty) {
         OrderMenuQty createdOrderMenuQty = orderMenuQtyService.createOrderMenuQty(orderMenuQty);
         HttpHeaders headers = getCommonHeaders("Create a new OrderMenuQty");
-        return createdOrderMenuQty !=null
-                ?new ResponseEntity<>(createdOrderMenuQty,headers,HttpStatus.CREATED)
-                :new ResponseEntity<>(headers,HttpStatus.BAD_REQUEST);
-
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<OrderMenuQty> updatedOrderMenuQty(@PathVariable String id, @RequestBody OrderMenuQty orderMenuQtyDetails){
-        OrderMenuQty updatedOrderMenuQty = orderMenuQtyService.updateOrderMenuQty(id, orderMenuQtyDetails);
-        HttpHeaders headers = getCommonHeaders("Updated a OrderMenuQty");
-
-        return updatedOrderMenuQty !=null
-                ?new ResponseEntity<>(updatedOrderMenuQty, headers, HttpStatus.OK)
-                :new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<OrderMenuQty> deleteOrderMenuQty(@PathVariable String id){
-        boolean deleted = orderMenuQtyService.deleteOrderMenuQty(id);
-        HttpHeaders headers = getCommonHeaders("delete an OrderMenuQty");
-
-        return deleted
-                ? new ResponseEntity<>(headers, HttpStatus.NO_CONTENT)
-                : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+        return createdOrderMenuQty != null ? new ResponseEntity<>(createdOrderMenuQty, headers, HttpStatus.CREATED) : new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderMenuQty> getOrderMenuQtyByID(@PathVariable String id){
+    public ResponseEntity<OrderMenuQty> getOrderMenuQtyByID(@PathVariable String id) {
         OrderMenuQty orderMenuQty = orderMenuQtyService.getOrderMenuQtyById(id);
         HttpHeaders headers = getCommonHeaders("Get an OrderMenuQty by Id");
-        return orderMenuQty !=null
-                ? new ResponseEntity<>(orderMenuQty, headers, HttpStatus.OK)
-                : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+
+        return orderMenuQty != null ? new ResponseEntity<>(orderMenuQty, headers, HttpStatus.OK) : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
 
     }
 
+    @GetMapping("allOrderMenuQty")
+    public ResponseEntity<List<OrderMenuQty>> getAllOrderMenuQty() {
+        List<OrderMenuQty> orderMenuQtyList = orderMenuQtyService.getAllOrderMenuQts();
+        HttpHeaders headers = getCommonHeaders("Get all OrderMenuQty entries");
 
+        return orderMenuQtyList != null && !orderMenuQtyList.isEmpty() ? new ResponseEntity<>(orderMenuQtyList, headers, HttpStatus.OK) : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderMenuQty> updatedOrderMenuQty(@PathVariable String id, @RequestBody OrderMenuQty orderMenuQtyDetails) {
+        OrderMenuQty updatedOrderMenuQty = orderMenuQtyService.updateOrderMenuQty(id, orderMenuQtyDetails);
+        HttpHeaders headers = getCommonHeaders("Updated a OrderMenuQty");
+
+        return updatedOrderMenuQty != null
+                ? new ResponseEntity<>(updatedOrderMenuQty, headers, HttpStatus.OK) : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<OrderMenuQty> deleteOrderMenuQty(@PathVariable String id) {
+        boolean deleted = orderMenuQtyService.deleteOrderMenuQty(id);
+        HttpHeaders headers = getCommonHeaders("delete an OrderMenuQty");
+
+        return deleted ? new ResponseEntity<>(headers, HttpStatus.NO_CONTENT) : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+
+    }
 
     private HttpHeaders getCommonHeaders(String description) {
         HttpHeaders headers = new HttpHeaders();
