@@ -1,10 +1,7 @@
 package dev.example.restaurantManager.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +24,9 @@ public class MenuRestaurant  {
 //    @JsonIgnore
 //    @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
 //    private List<OrderRestaurant> orders = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "menu")
+//    private List<OrderMenuQty> menusQty;
 
 
     // to execute old tests

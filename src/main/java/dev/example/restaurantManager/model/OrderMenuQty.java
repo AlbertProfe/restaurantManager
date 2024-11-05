@@ -8,21 +8,25 @@ import java.util.Objects;
 
 @Data
 @Entity
+@Table(name = "ORDER_MENU_QTY")
 public class OrderMenuQty {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
+    @ManyToOne
+    @JoinColumn(name="order_id", referencedColumnName="id")
+    // @JoinColumn(name = "order_id")
     private OrderRestaurant order;
+
+    @ManyToOne
+    @JoinColumn(name="menu_id", referencedColumnName="id")
+    // @JoinColumn(name = "menu_id")
+    private MenuRestaurant menu;
 
     private int quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "menu_id")
-    private MenuRestaurant menu;
 
     @Override
     public String toString(){

@@ -52,6 +52,7 @@ public class FakeDataLoader {
     }
 
     public void createDataAndSave2DBWithoutRelationship(){
+        System.out.println("Delete all data");
         // delete all data
         customerRepository.deleteAll();
         tableRepository.deleteAll();
@@ -61,6 +62,9 @@ public class FakeDataLoader {
 
         createFakerIfNotExists();
 
+        System.out.println("Before creating data");
+
+        System.out.println("Before creating Customers");
         // Create sample customers
         Customer customer1 = new Customer("C1", "John", "john@email.com", "123-456-7890", 30, false, false);
         Customer customer3 = new Customer("C3", "Emily", "emily@email.com", "345-678-9012", 35, false, false);
@@ -68,17 +72,21 @@ public class FakeDataLoader {
         customerRepository.save(customer1);
         customerRepository.save(customer3);
         customerRepository.save(customer5);
+        System.out.println("after creating Customers");
 
         // Create sample tables
+        System.out.println("before creating Tables");
         TableRestaurant table1 = new TableRestaurant("T1", "Window Table", 4, false);
         TableRestaurant table2 = new TableRestaurant("T2", "Corner Table", 2, true);
         table1.setId("T01");
         table2.setId("T02");
         tableRepository.save(table1);
         tableRepository.save(table2);
+        System.out.println("after creating Tables");
 
 
         // Create sample menus
+        System.out.println("before creating Menus");
         MenuRestaurant menu1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true);
         MenuRestaurant menu2 = new MenuRestaurant("M02","Pizza Menu", 12.99, "Pizza and salad", true, false);
         MenuRestaurant menu3 = new MenuRestaurant("M03","Salad Menu", 8.99, "Mixed salad and dressing", true, true);
@@ -86,8 +94,10 @@ public class FakeDataLoader {
         menuRepository.save(menu1);
         menuRepository.save(menu2);
         menuRepository.save(menu3);
+        System.out.println("after creating Menus");
 
         // Create 3 ShippingOrder objects
+        System.out.println("before creating ShippingOrderRestaurants");
         ShippingOrderRestaurant so1 = new ShippingOrderRestaurant("SO1", new Date(), "John", 2, 0.0, false, (List)null, "123 Main St", "New York", "Mike");
         ShippingOrderRestaurant so2 = new ShippingOrderRestaurant("SO2", new Date(), "Sarah", 1, 0.0, true, (List)null, "456 Elm St", "Los Angeles", "Tom");
         ShippingOrderRestaurant so3 = new ShippingOrderRestaurant("SO3", new Date(), "Emily", 3, 0.0, false, (List)null, "789 Oak St", "Chicago", "Lisa");
@@ -95,6 +105,7 @@ public class FakeDataLoader {
         shippingOrderRepository.save(so1);
         shippingOrderRepository.save(so2);
         shippingOrderRepository.save(so3);
+        System.out.println("after creating ShippingOrderRestaurants");
 
     }
 
@@ -116,7 +127,16 @@ public class FakeDataLoader {
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(0);
         List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
         so1.setMenusQty(menusQty);
+        System.out.println("before creating relationship ShippingOrderRestaurant <-> OrderMenusQqy");
         shippingOrderRepository.save(so1);
+        System.out.println("after creating relationship ShippingOrderRestaurant <-> OrderMenusQqy");
+
+
+        System.out.println("check relationship ShippingOrderRestaurant <-> OrderMenusQqy");
+        ShippingOrderRestaurant so1DB = shippingOrderRepository.findById(so1.getId()).orElse(null);
+        System.out.println(menusQty.size() + "=" + so1DB.getMenusQty().size() );
+
+
     }
 
 

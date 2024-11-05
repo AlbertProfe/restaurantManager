@@ -32,7 +32,7 @@ public class OrderRestaurant {
 //            joinColumns = @JoinColumn(name = "ORDER_ID_FK"),
 //            inverseJoinColumns = @JoinColumn(name = "MENU_ID_FK")
 //    )
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<OrderMenuQty> menusQty;
 
     public OrderRestaurant(String id, Date date, String waiter, int peopleQty,
