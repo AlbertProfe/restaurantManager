@@ -2,7 +2,6 @@ package dev.example.restaurantManager.model;
 
 import java.util.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,15 +24,16 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER
-            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "ORDER_MENU_QUANTITY",
-            joinColumns = @JoinColumn(name = "ORDER_ID_FK"),
-            inverseJoinColumns = @JoinColumn(name = "MENU_ID_FK")
-    )
-    private List<OrderMenuQty> menus;
+//    @JsonIgnore
+//    @ManyToMany(fetch = FetchType.EAGER
+//            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(
+//            name = "ORDER_MENU_QUANTITY",
+//            joinColumns = @JoinColumn(name = "ORDER_ID_FK"),
+//            inverseJoinColumns = @JoinColumn(name = "MENU_ID_FK")
+//    )
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<OrderMenuQty> menusQty;
 
     public OrderRestaurant(String id, Date date, String waiter, int peopleQty,
                                    double totalPayment, boolean paid, ArrayList<MenuRestaurant> menus){
@@ -43,16 +43,16 @@ public class OrderRestaurant {
         this.peopleQty=peopleQty;
         this.totalPayment=totalPayment;
         this.paid=paid;
-        this.menus = Converter.convertMenus2QtyMenus(this,menus);
+        this.menusQty = Converter.convertMenus2QtyMenus(this,menus);
     }
 
 
     public List<OrderMenuQty> addMenuQty(MenuRestaurant menu, int qty) {
-        if(this.getMenus()==null){
-            this.setMenus(new ArrayList<OrderMenuQty>());
+        if(this.getMenusQty()==null){
+            this.setMenusQty(new ArrayList<OrderMenuQty>());
         }
         boolean found = false;
-        for(OrderMenuQty omq: this.getMenus()){
+        for(OrderMenuQty omq: this.getMenusQty()){
             if(omq.getMenu().equals(menu)){
                 omq.setQuantity(omq.getQuantity()+qty);
                 found = true;
@@ -64,17 +64,17 @@ public class OrderRestaurant {
             omq.setMenu(menu);
             omq.setQuantity(qty);
             omq.setOrder(this);
-            this.getMenus().add(omq);
+            this.getMenusQty().add(omq);
         }
-        return this.getMenus();
+        return this.getMenusQty();
     }
 
     public List<OrderMenuQty> addMenu(MenuRestaurant menu) {
-        if(this.getMenus()==null){
-            this.setMenus(new ArrayList<OrderMenuQty>());
+        if(this.getMenusQty()==null){
+            this.setMenusQty(new ArrayList<OrderMenuQty>());
         }
         boolean found = false;
-        for(OrderMenuQty omq: this.getMenus()){
+        for(OrderMenuQty omq: this.getMenusQty()){
             if(omq.getMenu().equals(menu)){
                 omq.setQuantity(omq.getQuantity()+1);
                 found = true;
@@ -86,45 +86,45 @@ public class OrderRestaurant {
             omq.setMenu(menu);
             omq.setQuantity(1);
             omq.setOrder(this);
-            this.getMenus().add(omq);
+            this.getMenusQty().add(omq);
         }
-        return this.getMenus();
+        return this.getMenusQty();
     }
 
     public List<OrderMenuQty> removeMenuQty(MenuRestaurant menu, int qty) {
-        if(this.getMenus()==null){
+        if(this.getMenusQty()==null){
             return null;
         }
-        for(OrderMenuQty omq: this.getMenus()){
+        for(OrderMenuQty omq: this.getMenusQty()){
             if(omq.getMenu().equals(menu)){
                 int oldQty = omq.getQuantity();
                 if (oldQty > qty) {
                     omq.setQuantity(omq.getQuantity() - qty);
                 } else{
-                    this.getMenus().remove(omq);
+                    this.getMenusQty().remove(omq);
                 }
                 break;
             }
         }
-        return this.getMenus();
+        return this.getMenusQty();
     }
 
     public List<OrderMenuQty> removeMenu(MenuRestaurant menu) {
-        if(this.getMenus()==null){
+        if(this.getMenusQty()==null){
             return null;
         }
-        for(OrderMenuQty omq: this.getMenus()){
+        for(OrderMenuQty omq: this.getMenusQty()){
             if(omq.getMenu().equals(menu)){
                 int qty = omq.getQuantity();
                 if (qty > 1) {
                     omq.setQuantity(omq.getQuantity() - 1);
                 } else{
-                    this.getMenus().remove(omq);
+                    this.getMenusQty().remove(omq);
                 }
                 break;
             }
         }
-        return this.getMenus();
+        return this.getMenusQty();
     }
 
 
@@ -150,8 +150,8 @@ public class OrderRestaurant {
                 ", peopleQty=" + peopleQty +
                 ", totalPayment=" + totalPayment +
                 ", paid=" + paid +
-                ", menusCount=" + (menus != null ? menus.size() : 0) +
-                ", menus=" + menus +
+                ", menusQtyCount=" + (menusQty != null ? menusQty.size() : 0) +
+                ", menusQty=" + menusQty +
                 '}';
     }
 

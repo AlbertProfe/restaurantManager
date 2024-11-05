@@ -112,7 +112,12 @@ public class FakeDataLoader {
         }
         return menusQty;
     }
-
+    public void createSomeRelations(){
+        ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(0);
+        List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
+        so1.setMenusQty(menusQty);
+        shippingOrderRepository.save(so1);
+    }
 
 
 }

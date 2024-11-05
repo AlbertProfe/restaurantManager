@@ -1,6 +1,5 @@
 package dev.example.restaurantManager;
 
-import com.github.javafaker.Faker;
 import dev.example.restaurantManager.model.*;
 import dev.example.restaurantManager.repository.*;
 import dev.example.restaurantManager.utilities.FakeDataLoader;
@@ -44,7 +43,7 @@ public class OrderMenuQtyTest {
     public void createOrderMenuQtyDB() {
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant)orders.get(0);
         List<OrderMenuQty> menusQty = dataLoader.getRandomMenuQty(so1);
-        so1.setMenus(menusQty);
+        so1.setMenusQty(menusQty);
         // save relationship to DB
         shippingOrderRepository.save(so1);
 
@@ -56,15 +55,16 @@ public class OrderMenuQtyTest {
         // check if shipping order has all his menus saved to DB
         // this method must be @Transactional because
         // menus in order are fetch.LAZY
-        int nMenus = so1DB.getMenus().size();
+        int nMenus = so1DB.getMenusQty().size();
         for(int i=0;i<nMenus;i++){
-            System.out.println(so1DB.getMenus().get(i));
+            System.out.println(so1DB.getMenusQty().get(i));
         }
         assertThat(so1DB.getId()).isEqualTo(so1.getId());
     }
 
 
     @Test
+    @Transactional
     public void createOrderManyMenus() {
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant)orders.get(1);
         List<OrderMenuQty> menusQty = dataLoader.getRandomMenuQty(so1);
@@ -78,7 +78,7 @@ public class OrderMenuQtyTest {
             totalQtyMenus += q.getQuantity();
             nMenus += 1;
         }
-        so1.setMenus(menusQty);
+        so1.setMenusQty(menusQty);
         System.out.println("total menus: " + nMenus);
         System.out.println("total qty menus: " + totalQtyMenus);
         shippingOrderRepository.save(so1);
@@ -86,10 +86,10 @@ public class OrderMenuQtyTest {
         Optional<ShippingOrderRestaurant> found = shippingOrderRepository.findById(so1.getId());
         assertThat(found).isPresent();
         assertThat(found.get().getId()).isEqualTo(so1.getId());
-        assertThat(found.get().getMenus().stream()
+        assertThat(found.get().getMenusQty().stream()
                 .count()
         ).isEqualTo(nMenus);
-        assertThat(found.get().getMenus().stream()
+        assertThat(found.get().getMenusQty().stream()
                 .mapToInt(omq -> omq.getQuantity())
                 .sum()
         ).isEqualTo(totalQtyMenus);
@@ -105,7 +105,7 @@ public class OrderMenuQtyTest {
 
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(2);
         List<OrderMenuQty> menusQty = dataLoader.getRandomMenuQty(so1);
-        so1.setMenus(menusQty);
+        so1.setMenusQty(menusQty);
         // save some relationships
         shippingOrderRepository.save(so1);
 
@@ -117,10 +117,11 @@ public class OrderMenuQtyTest {
     }
 
     @Test
+    @Transactional
     public void createOrderAndDeleteSomeQtyMenus() {
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(0);
         List<OrderMenuQty> menusQty = dataLoader.getRandomMenuQty(so1);
-        so1.setMenus(menusQty);
+        so1.setMenusQty(menusQty);
         int nMenusOriginal = menusQty.size();
         // save some order with some menus
         shippingOrderRepository.save(so1);
@@ -133,7 +134,7 @@ public class OrderMenuQtyTest {
         assertThat(found.get().getId()).isEqualTo(so1.getId());
         ShippingOrderRestaurant soDB = found.get();
         // print menu qty from order
-        List<OrderMenuQty> menus = soDB.getMenus();
+        List<OrderMenuQty> menus = soDB.getMenusQty();
         int nMenus1 = menus.size();
         System.out.println(menus);
 
@@ -149,7 +150,7 @@ public class OrderMenuQtyTest {
         // now should have 1 menu qty less
         found = shippingOrderRepository.findById(so1.getId());
         ShippingOrderRestaurant soDB2 = found.get();
-        List<OrderMenuQty> menus2 = soDB2.getMenus();
+        List<OrderMenuQty> menus2 = soDB2.getMenusQty();
         int nMenus2 = menus2.size();
         System.out.println(menus2);
         List<OrderMenuQty> menus3 = orderMenuQtyRepository.findAll();
@@ -184,10 +185,11 @@ public class OrderMenuQtyTest {
 
 
     @Test
+    @Transactional
     public void createOrderAndDeleteSomeQtyMenusWithMenuQtyRepository() {
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(0);
         List<OrderMenuQty> menusQty = dataLoader.getRandomMenuQty(so1);
-        so1.setMenus(menusQty);
+        so1.setMenusQty(menusQty);
         int nMenusOriginal = menusQty.size();
         // save some order with some menus
         shippingOrderRepository.save(so1);
@@ -219,7 +221,7 @@ public class OrderMenuQtyTest {
 
         Optional<ShippingOrderRestaurant> found = shippingOrderRepository.findById(so1.getId());
         ShippingOrderRestaurant soDB2 = found.get();
-        int nMenusAfterDelete = soDB2.getMenus().size();
+        int nMenusAfterDelete = soDB2.getMenusQty().size();
 
         assertThat(nMenusOriginal-1).isEqualTo(nMenusAfterDelete);
 
