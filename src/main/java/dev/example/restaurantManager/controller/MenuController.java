@@ -2,7 +2,7 @@ package dev.example.restaurantManager.controller;
 
 
 import dev.example.restaurantManager.model.MenuRestaurant;
-import dev.example.restaurantManager.service.MenuService;
+import dev.example.restaurantManager.service.MenuRestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class MenuController {
 
 
     @Autowired
-    private MenuService menuService;
+    private MenuRestaurantService menuService;
 
     @GetMapping("/allMenus")
     public ResponseEntity<List<MenuRestaurant>> getAllMenus(){

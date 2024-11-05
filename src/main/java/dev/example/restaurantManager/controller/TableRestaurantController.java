@@ -1,8 +1,8 @@
 package dev.example.restaurantManager.controller;
 
 
-import dev.example.restaurantManager.model.RestaurantTable;
-import dev.example.restaurantManager.service.TableService;
+import dev.example.restaurantManager.model.TableRestaurant;
+import dev.example.restaurantManager.service.TableRestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,11 +17,11 @@ import java.util.List;
 public class TableRestaurantController {
 
     @Autowired
-    private TableService tableService;
+    private TableRestaurantService tableService;
 
     @GetMapping("/allTables")
-    public ResponseEntity<List<RestaurantTable>>getAllTables(){
-        List<RestaurantTable> tables = tableService.getAllTables();
+    public ResponseEntity<List<TableRestaurant>>getAllTables(){
+        List<TableRestaurant> tables = tableService.getAllTables();
         HttpHeaders headers = getCommonHeaders("Get all tables");
         return tables != null && !tables.isEmpty()
                 ? new ResponseEntity<>(tables, headers, HttpStatus.OK)
@@ -29,8 +29,8 @@ public class TableRestaurantController {
     }
 
     @PostMapping
-    public ResponseEntity<RestaurantTable> createTable(@RequestBody RestaurantTable table){
-        RestaurantTable createdTable = tableService.createTable(table);
+    public ResponseEntity<TableRestaurant> createTable(@RequestBody TableRestaurant table){
+        TableRestaurant createdTable = tableService.createTable(table);
         HttpHeaders headers = getCommonHeaders("Create a new table");
 
         return createdTable !=null
@@ -40,8 +40,8 @@ public class TableRestaurantController {
     }
 
     @PutMapping("/{name}")
-    public ResponseEntity<RestaurantTable> updateTable(@PathVariable String name, @RequestBody RestaurantTable tableDetails) {
-        RestaurantTable updatedTable = tableService.updateTable(name, tableDetails);
+    public ResponseEntity<TableRestaurant> updateTable(@PathVariable String name, @RequestBody TableRestaurant tableDetails) {
+        TableRestaurant updatedTable = tableService.updateTable(name, tableDetails);
         HttpHeaders headers = getCommonHeaders("Update a table");
         return updatedTable != null
                 ? new ResponseEntity<>(updatedTable, headers, HttpStatus.OK)
@@ -59,8 +59,8 @@ public class TableRestaurantController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<RestaurantTable> getTableByName(@PathVariable String name){
-        RestaurantTable table = tableService.getTableByName(name);
+    public ResponseEntity<TableRestaurant> getTableByName(@PathVariable String name){
+        TableRestaurant table = tableService.getTableByName(name);
         HttpHeaders headers = getCommonHeaders("Get a table by name");
 
         return table != null

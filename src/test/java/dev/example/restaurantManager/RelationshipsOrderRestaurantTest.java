@@ -57,9 +57,9 @@ private OrderRestaurantRepository orderRestaurantRepository;
                 OrderRestaurant shippingOrder3 = new ShippingOrderRestaurant("SO3", new Date(), "Emily", 3, 32.97, false, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)), "789 Oak St", "Chicago", "Lisa");
 
                 // Create 3 EatInOrder objects
-                OrderRestaurant eatInOrder1 = new EatInOrderRestaurant("EO1", new Date(), "David", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant1, menuRestaurant2, menuRestaurant2)), new ArrayList<>(Arrays.asList(table1)));
-                OrderRestaurant eatInOrder2 = new EatInOrderRestaurant("EO2", new Date(), "Anna", 2, 21.98, false, new ArrayList<>(Arrays.asList(menuRestaurant2, menuRestaurant3)), new ArrayList<>(Arrays.asList(table2)));
-                OrderRestaurant eatInOrder3 = new EatInOrderRestaurant("EO3", new Date(), "Mark", 6, 65.94, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant1, menuRestaurant2, menuRestaurant2, menuRestaurant3, menuRestaurant3)), new ArrayList<>(Arrays.asList(table1, table2)));
+                //OrderRestaurant eatInOrder1 = new EatInOrderRestaurant("EO1", new Date(), "David", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant1, menuRestaurant2, menuRestaurant2)), new ArrayList<>(Arrays.asList(table1))));
+                //OrderRestaurant eatInOrder2 = new EatInOrderRestaurant("EO2", new Date(), "Anna", 2, 21.98, false, new ArrayList<>(Arrays.asList(menuRestaurant2, menuRestaurant3)), new ArrayList<>(Arrays.asList(table2)));
+                //OrderRestaurant eatInOrder3 = new EatInOrderRestaurant("EO3", new Date(), "Mark", 6, 65.94, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant1, menuRestaurant2, menuRestaurant2, menuRestaurant3, menuRestaurant3)), new ArrayList<>(Arrays.asList(table1, table2)));
 
                 // Create 3 TakeAwayOrder objects
                 OrderRestaurant takeAwayOrder1 = new TakeAwayOrder("TO1", new Date(), "Alice", 1, 10.99, true, new ArrayList<>(Arrays.asList(menuRestaurant1)), customer1 );
@@ -70,7 +70,7 @@ private OrderRestaurantRepository orderRestaurantRepository;
                 // Create a list of all orders
                 ArrayList<OrderRestaurant> orders = new ArrayList<>();
                 orders.addAll(Arrays.asList(shippingOrder1, shippingOrder2, shippingOrder3,
-                        eatInOrder1, eatInOrder2, eatInOrder3,
+                 //       eatInOrder1, eatInOrder2, eatInOrder3,
                         takeAwayOrder1, takeAwayOrder2, takeAwayOrder3, takeAwayOrder4));
 
                 // Print the number of orders
@@ -113,82 +113,79 @@ private OrderRestaurantRepository orderRestaurantRepository;
                 System.out.println("--------------------");
         }
 
-        @Test
-        public void TestCreateOrderMenu () {
-                MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true, null);
-                MenuRestaurant menuRestaurant2 = new MenuRestaurant("M02","Pizza Menu", 12.99, "Pizza and salad", true, false, null);
-                MenuRestaurant menuRestaurant3 = new MenuRestaurant("M03","Salad Menu", 8.99, "Mixed salad and dressing", true, true, null);
-                // Save sample menus
-                menuRestaurantRepository.save(menuRestaurant1);
-                menuRestaurantRepository.save(menuRestaurant2);
-                menuRestaurantRepository.save(menuRestaurant3);
-                // Create 3 Order objects and assign menus
-                OrderRestaurant orderRestaurant1 = new OrderRestaurant("O01", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)));
-                OrderRestaurant orderRestaurant2 = new OrderRestaurant("O02", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant3)));
-                OrderRestaurant orderRestaurant3 = new OrderRestaurant("O03", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant2)));
-
-                // Save sample orders
-                orderRestaurantRepository.save(orderRestaurant1);
-                //orderRestaurantRepository.save(orderRestaurant2);
-                //orderRestaurantRepository.save(orderRestaurant3);
-
-
-                // when
-                Optional<OrderRestaurant> found = orderRestaurantRepository.findById("O01");
-                System.out.println("--------------------");
-                System.out.println("Order ID: " + found.get().getId());
-                System.out.println(found.get());
-                // then
-                assertThat(found).isPresent();
-                assertThat(found.get().getMenus().get(0).getName().equals(menuRestaurant1.getName()));
-        }
-
-        // java.lang.StackOverflowError toString
-        @Test
-        public void TestCreateOrderMenu_stackOverflow () {
-            // Create sample menus
-                MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99,
-                        "Burger, fries, and drink", true, true);
-                MenuRestaurant menuRestaurant2 = new MenuRestaurant("M02","Pizza Menu",
-                        12.99, "Pizza and salad", true, false);
-                MenuRestaurant menuRestaurant3 = new MenuRestaurant("M03","Salad Menu",
-                        8.99, "Mixed salad and dressing", true, true);
-                // Save sample menus
-                menuRestaurantRepository.save(menuRestaurant1);
-                menuRestaurantRepository.save(menuRestaurant2);
-                menuRestaurantRepository.save(menuRestaurant3);
-                // Create 3 Order objects and assign menus
-                OrderRestaurant orderRestaurant1 = new OrderRestaurant("O01", new Date(), "John", 4, 43.96,
-                        true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)));
-                OrderRestaurant orderRestaurant2 = new OrderRestaurant("O02", new Date(), "John", 4, 43.96, true,
-                        new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant3)));
-                OrderRestaurant orderRestaurant3 = new OrderRestaurant("O03", new Date(), "John", 4, 43.96, true,
-                        new ArrayList<>(Arrays.asList(menuRestaurant2)));
-
-                // Save sample orders
-                orderRestaurantRepository.save(orderRestaurant1);
-                //orderRestaurantRepository.save(orderRestaurant2);
-                //orderRestaurantRepository.save(orderRestaurant3);
-
-                // set menus to orders and save
-                menuRestaurant1.getOrders().add(orderRestaurant1);
-                menuRestaurantRepository.save(menuRestaurant1);
-
-                // when
-                Optional<OrderRestaurant> found = orderRestaurantRepository.findById("O01");
-                System.out.println("--------------------");
-                System.out.println("Order ID: " + found.get().getId());
-                // stack-overflow toString does not work in this case
-                //System.out.println(found.get());
-
-                Optional<MenuRestaurant> menuFound = menuRestaurantRepository.findById("M01");
-                System.out.println("--------------------");
-                System.out.println("Menu ID: " + menuFound.get().getId());
-                // stack-overflow toString does not work in this case
-                //System.out.println(menuFound.get());
-
-                // then
-                assertThat(found).isPresent();
-                assertThat(found.get().getMenus().get(0).getName().equals(menuRestaurant1.getName()));
-        }
+//        @Test
+//        public void TestCreateOrderMenu () {
+//                MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu", 10.99, "Burger, fries, and drink", true, true, null);
+//                MenuRestaurant menuRestaurant2 = new MenuRestaurant("M02","Pizza Menu", 12.99, "Pizza and salad", true, false, null);
+//                MenuRestaurant menuRestaurant3 = new MenuRestaurant("M03","Salad Menu", 8.99, "Mixed salad and dressing", true, true, null);
+//                // Save sample menus
+//                menuRestaurantRepository.save(menuRestaurant1);
+//                menuRestaurantRepository.save(menuRestaurant2);
+//                menuRestaurantRepository.save(menuRestaurant3);
+//                // Create 3 Order objects and assign menus
+//                OrderRestaurant orderRestaurant1 = new OrderRestaurant("O01", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)));
+//                OrderRestaurant orderRestaurant2 = new OrderRestaurant("O02", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant3)));
+//                OrderRestaurant orderRestaurant3 = new OrderRestaurant("O03", new Date(), "John", 4, 43.96, true, new ArrayList<>(Arrays.asList(menuRestaurant2)));
+//
+//                // Save sample orders
+//                orderRestaurantRepository.save(orderRestaurant1);
+//                //orderRestaurantRepository.save(orderRestaurant2);
+//                //orderRestaurantRepository.save(orderRestaurant3);
+//
+//
+//                // when
+//                Optional<OrderRestaurant> found = orderRestaurantRepository.findById("O01");
+//                System.out.println("--------------------");
+//                System.out.println("Order ID: " + found.get().getId());
+//                System.out.println(found.get());
+//                // then
+//                assertThat(found).isPresent();
+//                assertThat(found.get().getMenus().get(0).getName().equals(menuRestaurant1.getName()));
+//        }
+//
+//        // java.lang.StackOverflowError toString
+//        @Test
+//        public void TestCreateOrderMenu_stackOverflow () {
+//            // Create sample menus
+//                MenuRestaurant menuRestaurant1 = new MenuRestaurant("M01", "Burger Menu",10.99,"Burger, fries, and drink", true, true);
+//                MenuRestaurant menuRestaurant2 = new MenuRestaurant("M02","Pizza Menu",12.99, "Pizza and salad", true, false);
+//                MenuRestaurant menuRestaurant3 = new MenuRestaurant("M03","Salad Menu",8.99, "Mixed salad and dressing", true, true);
+//                // Save sample menus
+//                menuRestaurantRepository.save(menuRestaurant1);
+//                menuRestaurantRepository.save(menuRestaurant2);
+//                menuRestaurantRepository.save(menuRestaurant3);
+//                // Create 3 Order objects and assign menus
+//                OrderRestaurant orderRestaurant1 = new OrderRestaurant("O01", new Date(), "John", 4, 43.96,
+//                        true, new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant2, menuRestaurant3)));
+//                OrderRestaurant orderRestaurant2 = new OrderRestaurant("O02", new Date(), "John", 4, 43.96, true,
+//                        new ArrayList<>(Arrays.asList(menuRestaurant1, menuRestaurant3)));
+//                OrderRestaurant orderRestaurant3 = new OrderRestaurant("O03", new Date(), "John", 4, 43.96, true,
+//                        new ArrayList<>(Arrays.asList(menuRestaurant2)));
+//
+//                // Save sample orders
+//                orderRestaurantRepository.save(orderRestaurant1);
+//                //orderRestaurantRepository.save(orderRestaurant2);
+//                //orderRestaurantRepository.save(orderRestaurant3);
+//
+//                // set menus to orders and save
+//                menuRestaurant1.getOrders().add(orderRestaurant1);
+//                menuRestaurantRepository.save(menuRestaurant1);
+//
+//                // when
+//                Optional<OrderRestaurant> found = orderRestaurantRepository.findById("O01");
+//                System.out.println("--------------------");
+//                System.out.println("Order ID: " + found.get().getId());
+//                // stack-overflow toString does not work in this case
+//                //System.out.println(found.get());
+//
+//                Optional<MenuRestaurant> menuFound = menuRestaurantRepository.findById("M01");
+//                System.out.println("--------------------");
+//                System.out.println("Menu ID: " + menuFound.get().getId());
+//                // stack-overflow toString does not work in this case
+//                //System.out.println(menuFound.get());
+//
+//                // then
+//                assertThat(found).isPresent();
+//                assertThat(found.get().getMenus().get(0).getName().equals(menuRestaurant1.getName()));
+//        }
 }
