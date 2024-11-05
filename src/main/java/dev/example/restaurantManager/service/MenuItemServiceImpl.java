@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class MenuItemServiceImpl implements MenuItemService{
+public class MenuItemServiceImpl implements MenuItemService {
 
     @Autowired
     MenuItemRepository menuItemRepository;
@@ -29,7 +29,7 @@ public class MenuItemServiceImpl implements MenuItemService{
         // not needed because it's already generated in the own entity
         //menuItem.setId(UUID.randomUUID().toString());
         Optional<MenuItem> menuItemCreated = menuItemRepository.findById(menuItem.getId());
-        if(menuItemCreated.isPresent()){
+        if (menuItemCreated.isPresent()) {
             return null;
         }
         menuItemRepository.save(menuItem);
@@ -45,20 +45,20 @@ public class MenuItemServiceImpl implements MenuItemService{
     @Override
     public MenuItem updateMenuItem(String id, MenuItem menuItemDetails) {
         MenuItem menuItem = menuItemRepository.findById(id).orElse(null);
-        if (menuItem !=null){
-            if (menuItemDetails.getName() != null){
+        if (menuItem != null) {
+            if (menuItemDetails.getName() != null) {
                 menuItem.setName(menuItemDetails.getName());
             }
-            if (menuItemDetails.getDescription() != null){
+            if (menuItemDetails.getDescription() != null) {
                 menuItem.setDescription(menuItemDetails.getDescription());
             }
-            if (menuItemDetails.isSpicy()){
+            if (menuItemDetails.isSpicy()) {
                 menuItem.setSpicy(menuItemDetails.isSpicy());
             }
-            if (menuItemDetails.isHasGluten()){
+            if (menuItemDetails.isHasGluten()) {
                 menuItem.setHasGluten(menuItemDetails.isHasGluten());
             }
-            if (menuItemDetails.isAvailable()){
+            if (menuItemDetails.isAvailable()) {
                 menuItem.setAvailable(menuItemDetails.isAvailable());
             }
             return menuItemRepository.save(menuItem);
@@ -71,7 +71,7 @@ public class MenuItemServiceImpl implements MenuItemService{
         menuItemRepository.deleteById(id);
         Optional<MenuItem> menuItem = menuItemRepository.findById(id);
         return menuItem.isEmpty()
-                ? false : true ;
+                ? false : true;
     }
 
     @Override
@@ -79,10 +79,9 @@ public class MenuItemServiceImpl implements MenuItemService{
         return menuItemRepository.count();
     }
 
-    @Override
-    public List<MenuItem> getMenuItemsByMenuId(String menuId) {
-
-        MenuRestaurant menu = menuRepository.findById(menuId).orElse(null);
-        return menu != null ? menu.getMenuItems() : new ArrayList<>();
-    }
+//    @Override
+//    public List<MenuItem> getMenuItemsByMenuId(String menuId) {
+//        MenuRestaurant menu = menuRepository.findById(menuId).orElse(null);
+//        return menu != null ? menu.getMenuItems() : new ArrayList<>();
+//    }
 }

@@ -31,6 +31,15 @@ public class MenuRestaurant  {
     @OneToMany(mappedBy = "menuRestaurantMapped", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private ArrayList<OrderMenuQty> orderMenuQts;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinTable(
+            name = "menu_menuItem",
+            joinColumns = @JoinColumn(name = "menu_id"),
+            inverseJoinColumns = @JoinColumn(name = "menuItem_id")
+    )
+    private List<MenuItem> menuItems = new ArrayList<>();
+
 
     public MenuRestaurant(String name, Double price, String content, boolean active, boolean water) {
         //this.id = id;
