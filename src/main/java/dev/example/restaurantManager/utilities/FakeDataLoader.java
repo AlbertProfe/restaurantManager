@@ -51,7 +51,7 @@ public class FakeDataLoader {
         faker = new Faker(new Random(42));
     }
 
-    public void createDataAndSave2DBWithoutRelationship(){
+    public void deleteAllData(){
         System.out.println("Delete all data");
         // delete all data
         customerRepository.deleteAll();
@@ -59,7 +59,9 @@ public class FakeDataLoader {
         orderMenuQtyRepository.deleteAll();
         menuRepository.deleteAll();
         shippingOrderRepository.deleteAll();
+    }
 
+    public void createDataAndSave2DBWithoutRelationship(){
         createFakerIfNotExists();
 
         System.out.println("Before creating data");
@@ -107,6 +109,7 @@ public class FakeDataLoader {
         shippingOrderRepository.save(so3);
         System.out.println("after creating ShippingOrderRestaurants");
 
+        System.out.println("after creating data");
     }
 
     public List<OrderMenuQty> getRandomMenuQty(OrderRestaurant orderRestaurant){
@@ -123,20 +126,19 @@ public class FakeDataLoader {
         }
         return menusQty;
     }
+
     public void createSomeRelations(){
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(0);
         List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
         so1.setMenusQty(menusQty);
-        System.out.println("before creating relationship ShippingOrderRestaurant <-> OrderMenusQqy");
-        shippingOrderRepository.save(so1);
-        System.out.println("after creating relationship ShippingOrderRestaurant <-> OrderMenusQqy");
-
-
-        System.out.println("check relationship ShippingOrderRestaurant <-> OrderMenusQqy");
+        System.out.println("before saving relationship ShippingOrderRestaurant <-> OrderMenusQqy");
+//        shippingOrderRepository.save(so1);
+//        System.out.println("after saving relationship ShippingOrderRestaurant <-> OrderMenusQqy");
+//
+//
+//        System.out.println("check saving relationship ShippingOrderRestaurant <-> OrderMenusQqy");
         ShippingOrderRestaurant so1DB = shippingOrderRepository.findById(so1.getId()).orElse(null);
         System.out.println(menusQty.size() + "=" + so1DB.getMenusQty().size() );
-
-
     }
 
 

@@ -9,17 +9,21 @@ import java.util.Objects;
 @Data
 @Entity
 @Table(name = "ORDER_MENU_QTY")
+@IdClass(PK_OrderMenuQty.class)
 public class OrderMenuQty {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+//    @Id
+//    @GeneratedValue(generator = "UUID")
+//    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+//    private String id;
 
+
+    @Id
     @ManyToOne
     @JoinColumn(name="order_id", referencedColumnName="id")
     // @JoinColumn(name = "order_id")
     private OrderRestaurant order;
 
+    @Id
     @ManyToOne
     @JoinColumn(name="menu_id", referencedColumnName="id")
     // @JoinColumn(name = "menu_id")
@@ -28,9 +32,19 @@ public class OrderMenuQty {
     private int quantity;
 
 
+    public PK_OrderMenuQty getId() {
+        return new PK_OrderMenuQty(order,menu);
+    }
+
+    public void setId(PK_OrderMenuQty id) {
+        this.order = id.getOrder();
+        this.menu = id.getMenu();
+    }
+
+
     @Override
     public String toString(){
-        return "id=" + id + ", menú: " + menu.getId() + ", qty:  " + this.quantity;
+        return "order_id: " + order.getId() + ", menu_id: " + menu.getId() + ", qty:  " + this.quantity;
     }
 
     @Override
