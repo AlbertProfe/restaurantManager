@@ -11,6 +11,6 @@ public interface OrderMenuQtyRepository extends JpaRepository<OrderMenuQty,Strin
     @Modifying
     @Transactional
     @Query("delete from OrderMenuQty omq where omq.id = ?1")
-    void delete2(String id);
+    void myDeleteQuery(String id);
 
 }

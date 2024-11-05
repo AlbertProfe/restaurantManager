@@ -1,5 +1,7 @@
 package dev.example.restaurantManager.controller;
 
+import dev.example.restaurantManager.model.MenuRestaurant;
+import dev.example.restaurantManager.model.OrderMenuQty;
 import dev.example.restaurantManager.model.OrderRestaurant;
 import dev.example.restaurantManager.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +62,37 @@ public class OrderController {
                 ? new ResponseEntity<>(headers, HttpStatus.NO_CONTENT)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
+
+
+    @PutMapping("/{id}/menus/{menus}")
+    public ResponseEntity<OrderRestaurant> updateOrder(@PathVariable String id, @RequestBody List<MenuRestaurant> menus) {
+        OrderRestaurant order = orderService.getOrderById(id);
+        HttpHeaders headers = getCommonHeaders("Add menu qties to order");
+        if( order==null ){
+            return  new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+        }
+        for (MenuRestaurant m : menus) {
+            order.addMenu(m);
+        }
+        OrderRestaurant orderUpdated = orderService.updateOrder(id,order);
+
+        return orderUpdated != null
+                ? new ResponseEntity<>(orderUpdated, headers, HttpStatus.OK)
+                : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+    }
+
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> deleteOrder(@PathVariable String id) {
+//        boolean deleted = orderService.deleteOrder(id);
+//        HttpHeaders headers = getCommonHeaders("Delete an order");
+//        headers.add("deleted", String.valueOf(deleted));
+//
+//
+//        return deleted
+//                ? new ResponseEntity<>(headers, HttpStatus.NO_CONTENT)
+//                : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+//    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderRestaurant> getOrderById(@PathVariable String id) {
