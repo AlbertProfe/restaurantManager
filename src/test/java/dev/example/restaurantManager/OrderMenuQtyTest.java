@@ -269,10 +269,30 @@ public class OrderMenuQtyTest {
         // save some order with some menus
         shippingOrderRepository.save(so1);
 
+
         List<OrderMenuQty> menusQtyDB = orderMenuQtyRepository.findAll();
-        String id = menusQtyDB.get(0).getId();
-        orderMenuQtyRepository.deleteById(id);
-        List<OrderMenuQty> menusQtyDB2 = orderMenuQtyRepository.findAll();
+        OrderMenuQty omq = menusQtyDB.get(0);
+
+        int test = 4;
+        if( test==1){
+            omq.setMenu(null);
+            omq.setOrder(null);
+            orderMenuQtyRepository.save(omq);
+            orderMenuQtyRepository.delete(omq);
+            assertThat(orderMenuQtyRepository.findAll().size()).isEqualTo(2);
+        } else if( test==2) {
+            orderMenuQtyRepository.delete(omq);
+            assertThat(orderMenuQtyRepository.findAll().size()).isEqualTo(2);
+        } else if( test==3) {
+            orderMenuQtyRepository.delete2(omq.getId());
+            assertThat(orderMenuQtyRepository.findAll().size()).isEqualTo(2);
+        } else if( test==4) {
+            String id = menusQtyDB.get(0).getId();
+            orderMenuQtyRepository.deleteById(id);
+            assertThat(orderMenuQtyRepository.findAll().size()).isEqualTo(2);
+        }
+
+
         Optional<ShippingOrderRestaurant> found = shippingOrderRepository.findById(so1.getId());
         ShippingOrderRestaurant soDB2 = found.get();
         int nMenusAfterDelete = soDB2.getMenus().size();
