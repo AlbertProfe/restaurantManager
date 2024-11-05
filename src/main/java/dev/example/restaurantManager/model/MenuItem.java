@@ -35,17 +35,17 @@ public class MenuItem {
     @ManyToMany(mappedBy = "menuItems", fetch = FetchType.LAZY)
     private List<MenuRestaurant> menuRestaurants;
 
-    // Create add method
-    public void addItem(MenuRestaurant menu){
-        this.menuRestaurants.add(menu);
-        menu.getMenuItems().add(this);
-
-    }
-    // Create remove method
-    public void removeItem(MenuRestaurant menu) {
-        this.menuRestaurants.remove(menu);
-        menu.getMenuItems().remove(this);
-    }
+//    // Create add method
+//    public void addItem(MenuRestaurant menu){
+//        this.menuRestaurants.add(menu);
+//        menu.getMenuItems().add(this);
+//
+//    }
+//    // Create remove method
+//    public void removeItem(MenuRestaurant menu) {
+//        this.menuRestaurants.remove(menu);
+//        menu.getMenuItems().remove(this);
+//    }
 
     // Default constructor
     public MenuItem() {
