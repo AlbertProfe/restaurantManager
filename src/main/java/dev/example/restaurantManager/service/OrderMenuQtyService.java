@@ -13,4 +13,5 @@ public interface OrderMenuQtyService {
     boolean deleteOrderMenuQty(String id);
     long countOrderMenuQts();
 
+
 }
