@@ -143,6 +143,7 @@ public class FakeDataLoader {
             menusQty.add(omq);
         }
         System.out.println("before saving relationship ShippingOrderRestaurant <-> OrderMenusQqy");
+        so.setMenusQty(menusQty);
         shippingOrderRepository.save(so);
         System.out.println("after saving relationship ShippingOrderRestaurant <-> OrderMenusQqy");
 

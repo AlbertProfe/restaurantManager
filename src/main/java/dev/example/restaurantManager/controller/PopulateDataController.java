@@ -17,8 +17,8 @@ public class PopulateDataController {
     @PostMapping("/all")
     public ResponseEntity<String> PopulateAllData(){
         dataLoader.createDataAndSave2DBWithoutRelationship();
-        dataLoader.createSomeRelations();
-        return ResponseEntity.ok("All data populated successfully");
+        String idOrder = dataLoader.createSomeRelations();
+        return ResponseEntity.ok("All data populated successfully. Some relationship to order_id="+idOrder);
     }
 
 }
