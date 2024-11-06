@@ -10,7 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class MenuItem {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class MenuItem implements IMenuItem {
 
     @Id
     private String id;

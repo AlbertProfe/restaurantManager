@@ -44,7 +44,7 @@ public class DataLoader {
         // then create relationships between them
         createCustomers();
         createTables();
-        createMenuItems();
+        //createMenuItems();
 
         // create and assign menu items
         createMenusAndAssignMenuItems();
@@ -96,17 +96,17 @@ public class DataLoader {
 
     // we are going to create 25 menu items
     // and save them in the H2 local database
-    private void createMenuItems() {
-        for (int i = 0; i < 25; i++) {
-            MenuItem menuItem = new MenuItem(
-                    UUID.randomUUID().toString(),
-                    faker.food().dish(),
-                    faker.food().ingredient() + " " + faker.food().ingredient() ,
-                    faker.number().randomDouble(2, 5, 30)
-            );
-            menuItemRepository.save(menuItem);
-        }
-    }
+//    private void createMenuItems() {
+//        for (int i = 0; i < 25; i++) {
+//            MenuItem menuItem = new MenuItem(
+//                    UUID.randomUUID().toString(),
+//                    faker.food().dish(),
+//                    faker.food().ingredient() + " " + faker.food().ingredient() ,
+//                    faker.number().randomDouble(2, 5, 30)
+//            );
+//            menuItemRepository.save(menuItem);
+//        }
+//    }
 
     // we are going to create 15 menus
     // and assign 5 to 10 menu items to each menu
