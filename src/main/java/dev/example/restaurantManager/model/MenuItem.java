@@ -10,7 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class MenuItem {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class MenuItem implements IMenuItem {
 
     @Id
     private String id;
@@ -26,5 +27,20 @@ public class MenuItem {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public double getPrice() {
+        return this.price;
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
     }
 }
