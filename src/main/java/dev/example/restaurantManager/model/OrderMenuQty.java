@@ -19,13 +19,13 @@ public class OrderMenuQty {
 
     @Id
     @ManyToOne
-    @JoinColumn(name="order_id", referencedColumnName="id")
+    @JoinColumn(name="order_id", referencedColumnName="id", nullable = false)
     // @JoinColumn(name = "order_id")
     private OrderRestaurant order;
 
     @Id
     @ManyToOne
-    @JoinColumn(name="menu_id", referencedColumnName="id")
+    @JoinColumn(name="menu_id", referencedColumnName="id", nullable = false)
     // @JoinColumn(name = "menu_id")
     private MenuRestaurant menu;
 

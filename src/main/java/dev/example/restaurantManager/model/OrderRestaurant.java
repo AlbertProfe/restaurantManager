@@ -32,7 +32,8 @@ public class OrderRestaurant {
 //            joinColumns = @JoinColumn(name = "ORDER_ID_FK"),
 //            inverseJoinColumns = @JoinColumn(name = "MENU_ID_FK")
 //    )
-    @OneToMany(mappedBy = "order",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name="order_id")  // Sin esta anotación se crea la tabla order_restaurant_menus_qty !!!
     private List<OrderMenuQty> menusQty;
 
     public OrderRestaurant(String id, Date date, String waiter, int peopleQty,

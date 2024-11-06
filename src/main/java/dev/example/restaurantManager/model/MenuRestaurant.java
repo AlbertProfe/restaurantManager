@@ -25,8 +25,9 @@ public class MenuRestaurant  {
 //    @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
 //    private List<OrderRestaurant> orders = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "menu")
-//    private List<OrderMenuQty> menusQty;
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name="menu_id") // sin esta anotación se crea la tabla menu_restaurant_menus_qty
+    private List<OrderMenuQty> menusQty;
 
 
     // to execute old tests

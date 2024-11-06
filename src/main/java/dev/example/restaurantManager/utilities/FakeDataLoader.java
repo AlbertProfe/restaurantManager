@@ -3,6 +3,7 @@ package dev.example.restaurantManager.utilities;
 import com.github.javafaker.Faker;
 import dev.example.restaurantManager.model.*;
 import dev.example.restaurantManager.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -127,7 +128,32 @@ public class FakeDataLoader {
         return menusQty;
     }
 
-    public void createSomeRelations(){
+    public String createSomeRelations(){
+        ShippingOrderRestaurant so = shippingOrderRepository.findAll().getFirst();
+        String idOrder = so.getId();
+        List<OrderMenuQty> menusQty = new ArrayList<>();
+        for(MenuRestaurant m:menuRepository.findAll()){
+            if (faker.random().nextInt(0,3) == 0){
+                continue;
+            }
+            OrderMenuQty omq = new OrderMenuQty();
+            omq.setOrder(so);
+            omq.setMenu(m);
+            omq.setQuantity(faker.random().nextInt(1,5));
+            menusQty.add(omq);
+        }
+        System.out.println("before saving relationship ShippingOrderRestaurant <-> OrderMenusQqy");
+        shippingOrderRepository.save(so);
+        System.out.println("after saving relationship ShippingOrderRestaurant <-> OrderMenusQqy");
+
+//        ShippingOrderRestaurant so1DB = shippingOrderRepository.findById(idOrder).orElse(null);
+//        System.out.println(menusQty.size() + "=" + so1DB.getMenusQty().size() );
+
+        return idOrder;
+    }
+
+
+    public void createSomeRelationsOld(){
         ShippingOrderRestaurant so1 = (ShippingOrderRestaurant) orders.get(0);
         List<OrderMenuQty> menusQty = getRandomMenuQty(so1);
         so1.setMenusQty(menusQty);
