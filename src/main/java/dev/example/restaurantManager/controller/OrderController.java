@@ -65,7 +65,7 @@ public class OrderController {
 
 
     @PutMapping("/{id}/menus/{menus}")
-    public ResponseEntity<OrderRestaurant> updateOrder(@PathVariable String id, @RequestBody List<MenuRestaurant> menus) {
+    public ResponseEntity<OrderRestaurant> updateOrderAddMenuQty(@PathVariable String id, @RequestBody List<MenuRestaurant> menus) {
         OrderRestaurant orderUpdated = orderService.addMenus(id,menus);
         // OrderRestaurant order = orderService.getOrderById(id);
         HttpHeaders headers = getCommonHeaders("Add menu qties to order");
@@ -82,17 +82,14 @@ public class OrderController {
 
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteOrder(@PathVariable String id) {
-//        boolean deleted = orderService.deleteOrder(id);
-//        HttpHeaders headers = getCommonHeaders("Delete an order");
-//        headers.add("deleted", String.valueOf(deleted));
-//
-//
-//        return deleted
-//                ? new ResponseEntity<>(headers, HttpStatus.NO_CONTENT)
-//                : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
-//    }
+    @DeleteMapping("/{id}/menus/{menus}")
+    public ResponseEntity<OrderRestaurant> updateOrderDelMenuQty(@PathVariable String id, @RequestBody List<MenuRestaurant> menus) {
+        OrderRestaurant orderUpdated = orderService.deleteMenus(id,menus);
+        HttpHeaders headers = getCommonHeaders("Delete menu qties from order");
+        return orderUpdated != null
+                ? new ResponseEntity<>(orderUpdated, headers, HttpStatus.OK)
+                : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+    }
 
 
     @GetMapping("/{id}")

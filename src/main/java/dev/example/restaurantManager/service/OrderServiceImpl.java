@@ -64,4 +64,17 @@ public class OrderServiceImpl implements OrderService{
         }
         return orderRepository.save(order);
     }
+
+    @Override
+    public OrderRestaurant deleteMenus(String idOrder, List<MenuRestaurant> menus){
+        // OrderRestaurant order = orderRepository.findById(idOrder).orElse(null);
+        OrderRestaurant order = orderRepository.getReferenceById(idOrder);
+        if( order==null ){
+            return  null;
+        }
+        for (MenuRestaurant m : menus) {
+            order.removeMenu(m);
+        }
+        return orderRepository.save(order);
+    }
 }

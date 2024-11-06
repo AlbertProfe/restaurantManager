@@ -15,4 +15,5 @@ public interface OrderService {
 
 
     OrderRestaurant addMenus(String idOrder, List<MenuRestaurant> menus);
+    OrderRestaurant deleteMenus(String idOrder, List<MenuRestaurant> menus);
 }

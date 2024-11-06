@@ -257,9 +257,10 @@ public class OrderMenuQtyTest {
         long nOrderMenuQty = menusQty.size();
         System.out.println("total OrderMenuQty: " + nOrderMenuQty);
         // find from DB first menusQty
-        OrderMenuQty omqToDelete = menusQty.get(0);
+        OrderMenuQty omqToDelete = orderMenuQtyRepository.findById(menusQty.get(0).getId()).orElseThrow();
         System.out.println("OrderMenuQty to delete: " + omqToDelete);
         orderMenuQtyRepository.deleteById(omqToDelete.getId());
+        orderMenuQtyRepository.delete(omqToDelete);
         orderMenuQtyRepository.flush();
 
         Optional<OrderMenuQty> found = orderMenuQtyRepository.findById(omqToDelete.getId());
