@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.List;
 
 @Data
@@ -14,6 +16,8 @@ import java.util.List;
 public abstract class MenuItem implements IMenuItem {
 
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String name;
     private String description;
@@ -22,8 +26,7 @@ public abstract class MenuItem implements IMenuItem {
     @ManyToMany(mappedBy = "menuItems")
     private List<MenuRestaurant> menus;
 
-    public MenuItem(String id, String name, String description, double price) {
-        this.id = id;
+    public MenuItem(String name, String description, double price) {
         this.name = name;
         this.description = description;
         this.price = price;
