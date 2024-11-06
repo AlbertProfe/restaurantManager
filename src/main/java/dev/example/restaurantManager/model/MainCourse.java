@@ -1,15 +1,25 @@
 package dev.example.restaurantManager.model;
+import jakarta.persistence.*;
 
-import java.util.List;
+    @Entity
+    public class MainCourse extends MenuItem {
+        private String servingSize;
 
-public class MainCourse extends MenuItem {
-    public MainCourse(String string, String dish, String s, double v) {
+        public MainCourse(String id, String name, String description, double price, String servingSize) {
+            super(id, name, description, price);
+            this.servingSize = servingSize;
+        }
+
+        public String getServingSize() {
+            return servingSize;
+        }
+
+        public void setServingSize(String servingSize) {
+            this.servingSize = servingSize;
+        }
+
+        public void printServingSize() {
+            System.out.println("Serving Size: " + servingSize);
+        }
     }
 
-    public MainCourse(String id, String name, String description, double price, List<MenuRestaurant> menus) {
-        super(id, name, description, price, menus);
-    }
-
-    public MainCourse() {
-    }
-}

@@ -1,15 +1,29 @@
 package dev.example.restaurantManager.model;
 
+import jakarta.persistence.Entity;
+
 import java.util.List;
 
+@Entity
 public class Dessert extends MenuItem {
-    public Dessert(String string, String dish, String s, double v) {
+    private boolean toShare;
+
+    public Dessert(String id, String name, String description, double price, boolean toShare) {
+        super(id, name, description, price);
+        this.toShare = false;
     }
 
-    public Dessert() {
+    public boolean getToShare() {
+        return toShare;
     }
 
-    public Dessert(String id, String name, String description, double price, List<MenuRestaurant> menus) {
-        super(id, name, description, price, menus);
+    public void setToShare(boolean toShare) {
+        this.toShare = toShare;
+    }
+
+    // Example method specific to Dessert
+    public void isToShare() {
+        System.out.println("Dessert to share? " + toShare);
     }
 }
+

@@ -102,7 +102,8 @@ public class DataLoader {
                     UUID.randomUUID().toString(),
                     faker.food().dish(),
                     faker.food().ingredient() + " " + faker.food().ingredient(),
-                    faker.number().randomDouble(2, 5, 30)
+                    faker.number().randomDouble(2, 5, 30),
+                    faker.options().option("Small", "Medium", "Large")
             );
             menuItemRepository.save(menuItem);
         }
@@ -114,7 +115,8 @@ public class DataLoader {
                     UUID.randomUUID().toString(),
                     faker.food().dish(),
                     faker.food().ingredient() + " " + faker.food().ingredient(),
-                    faker.number().randomDouble(2, 5, 30)
+                    faker.number().randomDouble(2, 5, 30),
+                    faker.random().nextBoolean()
             );
             menuItemRepository.save(menuItem);
         }
