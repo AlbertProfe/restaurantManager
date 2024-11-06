@@ -220,6 +220,52 @@ public class OrderMenuQtyTest {
 
     }
 
+    @Test
+    @Transactional
+    public void testFindByIdInMenuQtyRepository(){
+        // get last order
+        ShippingOrderRestaurant so = shippingOrderRepository.findAll().getLast();
+        // get some random QtyMenu
+        List<OrderMenuQty> menusQty = getRandomMenuQty(so);
+        so.setMenusQty(menusQty);
+        // save relationships
+        shippingOrderRepository.save(so);
+        // print all orders relationships
+        shippingOrderRepository.findAll().forEach( or -> System.out.println(or.getId() + ": " + or.getMenusQty() ));
+
+        // find from DB first menusQty
+        OrderMenuQty omqMemory = menusQty.get(0);
+        Optional<OrderMenuQty> foundOmq = orderMenuQtyRepository.findById(omqMemory.getId());
+        assertThat(foundOmq).isPresent();
+        OrderMenuQty omqDB = foundOmq.get();
+        assertThat(omqMemory).isEqualTo(omqDB);
+    }
+
+    @Test
+    @Transactional
+    public void deleteByIdInMenuQtyRepository(){
+        // get last order
+        ShippingOrderRestaurant so = shippingOrderRepository.findAll().getLast();
+        // get some random QtyMenu
+        List<OrderMenuQty> menusQty = getRandomMenuQty(so);
+        so.setMenusQty(menusQty);
+        // save relationships
+        shippingOrderRepository.save(so);
+        // print all orders relationships
+        shippingOrderRepository.findAll().forEach( or -> System.out.println(or.getId() + ": " + or.getMenusQty() ));
+
+        long nOrderMenuQty = menusQty.size();
+        System.out.println("total OrderMenuQty: " + nOrderMenuQty);
+        // find from DB first menusQty
+        OrderMenuQty omqToDelete = menusQty.get(0);
+        System.out.println("OrderMenuQty to delete: " + omqToDelete);
+        orderMenuQtyRepository.deleteById(omqToDelete.getId());
+        orderMenuQtyRepository.flush();
+
+        Optional<OrderMenuQty> found = orderMenuQtyRepository.findById(omqToDelete.getId());
+        assertThat(found).isNotPresent();
+        assertThat(orderMenuQtyRepository.count()).isEqualTo(nOrderMenuQty-1);
+    }
 
     @Test
     @Transactional
