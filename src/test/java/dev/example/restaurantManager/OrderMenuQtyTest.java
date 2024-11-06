@@ -139,6 +139,45 @@ public class OrderMenuQtyTest {
 
     @Test
     @Transactional
+    public void checkOrderMenuQtyRepository2() {
+        // no relationship is on DB
+        int totalRelationships = 0;
+        assertThat(orderMenuQtyRepository.findAll().size()).isEqualTo(totalRelationships);
+
+        List<ShippingOrderRestaurant> orders = shippingOrderRepository.findAll();
+        ShippingOrderRestaurant so0 = orders.get(0);
+        List<OrderMenuQty> menusQty0 = getRandomMenuQty(so0);
+        so0.setMenusQty(menusQty0);
+        // save some relationships
+        shippingOrderRepository.save(so0);
+        totalRelationships += menusQty0.size();
+        assertThat(orderMenuQtyRepository.findAll().size()).isEqualTo(totalRelationships);
+
+
+        ShippingOrderRestaurant so1 = orders.get(1);
+        List<OrderMenuQty> menusQty1 = new ArrayList<>();
+        for(OrderMenuQty omq:menusQty0){
+            OrderMenuQty omqNew = new OrderMenuQty();
+            omqNew.setOrder(so1);
+            omqNew.setMenu(omq.getMenu());
+            omqNew.setQuantity(omq.getQuantity());
+            menusQty1.add(omqNew);
+        }
+        so1.setMenusQty(menusQty1);
+        shippingOrderRepository.save(so1);
+        totalRelationships += menusQty1.size();
+        assertThat(orderMenuQtyRepository.findAll().size()).isEqualTo(totalRelationships);
+
+        ShippingOrderRestaurant so2 = orders.get(2);
+        List<OrderMenuQty> menusQty2 = getRandomMenuQty(so2);
+        so2.setMenusQty(menusQty2);
+        shippingOrderRepository.save(so2);
+        totalRelationships += menusQty2.size();
+        assertThat(orderMenuQtyRepository.findAll().size()).isEqualTo(totalRelationships);
+    }
+
+    @Test
+    @Transactional
     public void createOrderAndDeleteSomeQtyMenus() {
         List<ShippingOrderRestaurant> orders = shippingOrderRepository.findAll();
         ShippingOrderRestaurant so1 = orders.get(0);
