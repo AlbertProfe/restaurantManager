@@ -1,5 +1,6 @@
 package dev.example.restaurantManager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -53,7 +54,7 @@ public class OrderMenuQty {
         if (!(o instanceof OrderMenuQty that)) return false;
         // don't check because id it's set in db
         // Objects.equals(id, that.id)
-        return quantity == that.quantity && Objects.equals(order, that.order) && Objects.equals(menu, that.menu);
+        return quantity == that.quantity && order.getId().equals(that.order.getId()) && menu.getId().equals(that.menu.getId());
     }
 
 

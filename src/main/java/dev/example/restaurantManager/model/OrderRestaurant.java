@@ -2,6 +2,7 @@ package dev.example.restaurantManager.model;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,6 +33,7 @@ public class OrderRestaurant {
 //            joinColumns = @JoinColumn(name = "ORDER_ID_FK"),
 //            inverseJoinColumns = @JoinColumn(name = "MENU_ID_FK")
 //    )
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="order_id")  // Sin esta anotación se crea la tabla order_restaurant_menus_qty !!!
     private List<OrderMenuQty> menusQty;

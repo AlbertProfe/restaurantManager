@@ -20,6 +20,8 @@ public class OrderMenuQtyTest {
     @Autowired
     ShippingOrderRepository shippingOrderRepository;
     @Autowired
+    OrderRestaurantRepository orderRepository;
+    @Autowired
     MenuRestaurantRepository menuRepository;
     @Autowired
     OrderMenuQtyRepository orderMenuQtyRepository;
@@ -239,6 +241,28 @@ public class OrderMenuQtyTest {
         assertThat(orderMenuQtyRepository.count()).isEqualTo(nMenusOriginal-1);
         System.out.println("TEST deleteSomeQtyMenusWithMenuQtyRepository END");
 
+    }
+
+
+    @Test
+    @Transactional
+    public void orderRepositoryAndShippingRepository() {
+        System.out.println("TEST orderRepositoryAndShippingRepository BEGIN");
+        System.out.println(shippingOrderRepository.findAll());
+        String id = shippingOrderRepository.findAll().get(1).getId();
+        System.out.println("id from db=" + id);
+        String shippingOrderId = "SO2";
+        System.out.println("id from db=" + shippingOrderId);
+        assertThat(id).isEqualTo(shippingOrderId);
+        Optional<ShippingOrderRestaurant> optionalSO = shippingOrderRepository.findById(shippingOrderId);
+        assertThat(optionalSO).isPresent();
+        ShippingOrderRestaurant so = optionalSO.get();
+
+        Optional<OrderRestaurant> optionalOR = orderRepository.findById(shippingOrderId);
+        assertThat(optionalOR).isPresent();
+        ShippingOrderRestaurant so2 = (ShippingOrderRestaurant)optionalOR.get();
+        assertThat(so).isEqualTo(so2);
+        System.out.println("TEST orderRepositoryAndShippingRepository END");
     }
 
 

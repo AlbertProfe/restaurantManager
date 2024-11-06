@@ -1,8 +1,13 @@
 package dev.example.restaurantManager.service;
 
+import dev.example.restaurantManager.model.MenuRestaurant;
 import dev.example.restaurantManager.model.OrderRestaurant;
 import dev.example.restaurantManager.repository.OrderRestaurantRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +34,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public OrderRestaurant updateOrder(String id, OrderRestaurant orderDetails) {
-        OrderRestaurant order = getOrderById(id);
+        // OrderRestaurant order = getOrderById(id);
+        OrderRestaurant order = orderRepository.getReferenceById(id);
+
         return orderRepository.save(orderDetails);
     }
 
@@ -42,6 +49,19 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public long countOrders() {
-        return 0;
+        return orderRepository.count();
+    }
+
+    @Override
+    public OrderRestaurant addMenus(String idOrder, List<MenuRestaurant> menus){
+        // OrderRestaurant order = orderRepository.findById(idOrder).orElse(null);
+        OrderRestaurant order = orderRepository.getReferenceById(idOrder);
+        if( order==null ){
+            return  null;
+        }
+        for (MenuRestaurant m : menus) {
+            order.addMenu(m);
+        }
+        return orderRepository.save(order);
     }
 }

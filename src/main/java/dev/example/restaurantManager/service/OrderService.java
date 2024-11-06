@@ -1,5 +1,6 @@
 package dev.example.restaurantManager.service;
 
+import dev.example.restaurantManager.model.MenuRestaurant;
 import dev.example.restaurantManager.model.OrderRestaurant;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface OrderService {
     boolean deleteOrder(String id);
     long countOrders();
 
+
+    OrderRestaurant addMenus(String idOrder, List<MenuRestaurant> menus);
 }

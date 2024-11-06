@@ -66,19 +66,20 @@ public class OrderController {
 
     @PutMapping("/{id}/menus/{menus}")
     public ResponseEntity<OrderRestaurant> updateOrder(@PathVariable String id, @RequestBody List<MenuRestaurant> menus) {
-        OrderRestaurant order = orderService.getOrderById(id);
+        OrderRestaurant orderUpdated = orderService.addMenus(id,menus);
+        // OrderRestaurant order = orderService.getOrderById(id);
         HttpHeaders headers = getCommonHeaders("Add menu qties to order");
-        if( order==null ){
-            return  new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
-        }
-        for (MenuRestaurant m : menus) {
-            order.addMenu(m);
-        }
-        OrderRestaurant orderUpdated = orderService.updateOrder(id,order);
-
         return orderUpdated != null
                 ? new ResponseEntity<>(orderUpdated, headers, HttpStatus.OK)
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+//        if( orderUpdated==null ){
+//            return  new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+//        }
+//        for (MenuRestaurant m : menus) {
+//            order.addMenu(m);
+//        }
+        // OrderRestaurant orderUpdated = orderService.updateOrder(id,order);
+
     }
 
 //    @DeleteMapping("/{id}")
