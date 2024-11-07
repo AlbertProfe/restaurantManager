@@ -1,16 +1,20 @@
 package dev.example.restaurantManager.model;
 
 import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Dessert extends MenuItem {
     private boolean toShare;
 
     public Dessert(String id, String name, String description, double price, boolean toShare) {
         super(id, name, description, price);
-        this.toShare = false;
+        this.toShare = toShare;
     }
 
     public boolean getToShare() {

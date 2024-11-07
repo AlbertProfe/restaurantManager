@@ -2,6 +2,7 @@ package dev.example.restaurantManager;
 
 import dev.example.restaurantManager.model.Booking;
 import dev.example.restaurantManager.model.Customer;
+import dev.example.restaurantManager.model.MainCourse;
 import dev.example.restaurantManager.model.TableRestaurant;
 import dev.example.restaurantManager.repository.BookingRepository;
 import dev.example.restaurantManager.repository.CustomerRepository;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 public class BookingTableManyToManyTest {
@@ -127,4 +129,5 @@ public class BookingTableManyToManyTest {
 
 
     }
+
 }

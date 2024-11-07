@@ -33,6 +33,10 @@ public class DataLoader {
     private ShippingOrderRepository shippingOrderRepository;
     @Autowired
     private TakeAwayOrderRepository takeAwayOrderRepository;
+    @Autowired
+    private MainCourseRepository mainCourseRepository;
+    @Autowired
+    private DessertRepository dessertRepository;
     private final Faker faker = new Faker(new Locale("en-US"));
 
     // master method orchestrating all other methods to
