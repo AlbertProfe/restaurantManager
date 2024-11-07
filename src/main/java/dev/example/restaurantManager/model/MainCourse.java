@@ -13,6 +13,12 @@ public class MainCourse extends MenuItem {
     private boolean vegan;
     private boolean glutenFree;
 
-
+    public MainCourse(String name, String description, double price, boolean vegan, boolean glutenFree) {
+        // Call to constructor from superclass
+        super(name, description, price);
+        // Constructor from subclass
+        this.vegan = vegan;
+        this.glutenFree = glutenFree;
+    }
 
 }
