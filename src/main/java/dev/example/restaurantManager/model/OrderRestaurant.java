@@ -2,7 +2,9 @@ package dev.example.restaurantManager.model;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +17,10 @@ import dev.example.restaurantManager.utilities.Converter;
 @Entity
 @Table(name = "ORDER_RESTAURANT")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+// https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class OrderRestaurant {
 
     @Id
@@ -33,7 +39,6 @@ public class OrderRestaurant {
 //            joinColumns = @JoinColumn(name = "ORDER_ID_FK"),
 //            inverseJoinColumns = @JoinColumn(name = "MENU_ID_FK")
 //    )
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="order_id")  // Sin esta anotación se crea la tabla order_restaurant_menus_qty !!!
     private List<OrderMenuQty> menusQty;

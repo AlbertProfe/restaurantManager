@@ -1,16 +1,16 @@
 package dev.example.restaurantManager.service;
 
 import dev.example.restaurantManager.model.MenuRestaurant;
+import dev.example.restaurantManager.model.OrderMenuQty;
 import dev.example.restaurantManager.model.OrderRestaurant;
 import dev.example.restaurantManager.repository.OrderRestaurantRepository;
-import jakarta.transaction.Transactional;
+import dev.example.restaurantManager.utilities.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static dev.example.restaurantManager.utilities.Converter.convertMenus2QtyMenus;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -59,8 +59,12 @@ public class OrderServiceImpl implements OrderService{
         if( order==null ){
             return  null;
         }
-        for (MenuRestaurant m : menus) {
-            order.addMenu(m);
+//        for (MenuRestaurant m : menus) {
+//            order.addMenu(m);
+//        }
+        List<OrderMenuQty> menusQt = Converter.convertMenus2QtyMenus(order,menus);
+        for(OrderMenuQty omq:menusQt){
+            order.addMenuQty(omq.getMenu(),omq.getQuantity());
         }
         return orderRepository.save(order);
     }
@@ -72,8 +76,12 @@ public class OrderServiceImpl implements OrderService{
         if( order==null ){
             return  null;
         }
-        for (MenuRestaurant m : menus) {
-            order.removeMenu(m);
+//        for (MenuRestaurant m : menus) {
+//            order.removeMenu(m);
+//        }
+        List<OrderMenuQty> menusQt = Converter.convertMenus2QtyMenus(order,menus);
+        for(OrderMenuQty omq:menusQt){
+            order.removeMenuQty(omq.getMenu(),omq.getQuantity());
         }
         return orderRepository.save(order);
     }

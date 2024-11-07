@@ -1,6 +1,8 @@
 package dev.example.restaurantManager.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
@@ -11,6 +13,10 @@ import java.util.Objects;
 // @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+// https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class MenuRestaurant  {
 
     @Id
@@ -25,7 +31,6 @@ public class MenuRestaurant  {
 //    @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
 //    private List<OrderRestaurant> orders = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="menu_id") // sin esta anotación se crea la tabla menu_restaurant_menus_qty
     private List<OrderMenuQty> menusQty;
