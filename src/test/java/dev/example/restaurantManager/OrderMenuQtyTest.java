@@ -2,7 +2,9 @@ package dev.example.restaurantManager;
 
 import dev.example.restaurantManager.model.*;
 import dev.example.restaurantManager.repository.*;
+import dev.example.restaurantManager.service.OrderService;
 import dev.example.restaurantManager.utilities.FakeDataLoader;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OrderMenuQtyTest {
 
     @Autowired
+    EntityManager entityManager;
+    @Autowired
     ShippingOrderRepository shippingOrderRepository;
     @Autowired
     OrderRestaurantRepository orderRepository;
@@ -25,6 +29,8 @@ public class OrderMenuQtyTest {
     MenuRestaurantRepository menuRepository;
     @Autowired
     OrderMenuQtyRepository orderMenuQtyRepository;
+    @Autowired
+    OrderService orderService;
 
 
 //    List<MenuRestaurant> menus;
@@ -222,7 +228,7 @@ public class OrderMenuQtyTest {
 
     @Test
     @Transactional
-    public void testFindByIdInMenuQtyRepository(){
+    public void findByIdInMenuQtyRepository(){
         // get last order
         ShippingOrderRestaurant so = shippingOrderRepository.findAll().getLast();
         // get some random QtyMenu
@@ -243,37 +249,11 @@ public class OrderMenuQtyTest {
 
     @Test
     @Transactional
-    public void deleteByIdInMenuQtyRepository(){
-        // get last order
-        ShippingOrderRestaurant so = shippingOrderRepository.findAll().getLast();
-        // get some random QtyMenu
-        List<OrderMenuQty> menusQty = getRandomMenuQty(so);
-        so.setMenusQty(menusQty);
-        // save relationships
-        shippingOrderRepository.save(so);
-        // print all orders relationships
-        shippingOrderRepository.findAll().forEach( or -> System.out.println(or.getId() + ": " + or.getMenusQty() ));
-
-        long nOrderMenuQty = menusQty.size();
-        System.out.println("total OrderMenuQty: " + nOrderMenuQty);
-        // find from DB first menusQty
-        OrderMenuQty omqToDelete = orderMenuQtyRepository.findById(menusQty.get(0).getId()).orElseThrow();
-        System.out.println("OrderMenuQty to delete: " + omqToDelete);
-        orderMenuQtyRepository.deleteById(omqToDelete.getId());
-        orderMenuQtyRepository.delete(omqToDelete);
-        orderMenuQtyRepository.flush();
-
-        Optional<OrderMenuQty> found = orderMenuQtyRepository.findById(omqToDelete.getId());
-        assertThat(found).isNotPresent();
-        assertThat(orderMenuQtyRepository.count()).isEqualTo(nOrderMenuQty-1);
-    }
-
-    @Test
-    @Transactional
-    public void deleteSomeQtyMenusWithMenuQtyRepository() {
-        System.out.println("TEST deleteSomeQtyMenusWithMenuQtyRepository BEGIN");
+    public void deleteQtyMenusWithOrderRepository() {
+        System.out.println("TEST deleteQtyMenusWithOrderRepository BEGIN");
         // check no relationship is stored on DB
         assertThat(orderMenuQtyRepository.findAll().size()).isEqualTo(0);
+
 
         // get first order
         List<ShippingOrderRestaurant> orders = shippingOrderRepository.findAll();
@@ -285,49 +265,29 @@ public class OrderMenuQtyTest {
         System.out.println("Printing " + nMenusOriginal + " menu qty from memory");
         menusQty.forEach(System.out::println);
         // save relationship of order with some qty menus
-        shippingOrderRepository.save(so);
+        orderRepository.save(so);
         System.out.println("After shippingOrderRepository.save");
 
-        // first check: removing one OrderMenuQty with shippingOrderRepository
+        // removing one OrderMenuQty with shippingOrderRepository
         OrderMenuQty omq = menusQty.get(0);
         so.removeMenuQty(omq.getMenu(),omq.getQuantity());
-        shippingOrderRepository.save(so);
+        orderRepository.save(so);
         // get order from db to check if OrderMenuQty is removed
         Optional<ShippingOrderRestaurant> found1 = shippingOrderRepository.findById(so.getId());
         assertThat(found1).isPresent();
         assertThat(found1.get().getMenusQty().size()).isEqualTo(nMenusOriginal-1);
         // insert back OrderMenuQty
         so.addMenuQty(omq.getMenu(),omq.getQuantity());
-        shippingOrderRepository.save(so);
+        orderRepository.save(so);
         // and check if OrderMenuQty is added
         found1 = shippingOrderRepository.findById(so.getId());
         assertThat(found1).isPresent();
         assertThat(found1.get().getMenusQty().size()).isEqualTo(nMenusOriginal);
 
-        // second check: removing one OrderMenuQty with orderMenuQtyRepository
-        List<OrderMenuQty> menusQtyDB = orderMenuQtyRepository.findAll();
-        OrderMenuQty omqToDelete = menusQtyDB.get(0);
-        System.out.println("Printing menu qty from DB");
-        menusQtyDB.forEach(System.out::println);
-        System.out.println("Menu qty to delete: " + omqToDelete);
-        // As no relationship was stored on DB before this test
-        // all relationships on DB belong to the order of this test
-        assertThat(menusQtyDB.stream().map(o -> o.getOrder().getId())).allMatch(id -> id.equals(so.getId()) );
-        // must be same number of relationships
-        assertThat(menusQtyDB.size()).isEqualTo(nMenusOriginal);
-        // and now remove one OrderMenuQty with orderMenuQtyRepository
-        System.out.println("Before orderMenuQtyRepository.delete");
-        // none of the next 2 methods work !!!!
-        orderMenuQtyRepository.deleteById(omqToDelete.getId());
-        orderMenuQtyRepository.delete(omqToDelete);
-        // orderMenuQtyRepository.myDeleteQuery(omqToDelete.getId());
-        // no SQL instruction is shown on console !!!
-        System.out.println("After orderMenuQtyRepository.delete");
-        // this assert will fail
-        assertThat(orderMenuQtyRepository.count()).isEqualTo(nMenusOriginal-1);
-        System.out.println("TEST deleteSomeQtyMenusWithMenuQtyRepository END");
-
+        System.out.println("TEST deleteQtyMenusWithOrderRepository END");
     }
+
+
 
 
     @Test
@@ -351,5 +311,103 @@ public class OrderMenuQtyTest {
         System.out.println("TEST orderRepositoryAndShippingRepository END");
     }
 
+    @Test
+    @Transactional
+    public void orderServiceAddMenus(){
+        System.out.println("TEST orderServiceAddMenus BEGIN");
+        // store in memory menus
+        List<MenuRestaurant> menusToAdd = new ArrayList<>();
+        HashMap<String,Integer> menusNumber = new HashMap<>();
+        for(MenuRestaurant m:menuRepository.findAll()){
+            int n = dataLoader.getFaker().random().nextInt(2,5);
+            for(int i=0;i<n;i++){
+                menusToAdd.add(m);
+            }
+            menusNumber.put(m.getId(),n);
+            System.out.println("Added " + n + " menu " + m.getId() );
+        }
+        // all orders are empty (no menus qty relationship)
+        String idOrder = "SO1";
+        // add menus to order
+        OrderRestaurant orderUpdated = orderService.addMenus(idOrder,menusToAdd);
+        for(OrderMenuQty omq:orderUpdated.getMenusQty()){
+            String idMenu = omq.getMenu().getId();
+            int qty = omq.getQuantity();
+            assertThat(qty).isEqualTo(menusNumber.get(idMenu));
+        }
+        System.out.println("TEST orderServiceAddMenus END");
+    }
 
+    @Test
+    @Transactional
+    public void orderServiceDeleteMenus(){
+        System.out.println("TEST orderServiceDeleteMenus BEGIN");
+
+        // save some menus to first order
+        ShippingOrderRestaurant so = shippingOrderRepository.findAll().getFirst();
+        // get some random QtyMenu
+        List<OrderMenuQty> menusQty = getRandomMenuQty(so);
+        so.setMenusQty(menusQty);
+        // save relationship of order with some qty menus
+        shippingOrderRepository.save(so);
+        int nMenusOriginal = menusQty.size();
+        System.out.println("Printing " + nMenusOriginal + " menu qty from memory");
+        menusQty.forEach(System.out::println);
+
+        // prepare list of menus to delete
+        List<MenuRestaurant> menusToDelete = new ArrayList<>();
+        for(OrderMenuQty omq: so.getMenusQty()){
+            for(int i=0;i<omq.getQuantity();i++){
+                menusToDelete.add(omq.getMenu());
+            }
+        }
+
+        // Deleting all menus previously added
+        String idOrder = so.getId();
+        // add menus to order
+        OrderRestaurant orderUpdated = orderService.deleteMenus(idOrder,menusToDelete);
+        // check object returned by service
+        assertThat(orderUpdated.getMenusQty().size()).isEqualTo(0);
+        OrderRestaurant order = orderRepository.getById(orderUpdated.getId());
+        // check object stored in DB
+        assertThat(order.getMenusQty().size()).isEqualTo(0);
+
+        System.out.println("TEST orderServiceDeleteMenus END");
+    }
+
+    @Test
+    @Transactional
+    public void deleteByIdInMenuQtyRepository(){
+        System.out.println("TEST deleteByIdInMenuQtyRepository BEGIN");
+        // get last order
+        ShippingOrderRestaurant so = shippingOrderRepository.findAll().getLast();
+        // get some random QtyMenu
+        List<OrderMenuQty> menusQty = getRandomMenuQty(so);
+        so.setMenusQty(menusQty);
+        // save relationships
+        shippingOrderRepository.save(so);
+        // print all orders relationships
+        shippingOrderRepository.findAll().forEach( or -> System.out.println(or.getId() + ": " + or.getMenusQty() ));
+
+        long nOrderMenuQty = menusQty.size();
+        System.out.println("total OrderMenuQty: " + nOrderMenuQty);
+        // find from DB first menusQty
+        OrderMenuQty omqToDelete = orderMenuQtyRepository.findById(menusQty.get(0).getId()).orElseThrow();
+        System.out.println("OrderMenuQty to delete: " + omqToDelete);
+        System.out.println("Before trying to delete");
+        // trying with id -> NOT WORKING
+        orderMenuQtyRepository.deleteById(omqToDelete.getId());
+        // trying with object -> NOT WORKING
+        orderMenuQtyRepository.delete(omqToDelete);
+        // flush to DB
+        orderMenuQtyRepository.flush();
+        entityManager.flush();
+        entityManager.clear();
+        System.out.println("After trying to delete + entityManager.flush(); entityManager.clear();");
+
+        Optional<OrderMenuQty> found = orderMenuQtyRepository.findById(omqToDelete.getId());
+        assertThat(found).isNotPresent(); // Fails -> object wasn't deleted
+        assertThat(orderMenuQtyRepository.count()).isEqualTo(nOrderMenuQty-1);
+        System.out.println("TEST deleteByIdInMenuQtyRepository END");
+    }
 }
