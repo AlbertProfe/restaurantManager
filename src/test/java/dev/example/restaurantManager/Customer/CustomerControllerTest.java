@@ -1,4 +1,4 @@
-package dev.example.restaurantManager;
+package dev.example.restaurantManager.Customer;
 
 import dev.example.restaurantManager.controller.CustomerController;
 import dev.example.restaurantManager.model.Customer;
