@@ -2,11 +2,11 @@ package dev.example.restaurantManager.utilities;
 
 import com.github.javafaker.Faker;
 import dev.example.restaurantManager.model.*;
+import dev.example.restaurantManager.model.MenuItem.MenuItem;
 import dev.example.restaurantManager.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 

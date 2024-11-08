@@ -1,6 +1,6 @@
 package dev.example.restaurantManager.controller;
 
-import dev.example.restaurantManager.model.MenuItem;
+import dev.example.restaurantManager.model.MenuItem.MenuItem;
 import dev.example.restaurantManager.service.MenuItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

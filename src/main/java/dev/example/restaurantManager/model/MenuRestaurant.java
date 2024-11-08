@@ -1,9 +1,9 @@
 package dev.example.restaurantManager.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.example.restaurantManager.model.MenuItem.MenuItem;
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
 package dev.example.restaurantManager.service;
 
 import dev.example.restaurantManager.model.MenuRestaurant;
-import dev.example.restaurantManager.model.MenuItem;
+import dev.example.restaurantManager.model.MenuItem.MenuItem;
 import dev.example.restaurantManager.repository.MenuRestaurantRepository;
 import dev.example.restaurantManager.repository.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;

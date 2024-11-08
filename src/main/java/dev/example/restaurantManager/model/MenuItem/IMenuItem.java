@@ -1,4 +1,4 @@
-package dev.example.restaurantManager.model;
+package dev.example.restaurantManager.model.MenuItem;
 
 public interface IMenuItem {
     String getId();

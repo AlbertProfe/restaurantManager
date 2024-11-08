@@ -1,9 +1,8 @@
-package dev.example.restaurantManager.model;
+package dev.example.restaurantManager.model.MenuItem;
 
+import dev.example.restaurantManager.model.MenuRestaurant;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 @Entity
