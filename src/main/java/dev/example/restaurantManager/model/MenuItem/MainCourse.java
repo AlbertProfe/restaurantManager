@@ -7,6 +7,10 @@ public class MainCourse extends MenuItem{
 
     private boolean vegan;
 
+    public MainCourse(){
+
+    }
+
     public MainCourse(String id, String name, String description, double price, boolean vegan) {
         super(id,name,description,price);
         this.vegan = vegan;

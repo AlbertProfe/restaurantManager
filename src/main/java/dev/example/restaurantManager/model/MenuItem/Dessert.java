@@ -8,6 +8,10 @@ public class Dessert extends MenuItem{
 
     private boolean sugarFree;
 
+    public Dessert(){
+
+    }
+
     public Dessert(String id, String name, String description, double price, boolean sugarFree) {
         super(id,name,description,price);
         this.sugarFree = sugarFree;

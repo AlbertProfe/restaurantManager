@@ -2,6 +2,8 @@ package dev.example.restaurantManager.utilities;
 
 import com.github.javafaker.Faker;
 import dev.example.restaurantManager.model.*;
+import dev.example.restaurantManager.model.MenuItem.Dessert;
+import dev.example.restaurantManager.model.MenuItem.MainCourse;
 import dev.example.restaurantManager.model.MenuItem.MenuItem;
 import dev.example.restaurantManager.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,9 @@ public class DataLoader {
     @Autowired
     private TableRestaurantRepository tableRepository;
     @Autowired
-    private MenuItemRepository menuItemRepository;
+    private MainCourseRepository mainCourseRepository;
+    @Autowired
+    private DessertRepository dessertRepository;
     @Autowired
     private MenuRestaurantRepository menuRepository;
     @Autowired
@@ -44,7 +48,8 @@ public class DataLoader {
         // then create relationships between them
         createCustomers();
         createTables();
-        createMenuItems();
+        createMainCourses();
+        createDesserts();
 
         // create and assign menu items
         createMenusAndAssignMenuItems();
@@ -94,17 +99,33 @@ public class DataLoader {
         }
     }
 
-    // we are going to create 25 menu items
+    // we are going to create 25 mainCourses
     // and save them in the H2 local database
-    private void createMenuItems() {
+    private void createMainCourses() {
         for (int i = 0; i < 25; i++) {
-            MenuItem menuItem = new MenuItem(
+            MainCourse mainCourse = new MainCourse(
                     UUID.randomUUID().toString(),
                     faker.food().dish(),
                     faker.food().ingredient() + " " + faker.food().ingredient() ,
-                    faker.number().randomDouble(2, 5, 30)
+                    faker.number().randomDouble(2, 5, 30),
+                    faker.bool().bool()
             );
-            menuItemRepository.save(menuItem);
+            mainCourseRepository.save(mainCourse);
+        }
+    }
+
+    // we are going to create 25 desserts
+    // and save them in the H2 local database
+    private void createDesserts() {
+        for (int i = 0; i < 25; i++) {
+            Dessert dessert = new Dessert(
+                    UUID.randomUUID().toString(),
+                    faker.food().fruit(),
+                    faker.food().ingredient() + " " + faker.food().ingredient() ,
+                    faker.number().randomDouble(2, 5, 30),
+                    faker.bool().bool()
+            );
+            dessertRepository.save(dessert);
         }
     }
 
@@ -112,16 +133,22 @@ public class DataLoader {
     // and assign 5 to 10 menu items to each menu
     // to create a many-to-many relationship
     private void createMenusAndAssignMenuItems() {
-        List<MenuItem> allItems = menuItemRepository.findAll();
+        List<MainCourse> allMainCourses = mainCourseRepository.findAll();
+        List<Dessert> allDesserts = dessertRepository.findAll();
         for (int i = 0; i < 15; i++) {
             MenuRestaurant menu = new MenuRestaurant(
                     UUID.randomUUID().toString(),
                      " Menu-00" + (i + 1),
                     faker.lorem().paragraph()
             );
-            List<MenuItem> menuItems = new ArrayList<>(faker.random().nextInt(5, 10));
-            for (int j = 0; j < faker.random().nextInt(5, 10); j++) {
-                menuItems.add(allItems.get(faker.random().nextInt(allItems.size())));
+            int mainCourses = faker.random().nextInt(5, 10);
+            int desserts = faker.random().nextInt(2, 5);
+            List<MenuItem> menuItems = new ArrayList<>(mainCourses+desserts);
+            for (int j = 0; j < mainCourses; j++) {
+                menuItems.add(allMainCourses.get(faker.random().nextInt(allMainCourses.size())));
+            }
+            for (int j = 0; j < desserts; j++) {
+                menuItems.add(allDesserts.get(faker.random().nextInt(allDesserts.size())));
             }
             menu.setMenuItems(menuItems);
             menuRepository.save(menu);
