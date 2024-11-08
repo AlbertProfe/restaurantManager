@@ -6,11 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-public class MenuItem {
+public class MenuItem implements IMenuItem{
 
     @Id
     private String id;
@@ -21,10 +18,63 @@ public class MenuItem {
     @ManyToMany(mappedBy = "menuItems")
     private List<MenuRestaurant> menus;
 
+    public MenuItem(){
+    }
+
     public MenuItem(String id, String name, String description, double price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
     }
+
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public double getPrice() {
+        return price;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
+    public String toString(){
+        return "id=" + this.id
+            + ", name=" + this.name
+            + ", description=" + this.description
+            + ", price=" + this.price;
+    }
+
 }
