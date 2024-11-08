@@ -3,7 +3,6 @@ package dev.example.restaurantManager.service;
 import dev.example.restaurantManager.model.MenuRestaurant;
 import dev.example.restaurantManager.model.MenuItem.MenuItem;
 import dev.example.restaurantManager.repository.MenuRestaurantRepository;
-import dev.example.restaurantManager.repository.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
