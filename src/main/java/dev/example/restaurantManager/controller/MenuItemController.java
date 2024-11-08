@@ -1,5 +1,7 @@
 package dev.example.restaurantManager.controller;
 
+import dev.example.restaurantManager.model.Dessert;
+import dev.example.restaurantManager.model.MainCourse;
 import dev.example.restaurantManager.model.MenuItem;
 import dev.example.restaurantManager.repository.DessertRepository;
 import dev.example.restaurantManager.repository.MainCourseRepository;
@@ -40,8 +42,8 @@ public class MenuItemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MenuItem> updateMenuItem(@PathVariable String id, @RequestBody MenuItem menuItemDetails) {
-        MenuItem updatedMenuItem = menuItemService.updateMenuItem(id, menuItemDetails);
+    public ResponseEntity<MenuItem> updateMenuItem(@PathVariable String id, @RequestBody MenuItem menuItemDetails, Dessert dessertDetails, MainCourse mainCourseDetails) {
+        MenuItem updatedMenuItem = menuItemService.updateMenuItem(id, menuItemDetails, dessertDetails, mainCourseDetails);
         if (updatedMenuItem != null) {
             return new ResponseEntity<>(updatedMenuItem, HttpStatus.OK);
         }

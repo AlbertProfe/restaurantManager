@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class MenuItemServiceImpl implements MenuItemService {
@@ -53,21 +52,25 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
-    public MenuItem updateMenuItem(String id, MenuItem menuItemDetails) {
+    public MenuItem updateMenuItem(String id, MenuItem menuItemDetails, Dessert dessertDetails, MainCourse mainCourseDetails) {
         if (dessertRepository.existsById(id)) {
             Dessert dessert = dessertRepository.findById(id).orElse(null);
             if (dessert != null) {
-                dessert.setName(menuItemDetails.getName());
-                dessert.setDescription(menuItemDetails.getDescription());
-                dessert.setPrice(menuItemDetails.getPrice());
+                dessert.setName(dessertDetails.getName());
+                dessert.setDescription(dessertDetails.getDescription());
+                dessert.setPrice(dessertDetails.getPrice());
+                dessert.setGlutenFree(dessertDetails.isGlutenFree());
+                dessert.setGlutenFree(dessertDetails.isLactoseFree());
                 return dessertRepository.save(dessert);
             }
         } else if (mainCourseRepository.existsById(id)) {
             MainCourse mainCourse = mainCourseRepository.findById(id).orElse(null);
             if (mainCourse != null) {
-                mainCourse.setName(menuItemDetails.getName());
-                mainCourse.setDescription(menuItemDetails.getDescription());
-                mainCourse.setPrice(menuItemDetails.getPrice());
+                mainCourse.setName(mainCourseDetails.getName());
+                mainCourse.setDescription(mainCourseDetails.getDescription());
+                mainCourse.setPrice(mainCourseDetails.getPrice());
+                mainCourse.setVegan(mainCourseDetails.isVegan());
+                mainCourse.setGlutenFree(mainCourseDetails.isGlutenFree());
                 return mainCourseRepository.save(mainCourse);
             }
         }
