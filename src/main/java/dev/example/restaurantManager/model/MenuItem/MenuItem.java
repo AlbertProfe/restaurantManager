@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class MenuItem implements IMenuItem{
+public abstract class MenuItem implements IMenuItem{
 
     @Id
     private String id;
