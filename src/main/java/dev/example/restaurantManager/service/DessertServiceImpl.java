@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -18,6 +19,13 @@ public class DessertServiceImpl implements DessertService{
     @Override
     public List<Dessert> getAllDesserts() {
         return dessertRepository.findAll();
+    }
+
+    @Override
+    public List<Dessert> getAllSugarFreeDesserts() {
+        return dessertRepository.findAll().stream()
+                .filter(Dessert::isSugarFree)
+                .collect(Collectors.toList());
     }
 
     @Override

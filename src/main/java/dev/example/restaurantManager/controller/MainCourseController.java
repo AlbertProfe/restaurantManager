@@ -22,6 +22,12 @@ public class MainCourseController {
         return new ResponseEntity<>(mainCourses, HttpStatus.OK);
     }
 
+    @GetMapping("/vegan")
+    public ResponseEntity<List<MainCourse>> getAllVeganMainCourses() {
+        List<MainCourse> mainCourses = mainCourseService.getAllVeganMainCourses();
+        return new ResponseEntity<>(mainCourses, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<MainCourse> createMainCourse(@RequestBody MainCourse mainCourse) {
         MainCourse newMainCourse = mainCourseService.createMainCourse(mainCourse);

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class MainCourseServiceImpl implements MainCourseService{
@@ -17,6 +18,13 @@ public class MainCourseServiceImpl implements MainCourseService{
     @Override
     public List<MainCourse> getAllMainCourses() {
         return mainCourseRepository.findAll();
+    }
+
+    @Override
+    public List<MainCourse> getAllVeganMainCourses() {
+        return mainCourseRepository.findAll().stream()
+                .filter(MainCourse::isVegan)
+                .collect(Collectors.toList());
     }
 
     @Override

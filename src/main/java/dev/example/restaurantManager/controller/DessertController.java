@@ -22,6 +22,12 @@ public class DessertController {
         return new ResponseEntity<>(desserts, HttpStatus.OK);
     }
 
+    @GetMapping("/sugarfree")
+    public ResponseEntity<List<Dessert>> getAllSugarFreeDesserts() {
+        List<Dessert> desserts = dessertService.getAllSugarFreeDesserts();
+        return new ResponseEntity<>(desserts, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Dessert> createDessert(@RequestBody Dessert dessert) {
         Dessert newDessert = dessertService.createDessert(dessert);

@@ -2,6 +2,8 @@ package dev.example.restaurantManager.service;
 
 import dev.example.restaurantManager.model.MenuRestaurant;
 import dev.example.restaurantManager.model.MenuItem.MenuItem;
+import dev.example.restaurantManager.repository.DessertRepository;
+import dev.example.restaurantManager.repository.MainCourseRepository;
 import dev.example.restaurantManager.repository.MenuRestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,10 @@ public class MenuRestaurantServiceImpl implements MenuRestaurantService {
     private MenuRestaurantRepository menuRestaurantRepository;
 
     @Autowired
-    private MenuItemRepository menuItemRepository;
+    private MainCourseRepository mainCourseRepository;
+
+    @Autowired
+    private DessertRepository dessertRepository;
 
     @Override
     public List<MenuRestaurant> getAllMenus() {
@@ -58,10 +63,21 @@ public class MenuRestaurantServiceImpl implements MenuRestaurantService {
         return menuRestaurantRepository.count();
     }
 
+
+    private MenuItem getMenuItem(String menuItemId){
+        if(mainCourseRepository.existsById(menuItemId)){
+            return mainCourseRepository.findById(menuItemId).orElse(null);
+        }
+        if(dessertRepository.existsById(menuItemId)){
+            return dessertRepository.findById(menuItemId).orElse(null);
+        }
+        return null;
+    }
+
     @Override
     public MenuRestaurant addMenuItemToMenu(String menuId, String menuItemId) {
+        MenuItem menuItem = getMenuItem(menuItemId);
         MenuRestaurant menu = menuRestaurantRepository.findById(menuId).orElse(null);
-        MenuItem menuItem = menuItemRepository.findById(menuItemId).orElse(null);
         if (menu != null && menuItem != null) {
             menu.getMenuItems().add(menuItem);
             return menuRestaurantRepository.save(menu);
