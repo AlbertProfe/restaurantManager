@@ -6,7 +6,6 @@ import dev.example.restaurantManager.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -44,7 +43,8 @@ public class DataLoader {
         // then create relationships between them
         createCustomers();
         createTables();
-        //createMenuItems();
+        createMenuDessert();
+        createMenuMainCourse();
 
         // create and assign menu items
         createMenusAndAssignMenuItems();
@@ -94,19 +94,35 @@ public class DataLoader {
         }
     }
 
-    // we are going to create 25 menu items
+    // we are going to create 10 Dessert
     // and save them in the H2 local database
-//    private void createMenuItems() {
-//        for (int i = 0; i < 25; i++) {
-//            MenuItem menuItem = new MenuItem(
-//                    UUID.randomUUID().toString(),
-//                    faker.food().dish(),
-//                    faker.food().ingredient() + " " + faker.food().ingredient() ,
-//                    faker.number().randomDouble(2, 5, 30)
-//            );
-//            menuItemRepository.save(menuItem);
-//        }
-//    }
+    private void createMenuDessert() {
+        for (int i = 0; i < 10; i++) {
+            MenuItem menuDessert = new Dessert(
+                    UUID.randomUUID().toString(),
+                    faker.food().dish(),
+                    faker.number().randomDouble(2, 5, 30),
+                    faker.random().nextBoolean(),
+                    faker.random().nextBoolean()
+            );
+            menuItemRepository.save(menuDessert);
+        }
+    }
+
+    // we are going to create 5 MainCourses
+
+    private void createMenuMainCourse() {
+        for (int i = 0; i < 5; i++) {
+            MenuItem menuMainCourse = new MainCourse(
+                    UUID.randomUUID().toString(),
+                    faker.food().dish(),
+                    faker.number().randomDouble(2, 5, 30),
+                    faker.random().nextBoolean(),
+                    faker.random().nextBoolean()
+            );
+            menuItemRepository.save(menuMainCourse);
+        }
+    }
 
     // we are going to create 15 menus
     // and assign 5 to 10 menu items to each menu

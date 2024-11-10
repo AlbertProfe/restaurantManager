@@ -11,6 +11,10 @@ public class Dessert extends MenuItem {
     private boolean lactoseFree;
     private boolean glutenFree;
 
+    // Empty constructor for testing via Swagger
+    public Dessert() {
+    }
+
     public Dessert(String name, String description, double price, boolean lactoseFree, boolean glutenFree) {
         // Call to constructor from superclass
         super(name, description, price);
