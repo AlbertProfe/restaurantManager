@@ -24,44 +24,29 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "order_menu",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "menu_id")
-    )
-    private List<MenuRestaurant> menus = new ArrayList<>();
+    @OneToMany(mappedBy = "orderMapped", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderMenuQty> orderMenuQtyList = new ArrayList<>();
 
-    public void addMenu(MenuRestaurant menu) {
-        this.menus.add(menu);
-        menu.getOrders().add(this);
+    // add menus
+    public void addMenu(MenuRestaurant menu, int quantity) {
+        OrderMenuQty orderMenuQty = new OrderMenuQty();
+        orderMenuQty.setOrderMapped(this);
+        orderMenuQty.setMenuMapped(menu);
+        orderMenuQty.setQuantity(quantity);
+        this.orderMenuQtyList.add(orderMenuQty);
     }
 
-    public void removeMenu(MenuRestaurant menu) {
-        this.menus.remove(menu);
-        menu.getOrders().remove(this);
-    }
-
-    public List<MenuRestaurant> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<MenuRestaurant> menus) {
-        this.menus = menus;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderRestaurant{" +
-                "id='" + id + '\'' +
-                ", date=" + date +
-                ", waiter='" + waiter + '\'' +
-                ", peopleQty=" + peopleQty +
-                ", totalPayment=" + totalPayment +
-                ", paid=" + paid +
-                ", menusCount=" + (menus != null ? menus.size() : 0) +
-                ", menus=" + menus +
-                '}';
-    }
+        @Override
+        public String toString() {
+            return "OrderRestaurant{" +
+                    "id='" + id + '\'' +
+                    ", date=" + date +
+                    ", waiter='" + waiter + '\'' +
+                    ", peopleQty=" + peopleQty +
+                    ", totalPayment=" + totalPayment +
+                    ", paid=" + paid +
+                    ", orderMenuQtyList=" + orderMenuQtyList +
+                    '}';
+        }
 
 }

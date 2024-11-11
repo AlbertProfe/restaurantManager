@@ -26,7 +26,7 @@ public class EatInOrderRestaurant extends OrderRestaurant {
 
 
     public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                double totalPayment, boolean paid, List<MenuRestaurant> menus,
+                                double totalPayment, boolean paid, List<OrderMenuQty> menus,
                                 TableRestaurant orderedTableRestaurant) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
         this.orderedTableRestaurant = orderedTableRestaurant;

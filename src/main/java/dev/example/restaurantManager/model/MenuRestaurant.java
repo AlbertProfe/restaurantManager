@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class MenuRestaurant {
