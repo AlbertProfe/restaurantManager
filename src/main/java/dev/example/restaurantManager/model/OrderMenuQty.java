@@ -21,16 +21,28 @@ public class OrderMenuQty {
 
     @ManyToOne
     @JoinColumn(name = "ORDER_FK_ID")
-    private OrderRestaurant order;
+    private OrderRestaurant orderMapped;
 
     @ManyToOne
     @JoinColumn(name = "MENU_FK_ID")
-    private MenuRestaurant menu;
+    private MenuRestaurant menuMapped;
 
     private int quantity;
 
 
-    public OrderMenuQty(OrderRestaurant orderRestaurant, MenuRestaurant menuRestaurant, int i) {
+    public OrderMenuQty(OrderRestaurant orderRestaurant, MenuRestaurant menuRestaurant, int quantity) {
+        this.orderMapped = orderRestaurant;
+        this.menuMapped = menuRestaurant;
+        this.quantity = quantity;
+    }
+    @Override
+    public String toString() {
+        return "OrderMenuQty{" +
+                "id='" + id + '\'' +
+                ", orderMapped=" + orderMapped.getId() +
+                ", menuMapped=" + menuMapped.getName() +
+                ", quantity=" + quantity +
+                '}';
 
     }
 }

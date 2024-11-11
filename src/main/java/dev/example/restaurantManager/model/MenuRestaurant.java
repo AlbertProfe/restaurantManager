@@ -34,8 +34,8 @@ public class MenuRestaurant {
     )
     private List<MenuItem> menuItems = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
-    private List<OrderRestaurant> orders = new ArrayList<>();
+    //@ManyToMany(mappedBy = "menus", fetch = FetchType.LAZY)
+    //private List<OrderRestaurant> orders = new ArrayList<>();
 
 
     public MenuRestaurant(String id, String name, Double price, String content, boolean active, boolean water, List<MenuItem> menuItems) {
