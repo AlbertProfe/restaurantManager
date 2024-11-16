@@ -25,6 +25,9 @@ public class SideCourse extends MenuItem {
 
     }
 
+    public SideCourse(String string, String s, String s1, double v, Boolean aBoolean, String s2, int i) {
+    }
+
     //method to get a summary of dessert
     public String getSideCourseSummary() {
         return String.format("%s - %s (Price: %.2f, Gluten Free: %b, Flavor: %s, Sweetness Level: %d)",

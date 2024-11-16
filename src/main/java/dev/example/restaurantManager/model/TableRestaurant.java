@@ -48,6 +48,9 @@ public class TableRestaurant {
         this.busy = busy;
     }
 
+    public <E> TableRestaurant(String string, String s, E option, Integer integer, boolean bool) {
+    }
+
     // Méthod tu add orders
 
     public void addEatInOrder(EatInOrderRestaurant order) {

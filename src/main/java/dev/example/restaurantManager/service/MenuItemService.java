@@ -1,7 +1,9 @@
 package dev.example.restaurantManager.service;
 
 import dev.example.restaurantManager.model.Customer;
+import dev.example.restaurantManager.model.MainCourse;
 import dev.example.restaurantManager.model.MenuItem;
+import dev.example.restaurantManager.model.SideCourse;
 
 import java.util.List;
 
@@ -15,4 +17,8 @@ public interface MenuItemService {
     long countMenuItems();
     List<MenuItem> getMenuItemsByMenuId(String menuId);
 
+    MenuItem getMenuItemById(String id);
+
+    MainCourse createMainCourse(MainCourse mainCourse);
+    SideCourse createSideCourse(SideCourse sideCourse);
 }
