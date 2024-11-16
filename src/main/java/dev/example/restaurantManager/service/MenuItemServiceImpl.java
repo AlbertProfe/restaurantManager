@@ -1,90 +1,75 @@
 package dev.example.restaurantManager.service;
 
-
-
+import dev.example.restaurantManager.model.MainCourse;
 import dev.example.restaurantManager.model.MenuItem;
-import dev.example.restaurantManager.model.MenuRestaurant;
+import dev.example.restaurantManager.model.SideCourse;
 import dev.example.restaurantManager.repository.MenuItemRepository;
-import dev.example.restaurantManager.repository.MenuRestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class MenuItemServiceImpl implements MenuItemService {
-
     @Autowired
-    MenuItemRepository menuItemRepository;
-    @Autowired
-    MenuRestaurantRepository menuRepository;
+    private MenuItemRepository menuItemRepository;
 
+    //Retrieve all MenuItems including subtypes
     @Override
-    public List<MenuItem> getMenuItemsByMenuId(String menuId) {
-        MenuRestaurant menu = menuRepository.findById(menuId).orElse(null);
-        return menu != null ? menu.getMenuItems() : new ArrayList<>();
-    }
-
-
-    @Override
-
-    public List<MenuItem> getAllMenuItems(){
+    public List<MenuItem> getAllMenuItems() {
         return menuItemRepository.findAll();
     }
 
+    //Save a generic Menu item
     @Override
-
-    public MenuItem createMenuItem(MenuItem menuItem){
+    public MenuItem createMenuItem(MenuItem menuItem) {
         menuItem.setId(UUID.randomUUID().toString());
         return menuItemRepository.save(menuItem);
     }
 
-    public MenuItem getMenuItemByID  (String id){
+    //Save a MainCourse
+    public MainCourse createMainCourse(MainCourse mainCourse){
+        mainCourse.setId(UUID.randomUUID().toString());
+        return menuItemRepository.save(mainCourse);
+    }
+
+    //Save SideCourse
+
+    public SideCourse createSideCourse(SideCourse dessert){
+        dessert.setId(UUID.randomUUID().toString());
+        return menuItemRepository.save(dessert);
+    }
+
+    //Retrieve a MenuItem by ID
+
+    public MenuItem getMenuItemById(String id) {
         return menuItemRepository.findById(id).orElse(null);
     }
 
+    //Update an existing MenuItem
     @Override
-
     public MenuItem updateMenuItem(String id, MenuItem menuItemDetails) {
         MenuItem menuItem = menuItemRepository.findById(id).orElse(null);
         if (menuItem != null) {
-            if (menuItemDetails.getName() != null) {
-                menuItem.setName(menuItemDetails.getName());
-            }
-            if (menuItemDetails.getDescription() != null) {
-                menuItem.setDescription(menuItemDetails.getDescription());
-            }
-            menuItem.setSpicy(menuItemDetails.isSpicy());
-            menuItem.setHasGluten(menuItemDetails.hasGluten());
-            menuItem.setAvailable(menuItemDetails.isAvailable());
-
-
-            if (menuItemDetails.getCourseType() != null) {
-                menuItem.setCourseType(menuItemDetails.getCourseType());
-            }
-
+            menuItem.setName(menuItemDetails.getName());
+            menuItem.setDescription(menuItemDetails.getDescription());
+            menuItem.setPrice(menuItemDetails.getPrice());
             return menuItemRepository.save(menuItem);
         }
         return null;
     }
     @Override
     public boolean deleteMenuItem(String id) {
-        menuItemRepository.deleteById(id);
-        Optional<MenuItem> menuItem = menuItemRepository.findById(id);
-        return menuItem.isEmpty()
-                ? false : true ;
+        if (menuItemRepository.existsById(id)) {
+            menuItemRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
-
     @Override
     public long countMenuItems() {
         return menuItemRepository.count();
     }
-
-
-
 }
 
 
