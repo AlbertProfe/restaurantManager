@@ -2,7 +2,6 @@ package dev.example.restaurantManager;
 
 
 import dev.example.restaurantManager.RestaurantManagerApplication;
-import dev.example.restaurantManager.model.Dessert;
 import dev.example.restaurantManager.model.MainCourse;
 import dev.example.restaurantManager.model.MenuItem;
 import dev.example.restaurantManager.model.SideCourse;
@@ -127,6 +126,7 @@ import java.util.UUID;
         assertThat(menuItemRepository.count()).isEqualTo(2);
 
     }
+
 
     @Test
     public void testUpdateMainCourse() {
