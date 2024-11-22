@@ -96,14 +96,40 @@ public class DataLoader {
 
     // we are going to create 25 menu items
     // and save them in the H2 local database
+//    private void createMenuItemsOld() {
+//        for (int i = 0; i < 25; i++) {
+//            MenuItem menuItem = new MenuItem(
+//                    UUID.randomUUID().toString(),
+//                    faker.food().dish(),
+//                    faker.food().ingredient() + " " + faker.food().ingredient() ,
+//                    faker.number().randomDouble(2, 5, 30)
+//            );
+//            menuItemRepository.save(menuItem);
+//        }
+//    }
+
     private void createMenuItems() {
         for (int i = 0; i < 25; i++) {
-            MenuItem menuItem = new MenuItem(
-                    UUID.randomUUID().toString(),
-                    faker.food().dish(),
-                    faker.food().ingredient() + " " + faker.food().ingredient() ,
-                    faker.number().randomDouble(2, 5, 30)
-            );
+            MenuItem menuItem;
+            if (faker.random().nextBoolean()) {
+                // Create a MainCourse
+                menuItem = new MainCourse(
+                        UUID.randomUUID().toString(),
+                        faker.food().dish(),
+                        faker.food().ingredient() + " " + faker.food().ingredient() ,
+                        faker.number().randomDouble(2, 5, 30),
+                        "Some main course specific property"
+                );
+            } else {
+                // Create a Dessert
+                menuItem = new Dessert(
+                        UUID.randomUUID().toString(),
+                        faker.food().dish(),
+                        faker.food().ingredient() + " " + faker.food().ingredient() ,
+                        faker.number().randomDouble(2, 5, 30),
+                        "Some dessert specific property"
+                );
+            }
             menuItemRepository.save(menuItem);
         }
     }
